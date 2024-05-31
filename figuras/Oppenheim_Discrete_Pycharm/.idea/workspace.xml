@@ -11,47 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="transform_analysis_second_order_zplane.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transform_analysis_second_order_zplane.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="16" column="26" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="transform_analysis_all_pass_first_second_order.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transform_analysis_all_pass_first_second_order.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="44" column="35" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="example_5_12_zero_pole_plot.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example_5_12_zero_pole_plot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1125">
-              <caret line="77" column="87" selection-start-line="77" selection-end-line="77" selection-end-column="87" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="example_5_13.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example_5_13.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1665">
-              <caret line="113" column="21" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="21" />
+            <state relative-caret-position="1305">
+              <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -62,8 +26,8 @@
       <file leaf-file-name="example_5_13_minimum_energy_delay.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example_5_13_minimum_energy_delay.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3135">
-              <caret line="211" column="82" selection-start-line="210" selection-end-line="211" selection-end-column="82" />
+            <state relative-caret-position="4740">
+              <caret line="318" column="50" selection-start-line="318" selection-start-column="50" selection-end-line="318" selection-end-column="50" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -74,8 +38,8 @@
       <file leaf-file-name="transform_analysis_example_05_14_linear_phase.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/transform_analysis_example_05_14_linear_phase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+            <state relative-caret-position="615">
+              <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -86,8 +50,8 @@
       <file leaf-file-name="example_02_16_moving_average_freq_response.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example_02_16_moving_average_freq_response.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="102" selection-start-line="102" selection-end-line="102" />
+            <state relative-caret-position="330">
+              <caret line="23" selection-end-line="23" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -98,8 +62,8 @@
       <file leaf-file-name="transform_analysis_lineal_phase_fir_types.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/transform_analysis_lineal_phase_fir_types.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="191" column="46" selection-start-line="191" selection-start-column="46" selection-end-line="191" selection-end-column="46" />
+            <state relative-caret-position="1095">
+              <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -107,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example_05_19.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="example_05_19.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example_05_19.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="314" column="23" lean-forward="true" selection-start-line="314" selection-start-column="23" selection-end-line="314" selection-end-column="23" />
+            <state relative-caret-position="2670">
+              <caret line="180" column="18" selection-start-line="180" selection-start-column="18" selection-end-line="180" selection-end-column="18" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -119,11 +83,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transform_analysis_example_5_1_2_group_delay.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transform_analysis_example_5_1_2_group_delay.py">
+      <file leaf-file-name="structures_problem_06_39.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/structures_problem_06_39.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
+            <state relative-caret-position="45">
+              <caret line="5" selection-end-line="5" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="structures_flow_graph_lineal_phase_FIR_zeros.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1215">
+              <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="structures_lattice_parameters_algorithm.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/structures_lattice_parameters_algorithm.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1035">
+              <caret line="69" column="39" lean-forward="true" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="frequency_sampling_zeros.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frequency_sampling_zeros.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1485">
+              <caret line="101" selection-start-line="101" selection-end-line="101" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -166,12 +163,18 @@
         <option value="$PROJECT_DIR$/transform_analysis_all_pass_first_second_order.py" />
         <option value="$PROJECT_DIR$/example_5_12_zero_pole_plot.py" />
         <option value="$PROJECT_DIR$/example_5_13.py" />
-        <option value="$PROJECT_DIR$/example_5_13_minimum_energy_delay.py" />
         <option value="$PROJECT_DIR$/example_02_16_moving_average_freq_response.py" />
         <option value="$PROJECT_DIR$/transform_analysis_example_05_14_linear_phase.py" />
         <option value="$PROJECT_DIR$/seq_and_sys_step_dtft_computation.py" />
         <option value="$PROJECT_DIR$/transform_analysis_lineal_phase_fir_types.py" />
         <option value="$PROJECT_DIR$/example_05_19.py" />
+        <option value="$PROJECT_DIR$/test_problem_06_39.py" />
+        <option value="$PROJECT_DIR$/example_5_13_minimum_energy_delay.py" />
+        <option value="$PROJECT_DIR$/frequency_sampling_test.py" />
+        <option value="$PROJECT_DIR$/frequency_sampling_zeros.py" />
+        <option value="$PROJECT_DIR$/structures_problem_06_39.py" />
+        <option value="$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py" />
+        <option value="$PROJECT_DIR$/structures_lattice_parameters_algorithm.py" />
       </list>
     </option>
   </component>
@@ -217,43 +220,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.example_05_19">
-    <configuration name="example_02_16_moving_average_freq_response" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Oppenheim_Discrete_Pycharm" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example_02_16_moving_average_freq_response.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="example_05_19" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Oppenheim_Discrete_Pycharm" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example_05_19.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.structures_lattice_parameters_algorithm">
     <configuration name="example_5_13_minimum_energy_delay" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Oppenheim_Discrete_Pycharm" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -267,6 +234,96 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example_5_13_minimum_energy_delay.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="frequency_sampling_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Oppenheim_Discrete_Pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/frequency_sampling_zeros.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="structures_flow_graph_lineal_phase_FIR_zeros" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Oppenheim_Discrete_Pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="structures_lattice_parameters_algorithm" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Oppenheim_Discrete_Pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_lattice_parameters_algorithm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="structures_problem_06_39 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Oppenheim_Discrete_Pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_problem_06_39.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="structures_problem_06_39" type="PythonConfigurationType" factoryName="Python">
+      <module name="Oppenheim_Discrete_Pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.6" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_problem_06_39_tmp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -290,56 +347,21 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="transform_analysis_example_05_14_linear_phase" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Oppenheim_Discrete_Pycharm" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/transform_analysis_example_05_14_linear_phase.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="transform_analysis_lineal_phase_fir_types" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Oppenheim_Discrete_Pycharm" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/transform_analysis_lineal_phase_fir_types.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <list>
+      <item itemvalue="Python.structures_problem_06_39" />
       <item itemvalue="Python.test_filter_coefs_from_zpk" />
+      <item itemvalue="Python.frequency_sampling_test" />
       <item itemvalue="Python.example_5_13_minimum_energy_delay" />
-      <item itemvalue="Python.transform_analysis_example_05_14_linear_phase" />
-      <item itemvalue="Python.example_02_16_moving_average_freq_response" />
-      <item itemvalue="Python.transform_analysis_lineal_phase_fir_types" />
-      <item itemvalue="Python.example_05_19" />
+      <item itemvalue="Python.structures_problem_06_39 (1)" />
+      <item itemvalue="Python.structures_flow_graph_lineal_phase_FIR_zeros" />
+      <item itemvalue="Python.structures_lattice_parameters_algorithm" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.example_05_19" />
-        <item itemvalue="Python.transform_analysis_lineal_phase_fir_types" />
-        <item itemvalue="Python.example_02_16_moving_average_freq_response" />
-        <item itemvalue="Python.transform_analysis_example_05_14_linear_phase" />
+        <item itemvalue="Python.structures_lattice_parameters_algorithm" />
+        <item itemvalue="Python.structures_flow_graph_lineal_phase_FIR_zeros" />
+        <item itemvalue="Python.structures_problem_06_39 (1)" />
+        <item itemvalue="Python.frequency_sampling_test" />
         <item itemvalue="Python.example_5_13_minimum_energy_delay" />
       </list>
     </recent_temporary>
@@ -358,8 +380,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_test_filter_coefs_from_zpk_py - 2024.01.31 at 16h 45m 38s.xml">
-      <configuration name="py.test in test_filter_coefs_from_zpk.py" configurationId="tests" />
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.19 at 19h 30m 10s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.19 at 19h 33m 08s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.19 at 19h 36m 49s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.19 at 19h 38m 04s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.19 at 19h 48m 12s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.19 at 19h 52m 49s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.20 at 16h 13m 15s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.20 at 16h 13m 44s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.20 at 16h 15m 47s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_problem_06_39_py - 2024.04.20 at 16h 22m 21s.xml">
+      <configuration name="py.test in test_problem_06_39.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -373,14 +422,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1155" height="732" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18570183" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32850242" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50043595" side_tool="true" weight="0.32850242" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49956408" weight="0.25120774" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49956408" weight="0.29307568" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -403,41 +451,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="6" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_step_dtft_computation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="105" column="8" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example_3_6_zero_pole_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="77" column="26" lean-forward="true" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -675,9 +688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="16" column="26" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -685,9 +695,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="44" column="35" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -695,59 +702,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example_5_13.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="113" column="21" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example_5_12_zero_pole_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="77" column="87" selection-start-line="77" selection-end-line="77" selection-end-column="87" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example_5_13_minimum_energy_delay.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3135">
-          <caret line="211" column="82" selection-start-line="210" selection-end-line="211" selection-end-column="82" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example_02_16_moving_average_freq_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/transform_analysis_example_05_14_linear_phase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -758,10 +712,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example_5_13.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1418">
+          <caret line="246" column="40" selection-start-line="246" selection-start-column="13" selection-end-line="246" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example_5_13_minimum_energy_delay.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4740">
+          <caret line="318" column="50" selection-start-line="318" selection-start-column="50" selection-end-line="318" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_problem_06_39_tmp.py" />
     <entry file="file://$PROJECT_DIR$/transform_analysis_lineal_phase_fir_types.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="191" column="46" selection-start-line="191" selection-start-column="46" selection-end-line="191" selection-end-column="46" />
+        <state relative-caret-position="1095">
+          <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example_5_12_zero_pole_plot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1305">
+          <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transform_analysis_example_05_14_linear_phase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_problem_06_39.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frequency_sampling_zeros.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1485">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -770,11 +792,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/example_05_19.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="314" column="23" lean-forward="true" selection-start-line="314" selection-start-column="23" selection-end-line="314" selection-end-column="23" />
+        <state relative-caret-position="2670">
+          <caret line="180" column="18" selection-start-line="180" selection-start-column="18" selection-end-line="180" selection-end-column="18" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example_02_16_moving_average_freq_response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_lattice_parameters_algorithm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1035">
+          <caret line="69" column="39" lean-forward="true" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
         </state>
       </provider>
     </entry>

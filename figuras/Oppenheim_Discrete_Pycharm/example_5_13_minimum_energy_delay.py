@@ -318,7 +318,7 @@ fs = 11
 
 fig = plt.figure(2, figsize=(6, 4), frameon=False)
 ax = fig.add_subplot(111)
-plt.plot(n[n_pad:-1], E[:, n_pad:-1].T)
+plt.plot(n[n_pad:-1], E[:, n_pad:-1].T, ls='-', marker='s', markersize=4)
 plt.xlim([nmin, nmax])
 plt.ylim(bottom=0)
 leg = plt.legend([r'$E_a[n]\textrm{ (fase m\'inima)}$', r'$E_b[n]\textrm{ (fase m\'axima)}$',

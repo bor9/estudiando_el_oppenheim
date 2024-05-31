@@ -84,6 +84,7 @@
 \newcommand{\A}{\mathbf{A}}
 \newcommand{\B}{\mathbf{B}}
 \newcommand{\D}{\mathbf{D}}
+\newcommand{\F}{\mathbf{F}}
 \newcommand{\G}{\mathbf{G}}
 \newcommand{\Hbf}{\mathbf{H}}
 \newcommand{\K}{\mathbf{K}}
@@ -93,6 +94,7 @@
 \newcommand{\T}{\mathbf{T}}
 \newcommand{\W}{\mathbf{W}}
 \newcommand{\X}{\mathbf{X}}
+\newcommand{\Y}{\mathbf{Y}}
 \newcommand{\Pbf}{\mathbf{P}}
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
@@ -1548,9 +1550,136 @@ Para especificar completamente a la transformada \(z\) de una secuencia no alcan
  
 En el empleo de la transformada \(z\) para el análisis de secuencias en tiempo discreto debe ser posible el pasaje entre las representaciones en el dominio del tiempo y en el dominio \(z\). A menudo, este análisis implica calcular la transformada \(z\) y luego de algo de manipulación de las expresiones algebraicas, calcular la transformada \(z\) inversa. La transformada \(z\) inversa es la integral de contorno
 \begin{equation}\label{eq:z_transform_inverse_computation}
- x[n]=\frac{1}{2\pi j}\oint_C X(z)z^{n-1}, 
+ x[n]=\frac{1}{2\pi j}\oint_C X(z)z^{n-1}\,dz, 
 \end{equation}
-donde \(C\) es un contorno cerrado orientado en sentido antihorario dentro de la ROC que encierra al origen. Esta expresión se deriva del teorema integral de Cauchy de la teoría de funciones de variable compleja. Específicamente, \(x[n]\) son los coeficientes de la representación en series de Laurent de la función \(X(z)\) (ver la sección 66 de \cite{brown2013complex} sobre la representación en series de Laurent de una función de variable compleja, y también el ejercicio 8 de la sección 68). Sin embargo, para el tipo de secuencias y transformadas \(z\) encontradas en el análisis de sistemas LTI, procedimientos menos formales son suficientes y preferibles para la evaluación de la ecuación  \ref{eq:z_transform_inverse_computation}. En las secciones siguientes se consideran dichos procedimientos, en particular, el método de inspección, la expansión en fracciones simples y la expansión en series de potencia.
+donde \(C\) es un contorno cerrado orientado en sentido antihorario dentro de la ROC que encierra al origen. Esta expresión se deriva del teorema integral de Cauchy de la teoría de funciones de variable compleja. Específicamente, \(x[n]\) son los coeficientes de la representación en series de Laurent de la función \(X(z)\) (ver la sección 66 de \cite{brown2013complex} sobre la representación en series de Laurent de una función de variable compleja, y también el ejercicio 8 de la sección 68). Sin embargo, para el tipo de secuencias y transformadas \(z\) encontradas en el análisis de sistemas LTI, procedimientos menos formales son suficientes y preferibles para la evaluación de la ecuación  \ref{eq:z_transform_inverse_computation}. En las secciones siguientes, además de la evaluación directa de la integral de contorno \ref{eq:z_transform_inverse_computation}, se consideran dichos procedimientos, en particular, el método de inspección, la expansión en fracciones simples y la expansión en series de potencia.
+
+\subsection{Evaluación directa de la integral de contorno}
+
+En ciertas condiciones, para evaluar la integral \ref{eq:z_transform_inverse_computation} puede emplearse el \emph{teorema de los residuos de Cauchy} (ver la sección 76 de \cite{brown2013complex}), que indica que si \(C\) un contorno cerrado simple orientado en sentido antihorario y \(f\) es una función analítica dentro de \(C\) excepto por un número finito de puntos singulares aislados \(z_k\) con \(k=1,\,2,\,\dots,\,n\) dentro de \(C\), entonces
+\begin{equation}\label{eq:z_transform_cauchy_residue_theorem}
+ \oint_C f(z)\,dz=2\pi j\sum_{k=1}^n \Res_{z=z_k}f(z). 
+\end{equation} 
+El teorema indica que la integral de contorno es \(2\pi j\) veces la suma de los residuos de \(f\) en los puntos singulares contenidos dentro del contorno \(C\).
+
+Se considerará el caso en que los todos los puntos singulares de \(f\) interiores a \(C\) son polos. Un forma conveniente de calcular los residuos en los polos es considerando que si \(z_0\) es un polo de orden \(m\) de \(f\), con \(m=1,\,2,\,\dots\), \(f(z)\) se puede escribir de la forma 
+ \[
+  f(z)=\frac{\phi(z)}{(z-z_0)^m}
+  \qquad\qquad\textrm{con}\qquad\qquad
+  m=1,\,2,\,\dots,
+ \]
+donde \(\phi(z)\) es analítica y no nula en \(z_0\), y el residuo de \(f\) en \(z_0\) es
+\begin{equation}\label{eq:z_transform_residues_at_poles_phi}
+ \Res_{z=z_0}f(z)=\frac{\phi^{(m-1)}(z_0)}{(m-1)!}
+ \qquad\qquad\textrm{cuando }m=1,\,2,\,\dots,
+\end{equation}
+con las convenciones \(\phi^{(0)}(z_0)=\phi(z_0)\) y \(0!=1\) (ver la sección 80 de \cite{brown2013complex}). 
+
+\paragraph{Ejemplo: antitransformada \(z\) correspondiente a la secuencia exponencial} Se evaluará la tranformada inversa de 
+\[
+ X(z)=\frac{1}{1-az^{-1}},
+\]
+que tiene un polo en \(z=a\),  y en consecuencia, las posibles ROC son \(|z|>|a|\) y \(|z|<|a|\). En este caso, el integrando en la ecuación \ref{eq:z_transform_inverse_computation} es 
+\[
+ f(z)=\frac{z^{n-1}}{1-az^{-1}}=\frac{z^n}{z-a}.
+\]
+Se considera primero el caso con ROC \(|z|>|a|\). En consecuencia, el contorno de integración en la ecuación \ref{eq:z_transform_inverse_computation} es un círculo centrado en el origen con radio mayor que \(|a|\). Se distinguen los siguientes dos casos:
+\begin{enumerate}
+ \item \(n\geq0\): en este caso, el único polo de \(f\) interior a \(C\) es \(z=a\). Expresando
+ \[
+  f(z)=\frac{\phi(z)}{z-a}
+  \qquad\qquad\textrm{donde}\qquad\qquad
+  \phi(z)=z^n.
+ \]
+ Como \(\phi(z)\) es analítica en \(z=a\) y \(\phi(a)=a^n\neq0\), de la ecuación \ref{eq:z_transform_residues_at_poles_phi} se cumple que 
+ \[
+  \Res_{z=a}f(z)=\phi(a)=a^n,
+ \]
+ concluyendo que para \(n>0\), 
+ \[
+  x[n]=a^n
+ \]
+ \item \(n<0\): definiendo \(m=-n>0\), el integrando es 
+ \[
+  f(z)=\dfrac{1}{z^m(z-a)},
+ \]
+ y ahora, además del polo en \(z=a\), también hay un polo de orden \(m\) en \(z=0\), y por lo tanto, la integral de contorno es la suma de los residuos en ambos polos. Al igual que antes, para calcular el residuo en \(z=a\), se expresa
+ \[
+  f(z)=\frac{\phi(z)}{z-a}
+  \qquad\qquad\textrm{donde}\qquad\qquad
+  \phi(z)=\frac{1}{z^m}.
+ \]
+ Como \(\phi(z)\) es analítica en \(z=a\) y \(\phi(a)=1/a^m\neq0\), de la ecuación \ref{eq:z_transform_residues_at_poles_phi} se cumple que 
+ \[
+  \Res_{z=a}f(z)=\phi(a)=\frac{1}{a^m}.
+ \]
+ Para calcular el residuo en el polo de orden \(m\) en \(z=0\), se expresa a \(f\) como
+ \[
+  f(z)=\frac{\phi(z)}{z^m}
+  \qquad\qquad\textrm{donde}\qquad\qquad
+  \phi(z)=\frac{1}{z-a},
+  \qquad\qquad\textrm{para }m=1,\,2,\,\dots.
+ \]
+ Para calcular el residuo mediante la ecuación \ref{eq:z_transform_residues_at_poles_phi}, hay que calcular las derivadas \(\phi^{(m-1)}(z)\) para \(m=1,\,2,\,\dots\). Observando que
+ \[
+  \phi'(z)=-\frac{1}{(z-a)^2},\qquad\qquad 
+  \phi''(z)=\frac{2}{(z-a)^3},\qquad\qquad
+  \phi'''(z)=-\frac{3\times2}{(z-a)^4},
+ \]
+ y así sucesivamente, el resultado se puede generalizar como 
+ \[
+  \phi^{(m-1)}(z)=\frac{(-1)^{m-1}(m-1)!}{(z-a)^m}.
+ \] 
+ Luego,
+ \[
+  \phi^{(m-1)}(0)=\frac{(-1)^{m-1}(m-1)!}{(-1)^m a^m}=-\frac{(m-1)!}{a^m},
+ \] 
+ resultando en que 
+ \[
+  \Res_{z=0}f(z)=-\frac{1}{a^m},
+  \qquad\qquad\textrm{para }m=1,\,2,\,\dots.
+ \]
+ Finalmente,
+ \[
+  x[-m]=\Res_{z=a}f(z)+\Res_{z=0}f(z)=\frac{1}{a^m}-\frac{1}{a^m}=0,
+  \qquad\qquad\textrm{para }m=1,\,2,\,\dots.
+ \]
+\end{enumerate}
+Se concluye que 
+ \[
+  x[n]=a^nu[n]
+ \]
+cuando \(|z|>|a|\). 
+En el caso en que la ROC es \(|z|<|a|\), el contorno de integración \(C\) es un circunferencia centrada en el origen de radio menor a \(|a|\) y se consideran nuevamente los dos siguientes casos:
+\begin{enumerate}
+ \item \(n\geq0\): en este caso, el integrando \(f\) no tiene polos dentro \(C\) y por lo tanto, \(x[n]=0\).
+ \item \(n<0\): nuevamente definiendo \(m=-n>0\), el integrando es 
+ \[
+  f(z)=\dfrac{1}{z^m(z-a)},
+ \]
+ y solo el polo de orden \(m\) en \(z=0\) es interior a \(C\). El residuo en dicho polo ya fue calculado antes y es
+ \[
+  \Res_{z=0}f(z)=-\frac{1}{a^m},
+  \qquad\qquad\textrm{para }m=1,\,2,\,\dots.
+ \]
+ Por lo tanto,
+ \[
+  x[-m]=\Res_{z=0}f(z)=-\frac{1}{a^m},
+  \qquad\qquad\textrm{para }m=1,\,2,\,\dots.
+ \]
+ o
+ \[
+  x[n]=-a^n,
+  \qquad\qquad\textrm{para }n=-1,\,-2,\,\dots.
+ \]
+\end{enumerate}
+Se concluye que 
+ \[
+  x[n]=-a^nu[-n-1]
+ \]
+cuando \(|z|<|a|\).
+
+Observar que el factor \(z^{n-1}\) en el integrando de la transformada inversa \ref{eq:z_transform_inverse_computation} introduce un polo de multiplicidad \((m=-n+1)\) en \(z=0\) para \(n=-1,\,-2,\,\dots\). Por lo tanto, como indica la ecuación \ref{eq:z_transform_residues_at_poles_phi}, el cálculo de residuo en \(z=0\) requiere el cálculo de la derivada \(m\)-ésima de \(\phi(z)\), o equivalentemente, de \(z^mf(z)\) para todo valor de \(m\). Dicho cálculo fue posible en el ejemplo precedente debido a que la transformada \(z\) a invertir es una función sencilla, pero en otro casos puede no ser viable. Sin embargo, si la ROC es \(|z|>|a|\) correspondiente a una secuencia hacia adelante, ya se sabe de antemano que los valores de la secuencia para \(n\) negativos son nulos, por lo que el cálculo de la derivada no es necesario.
 
 \subsection{Método de inspección}
 
@@ -1593,7 +1722,7 @@ y por lo tanto,
 
 Si una transformada \(z\) dada puede expresarse como suma de términos que se encuentran en una tabla de transformadas, su transformada inversa puede encontrarse solo empleando la tabla. Esto está vinculado la método de fracciones simples descripto en la siguiente sección. 
  
-\subsection{Método de fracciones simples} 
+\subsection{Método de fracciones simples}\label{sec:z_transform_partial_fraction_expansion} 
  
 Como se describió, las transformadas \(z\) pueden encontrarse mediante inspección si la expresión de la transformada \(z\) está tabulada. A veces, \(X(z)\) no se encuentra explícitamente en una tabla, pero puede descomponerse como la suma de términos mas simples, cada uno de los cuales están tabulados. Este es el caso de las funciones racionales, que pueden expandirse en fracciones simples en términos que están tabulados. 
 
@@ -1611,7 +1740,7 @@ Esta expresión muestra que hay explícitamente \(M\) ceros y \(N\) polos distin
 \end{equation}
 donde \(c_k\) y \(d_k\) son las raíces de numerador y denominador respectivamente. Se distinguen tres casos:
 \begin{enumerate}
- \item \(M<N\) y todos los polos son de primer orden. En este caso, \(X(z)\) puede expresarse como
+ \item \(M<N\) y todos los polos son de primer orden. Cuando \(M<N\), la función racional se dice que es \emph{propia}. En este caso, \(X(z)\) puede expresarse como
  \begin{equation}\label{eq:z_transform_rational_function_simple_fractions_1}
   X(z)=\sum_{k=1}^N\frac{A_k}{1-d_kz^{-1}}.  
  \end{equation}
@@ -1620,11 +1749,12 @@ donde \(c_k\) y \(d_k\) son las raíces de numerador y denominador respectivamen
  \begin{equation}\label{eq:z_transform_rational_function_simple_fractions_A_k}
   A_k=(1-d_kz^{-1})X(z)\big|_{z=d_k}.  
  \end{equation}
- \item \(M\geq N\) y todos los polos son de primer orden. En este caso debe sumarse un polinomio de grado \(M-N\) en el lado derecho de la ecuación \ref{eq:z_transform_rational_function_simple_fractions_1},
+ \item \(M\geq N\) y todos los polos son de primer orden. Cuando \(M\geq N\) la función racional se dice que es \emph{impropia}. En este caso debe sumarse un polinomio de grado \(M-N\) en el lado derecho de la ecuación \ref{eq:z_transform_rational_function_simple_fractions_1},
  \begin{equation}\label{eq:z_transform_rational_function_simple_fractions_2}
   X(z)=\sum_{r=0}^{M-N}B_rz^{-r}+\sum_{k=1}^N\frac{A_k}{1-d_kz^{-1}}.  
  \end{equation}
- Los coeficientes \(B_r\) pueden obtenerse mediante división larga del numerador entre el denominador, donde el proceso de división finaliza cuando el resto es de menor grado que el denominador. Los coeficientes \(A_k\) pueden obtenerse igual que antes mediante la ecuación \ref{eq:z_transform_rational_function_simple_fractions_A_k}.
+ Los coeficientes \(B_r\) pueden obtenerse mediante división larga del numerador entre el denominador, donde el proceso de división finaliza cuando el resto es de menor grado que el denominador. La división larga se realiza en orden reverso, es decir, se escriben ambos polinomios comenzando por la potencia mas negativa de \(z\) a la izquierda (ver la sección 3.4.3 de \cite{proakis06digital}), como se hace en el ejemplo siguiente.
+ Los coeficientes \(A_k\) pueden obtenerse igual que antes mediante la ecuación \ref{eq:z_transform_rational_function_simple_fractions_A_k}.
  \item \(M\geq N\) y existen polos de orden múltiple. Si \(X(z)\) tiene un polo de orden \(s\) en \(z=d_i\) y el resto de los polos son de primer orden, la ecuación \ref{eq:z_transform_rational_function_simple_fractions_2} se convierte en
  \begin{equation}\label{eq:z_transform_rational_function_simple_fractions_3}
   X(z)=\sum_{r=0}^{M-N}B_rz^{-r}+\sum_{k=1,\,k\neq i}^N\frac{A_k}{1-d_kz^{-1}}+\sum_{m=1}^s\frac{C_m}{(1-d_iz^{-1})^m}.  
@@ -1637,6 +1767,48 @@ donde \(c_k\) y \(d_k\) son las raíces de numerador y denominador respectivamen
 
 La ecuación \ref{eq:z_transform_rational_function_simple_fractions_3} es la forma mas general de la expansión en funciones simples de una transformada \(z\) racional expresada como función de \(z^{-1}\) para el caso en que \(M\geq N\) y \(d_i\) es un polo múltiple de orden \(s\). Si hay mas de un polo múltiple, la ecuación \ref{eq:z_transform_rational_function_simple_fractions_3} tendrá un término como el tercer sumando por cada polo múltiple. Si el grado \(M\) del numerador es menor al grado \(N\) del denominador, el término polinómico en la ecuación \ref{eq:z_transform_rational_function_simple_fractions_3} desaparece.
  
+\paragraph{Ejemplo: inversión mediante fracciones simples} Considérese la secuencia \(x[n]\) con transformada \(z\)
+\[
+ X(z)=\dfrac{1+2z^{-1}+z^{-2}}{1-\dfrac{3}{2}z^{-1}+\dfrac{1}{2}z^{-2}}
+  =\dfrac{(1+z^{-1})^2}{\left(1-\dfrac{1}{2}z^{-1}\right)\left(1-z^{-1}\right)},
+  \qquad 
+  |z|>1.
+\]
+\(X(z)\) tiene polos en \(z=1/2\) y en \(z=1\), y por la definición de la ROC, \(x[n]\) es una secuencia hacia adelante. Como \(M=N=2\) y los polos son de primer orden, \(X(z)\) puede descomponerse en la forma de la ecuación \ref{eq:z_transform_rational_function_simple_fractions_2}, en este caso como
+\[
+ X(z)=B_0+\dfrac{A_1}{1-\dfrac{1}{2}z^{-1}}+\dfrac{A_2}{1-z^{-1}}.
+\]
+La constante \(B_0\) puede obtenerse mediante división larga como
+\[
+\setlength\extrarowheight{10pt}
+\begin{array}[t]{cccc}
+                       & 2 &   &    \\[\medskipamount]
+\cline{2-4}
+\dfrac{1}{2}z^{-2}-\dfrac{3}{2}z^{-1}+1 
+                \bigg) & z^{-2} & +2z^{-1} & +1 \\
+                       & z^{-2} & -3z^{-1} & +2  \\[\medskipamount]
+\cline{2-4}
+                       &    & 5z^{-1} & -1  
+\end{array}
+\]
+Como el grado del resto en la variable \(z^{-1}\) es de menor grado que el denominador luego de un paso de la división larga, no es necesario continuar con la división. Se obtuvo que 
+\[
+ X(z)=2+\dfrac{5z^{-1}-1}{\left(1-\dfrac{1}{2}z^{-1}\right)\left(1-z^{-1}\right)}.
+\]
+Los coeficientes \(A_1\) y \(A_2\) pueden calcularse mediante la ecuación \ref{eq:z_transform_rational_function_simple_fractions_A_k} como
+\begin{align*}
+ A_1&=\left[\left(1-\dfrac{1}{2}z^{-1}\right)\dfrac{(1+z^{-1})^2}{\left(1-\dfrac{1}{2}z^{-1}\right)\left(1-z^{-1}\right)}\right]_{z=1/2}=\dfrac{(1+2)^2}{1-2}=-9\\
+ A_2&=\left[\left(1-z^{-1}\right)\dfrac{(1+z^{-1})^2}{\left(1-\dfrac{1}{2}z^{-1}\right)\left(1-z^{-1}\right)}\right]_{z=1}=\dfrac{(1+1)^2}{1-\dfrac{1}{2}}=8.
+\end{align*}
+Se concluye que 
+\[
+ X(z)=2-\dfrac{9}{1-\dfrac{1}{2}z^{-1}}+\dfrac{8}{1-z^{-1}},
+\]
+y considerando que la ROC es \(|z|>1\), del cuadro \ref{tab:z_transform_pairs} resulta en que 
+\[
+ x[n]=2\delta[n]-9\left(\frac{1}{2}\right)^nu[n]+8u[n].
+\]
+
 \subsection{Expansión en series de potencias} 
  
 La expresión de la definición de la transformada \(z\) es una serie de Laurent donde los valores \(x[n]\) de la secuencia son los coeficientes de \(z^{-n}\). Por lo tanto, si la transformada \(z\) está dada como una serie de potencias de la forma
@@ -1760,7 +1932,29 @@ es decir,
  \qquad\qquad\textrm{cuando}\qquad\qquad
  |z|>|a|.
 \]
-Dividiendo la mayor potencia de \(z^{-1}\) en el denominador entre la mayor potencia de \(z^{-1}\) en el numerador, se obtiene una expansión en series de potencias en \(z^{-1}\). Para el caso en que la ROC es \(|z|<|a|\) hay que expresar los polinomios del numerador y el denominador en potencias de \(z\), como en la ecuación \ref{eq:z_transform_exponential_anticausal}, y luego dividir. De esta forma se obtiene una expresión en series de potencias en \(z\) correspondiente a una secuencia hacia la izquierda.
+Observar que al realizar la división de polinomios en \(z^{-1}\) como se acaba de hacer, se obtuvo un desarrollo en series de potencias en \(z^{-1}\). Para el caso en que la ROC es \(|z|<|a|\) hay que expresar los polinomios del numerador y el denominador en potencias de \(z\), como en la ecuación \ref{eq:z_transform_exponential_anticausal}, y luego dividir. De esta forma se obtiene una expresión en series de potencias en \(z\) correspondiente a una secuencia hacia la izquierda. Equivalentemente, cuando la ROC corresponde a una secuencia hacia la izquierda, puede realizarse la división larga escribiendo ambos polinomios en orden reverso, es decir, comenzando con la potencia mas negativa de \(z\) en la izquierda (ver la sección 3.4.2 de \cite{proakis06digital}). En el caso del ejemplo, la división larga sería de la siguiente forma:
+\[
+%\setlength\arraycolsep{0pt} 
+\setlength\extrarowheight{10pt}
+\begin{array}[t]{ccccc}
+                       & -a^{-1}z & -a^{-2}z^2 & -a^{-3}z^{3} & -\cdots\\[\medskipamount]
+\cline{2-5}
+-az^{-1}+1 
+                \bigg) & 1  &   &  &\\
+                       & 1  & -a^{-1}z &  & \\[\medskipamount]
+\cline{2-5}
+                       &    & a^{-1}z &   & \\
+                       &    & a^{-1}z &  -a^{-2}z^2 & \\[\medskipamount]
+\cline{3-5}
+                       &    &         &  a^{-2}z^2 & \\
+                       &    &         &  a^{-2}z^2 & -a^{-3}z^3 \\[\medskipamount]
+\cline{4-5}
+                       &    &                  &   & a^{-3}z^3\\
+                       &    &                  &   & \vdots\\
+\end{array}
+\]
+
+En general, el método de división larga no es viable debido a que hay que continuar con la división para todo \(n\), y la obtención de una expresión analítica no es posible, a menos que el patrón sea sencillo y  pueda generalizarse, como en el caso de la secuencia exponencial en el ejemplo precedente. Sin embargo, el método es útil si se desea obtener los valores de unas pocas muestras de \(x[n]\).
 
 \section{Propiedades de la transformada \texorpdfstring{\(z\)}{z}}\label{sec:z_transform_properties}
  
@@ -2092,7 +2286,7 @@ En la figura se muestra además el correspondiente retardo de grupo \(\tau_\text
 \begin{equation}\label{eq:transform_analysis_example_5_1_2_system_function}
  H(z)=\prod_{k=1}^4\left[\frac{(c^*_k-z^{-1})(c_k-z^{-1})}{(1-c_kz^{-1})(1-c^*_kz^{-1})}\right]^2, 
 \end{equation}
-donde \(c_k=0.95e^{j(0.15\pi+0.02\pi k)}\) para \(k=1,\,2,\,3,\,4\). Este sistema tiene polos dobles en \(z=c_k=0.95e^{j(0.15\pi+0.02\pi k)}\) y en \(z=c^*_k=0.95e^{-j(0.15\pi+0.02\pi k)}\) y ceros dobles en \(z=1/c_k=0.95e^{-j(0.15\pi+0.02\pi k)}\) y en \(z=1/c^*_k=0.95e^{j(0.15\pi+0.02\pi k)}\). Como se verá mas adelante en la sección \ref{}, \(H(z)\) es un sistema pasa todo, es decir, \(|H(e^{j\omega})|=1\) para todo \(\omega\). Como se ilustrará, este sistema introduce un retardo de grupo grande sobre una banda angosta de frecuencias.
+donde \(c_k=0.95e^{j(0.15\pi+0.02\pi k)}\) para \(k=1,\,2,\,3,\,4\). Este sistema tiene polos dobles en \(z=c_k=0.95e^{j(0.15\pi+0.02\pi k)}\) y en \(z=c^*_k=0.95e^{-j(0.15\pi+0.02\pi k)}\) y ceros dobles en \(z=1/c_k=0.95e^{-j(0.15\pi+0.02\pi k)}\) y en \(z=1/c^*_k=0.95e^{j(0.15\pi+0.02\pi k)}\). Como se verá mas adelante en la sección \ref{sec:transform_analysis_all_pass_systems}, \(H(z)\) es un sistema pasa todo, es decir, \(|H(e^{j\omega})|=1\) para todo \(\omega\). Como se ilustrará, este sistema introduce un retardo de grupo grande sobre una banda angosta de frecuencias.
  \begin{figure}[!htb]
   \begin{minipage}[c]{0.53\textwidth}
     \includegraphics[width=\textwidth]{figuras/transform_analysis_example_5_1_2_group_delay_poles_zeros_plot.pdf}
@@ -2188,7 +2382,7 @@ Los filtros en el dominio del tiempo discreto son típicamente implementados med
 \begin{equation}\label{eq:transform_analysis_difference_equation_general}
  \sum_{k=0}^Na_ky[n-k]=\sum_{k=0}^Mb_kx[n-k]. 
 \end{equation}
-En el capítulo \ref{} se discuten varias estructuras para la realización de estos sistemas y en el capítulo \ref{} se discuten varios procedimientos para la obtención de los parámetros de la ecuación en diferencias para aproximar una respuesta en frecuencia deseada. En esta sección se examinan las propiedades y características de los sistemas LTI representados por la ecuación \ref{eq:transform_analysis_difference_equation_general} con la ayuda de la transformada \(z\).
+En el capítulo \ref{ch:structures} se discuten varias estructuras para la realización de estos sistemas y en el capítulo \ref{} se discuten varios procedimientos para la obtención de los parámetros de la ecuación en diferencias para aproximar una respuesta en frecuencia deseada. En esta sección se examinan las propiedades y características de los sistemas LTI representados por la ecuación \ref{eq:transform_analysis_difference_equation_general} con la ayuda de la transformada \(z\).
 
 Aplicando la transformada \(z\) a ambos lados de la ecuación \ref{eq:transform_analysis_difference_equation_general} se obtiene que la función del sistema tiene la forma algebraica
 \begin{equation}\label{eq:transform_analysis_difference_equation_system_function_ba}
@@ -2975,7 +3169,7 @@ Esta discusión también brinda una interpretación útil de la fase lineal cuan
  }\label{fig:linear_phase_lti_system_cascade}
  \end{minipage}
 \end{figure}
-Esta ecuación sugiere la interpretación de la figura \ref{fig:linear_phase_lti_system_cascade}. La señal \(x[n]\) es filtrada por la respuesta en \(x[n]\) \(x[n]\) frecuencia de fase nula \(|H(e^{j\omega})|\) y la salida filtrada es desplazada temporalmente una cantidad \(\alpha\) entera o no entera. 
+Esta ecuación sugiere la interpretación de la figura \ref{fig:linear_phase_lti_system_cascade}. La señal \(x[n]\) es filtrada por la respuesta en frecuencia de fase nula \(|H(e^{j\omega})|\) y la salida filtrada es desplazada temporalmente una cantidad \(\alpha\) entera o no entera. 
 Supóngase por ejemplo que \(H(e^{j\omega})\) es el pasabajos ideal de fase lineal
 \[
  H_\textrm{lp}(e^{j\omega})=
@@ -3009,7 +3203,7 @@ Otro caso a distinguir es cuando la pendiente \(\alpha\) de la fase lineal es un
 \[
  h_\textrm{lp}[2\alpha-n]=h_\textrm{lp}[n].
 \]
-Observar que por ser \(2\alpha\) entero, el argumento \(2\alpha-n\) es entero por lo que \(h_\textrm{lp}[2\alpha-n]\) está bien definido. En este caso, el punto de simetría es \(\alpha\), que no es entero si no que es el punto medio entre dos muestras sucesivas. Como el punto de simetría no es un punto de la secuencia no es posible desplazar la secuencia para obtener una secuencia par. 
+Observar que por ser \(2\alpha\) entero, el argumento \(2\alpha-n\) es entero por lo que \(h_\textrm{lp}[2\alpha-n]\) está bien definido. En este caso, el punto de simetría es \(\alpha\), que no es entero sino que es el punto medio entre dos muestras sucesivas. Como el punto de simetría no es un punto de la secuencia no es posible desplazar la secuencia para obtener una secuencia par. 
 Un último tercer caso es cuando \(\alpha\) es un número real arbitrario, en donde la respuesta al impulso no tiene simetría. En ejemplo de cada caso se muestra en la figura \ref{fig:transform_analysis_example_05_14_linear_phase}.
 \begin{figure}[!htb]
  \begin{center}
@@ -3137,7 +3331,7 @@ donde en \((a)\) se consideró que \(e^{j\beta}=\pm j\) con \(\beta=\pi/2\) y \(
 
 Se concluye que las ecuaciones \ref{eq:transform_analysis_generalizaed_lineal_phase_condition_symmetric} y \ref{eq:transform_analysis_generalizaed_lineal_phase_condition_antisymmetric} brindan dos conjuntos de condiciones suficientes que garantizan fase lineal generalizada o retardo de grupo constante, pero también hay otros sistemas que cumplen la ecuación \ref{eq:transform_analysis_generalizaed_lineal_phase_system_freq_response} sin las condiciones de simetría, como el de la figura \ref{fig:transform_analysis_example_05_14_linear_phase} cuando \(2\alpha\) no es entero.
 
-\subsection{Sistemas causales con fase lineal generalizada}
+\subsection{Sistemas causales con fase lineal generalizada}\label{sec:transform_analysis_generalized_linear_phase_causal}
 
 Causalidad y las condiciones de las ecuaciones \ref{eq:transform_analysis_generalizaed_lineal_phase_condition_symmetric} y \ref{eq:transform_analysis_generalizaed_lineal_phase_condition_antisymmetric} implica que 
 \[
@@ -3173,9 +3367,9 @@ donde \(A_e(e^{j\omega})\) es una función real, par y periódica de \(\omega\).
 \end{equation}
 la respuesta en frecuencia es
 \begin{equation}\label{eq:transform_analysis_generalizaed_lineal_phase_fir_antisymmetric_freq}
- H(e^{j\omega})=jA_o(e^{j\omega})e^{-j\omega M/2}=jA_o(e^{j\omega})e^{-j\omega M/2+j\pi/2}, 
+ H(e^{j\omega})=jA_o(e^{j\omega})e^{-j\omega M/2}=A_o(e^{j\omega})e^{-j\omega M/2+j\pi/2}, 
 \end{equation}
-donde \(A_e(e^{j\omega})\) es una función real, impar y periódica de \(\omega\).
+donde \(A_o(e^{j\omega})\) es una función real, impar y periódica de \(\omega\).
 
 Las condiciones \ref{eq:transform_analysis_generalizaed_lineal_phase_fir_symmetric_impulse} y \ref{eq:transform_analysis_generalizaed_lineal_phase_fir_antisymmetric_impulse} son suficientes para garantizar un sistema causal con fase lineal generalizada, pero no son condiciones necesarias. Es útil definir los siguientes cuatro tipos de sistemas FIR con fase lineal generalizada que se diferencian en el tipo de simetría y en si \(M\) es un número par o impar.
 
@@ -3350,7 +3544,7 @@ tiene fase lineal. El diagrama de polos y ceros de los tres sistemas se muestra 
 \begin{figure}[!htb]
  \begin{center}
  \includegraphics[width=0.97\textwidth]{figuras/example_05_19_zero_pole_plot.pdf}
- \caption{\label{fig:example_05_19_zero_pole_plot} Diagrama de polos y ceros diagrama de polos y ceros de los sistemas \(H_\textrm{min}(z)\), \(H_\textrm{max}(z)\) y \(H(z)\).}
+ \caption{\label{fig:example_05_19_zero_pole_plot} Diagrama de polos y ceros de los sistemas \(H_\textrm{min}(z)\), \(H_\textrm{max}(z)\) y \(H(z)\).}
  \end{center}
 \end{figure}
 Observar que por la ecuación \ref{eq:transform_analysis_lineal_phase_fir_minimun_maximum_factorization_2} y considerando que la respuesta al impulso es real,
@@ -3386,6 +3580,1490 @@ En la figura \ref{fig:example_05_19_freq_responses} se muestra la respuesta en f
  \end{center}
 \end{figure}
 
+\chapter{Estructuras de sistemas en tiempo discreto}\label{ch:structures}
+
+\section{Representación en diagramas de bloques de ecuaciones en diferencias con coeficientes lineales}\label{sec:structures_block_diagram_representation}
+
+Considérese el sistema definido por la ecuación en diferencias genérica\footnote{Observar que la forma general de una ecuación en diferencias de orden \(N\) empleada en los capítulos previos, dada por la ecuación \ref{eq:seq_and_sys_difference_equation_general}, es ligeramente diferente a la empleada de aquí en mas, donde el coeficiente \(a_0=1\) y los coeficientes correspondientes a la salida retardada son positivos luego de ser despejados al lado derecho de la igualdad.}
+\begin{equation}\label{eq:structures_difference_equation_general}
+ y[n]-\sum_{k=1}^N a_k y[n-k]=\sum_{k=0}^M b_k x[n-k],
+\end{equation}
+con la correspondiente función del sistema
+\begin{equation}\label{eq:structures_difference_equation_general_system_function}
+ H(z)=\dfrac{\displaystyle\sum_{k=0}^M b_kz^{-k}}{\displaystyle 1-\sum_{k=1}^N a_kz^{-k}} 
+\end{equation}
+Reescribiendo a la ecuación \ref{eq:structures_difference_equation_general} como una ecuación en recurrencia de \(y[n]\) en términos de  una combinación lineal de las muestras pasadas de la salida y la muestra actual y pasadas de la entrada se obtiene la relación
+\begin{equation}\label{eq:structures_difference_equation_general_yn}
+ y[n]=\sum_{k=1}^N a_k y[n-k]+\sum_{k=0}^M b_k x[n-k].
+\end{equation}
+El diagrama de bloques en la figura \ref{fig:structures_general_difference_equation_direct_form_I} es una representación explícita de la ecuación \ref{eq:structures_difference_equation_general_yn}. Mas precisamente, representa el par de ecuaciones 
+\begin{align*}
+ v[n]&=\sum_{k=0}^M b_k x[n-k]\\
+ y[n]&=\sum_{k=1}^N a_k y[n-k]+v[n]
+\end{align*}
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.56\textwidth}
+    \includegraphics[width=\textwidth]{figuras/structures_general_difference_equation_direct_form_I.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.34\textwidth}
+    \caption{
+     Representación en diagrama de bloques de una ecuación en diferencias de orden \(N\).
+    }\label{fig:structures_general_difference_equation_direct_form_I}
+  \end{minipage}
+\end{figure}
+ 
+Un diagrama de bloques puede ser reordenado o modificado de diversas formas sin cambiar la función del sistema global. Cada reorganización apropiada representa una algoritmo computacional diferente para implementar el mismo sistema. Por ejemplo, el diagrama de bloques de la figura \ref{fig:structures_general_difference_equation_direct_form_I} puede verse como dos sistemas en cascada, donde el primero calcula \(v[n]\) a partir de \(x[n]\) y el segundo calcula \(y[n]\) a partir de \(v[n]\). Como ambos sistemas son LTI, asumiendo condiciones iniciales nulas, puede intercambiarse el orden de los sistemas en la cascada, como se muestra en la figura \ref{fig:structures_general_difference_equation_direct_form_II}, sin afectar la función del sistema global. En la figura \ref{fig:structures_general_difference_equation_direct_form_II} se asumió que \(M=N\). Esto no implica pérdida de generalidad, ya que si \(M\neq N\), algunos de los coeficientes \(a_k\) o \(b_k\) en la figura son nulos.
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.56\textwidth}
+    \includegraphics[width=\textwidth]{figuras/structures_general_difference_equation_direct_form_II.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.34\textwidth}
+    \caption{
+     Reorganización del diagrama de bloques de la figura \ref{fig:structures_general_difference_equation_direct_form_I}. Se asume por conveniencia que \(M=N\) sin perder generalidad. 
+    }\label{fig:structures_general_difference_equation_direct_form_II}
+  \end{minipage}
+\end{figure}
+
+En términos de la función del sistema \(H(z)\) en la ecuación \ref{eq:structures_difference_equation_general_system_function}, la figura \ref{fig:structures_general_difference_equation_direct_form_I} puede verse como la implementación de \(H(z)\) mediante la descomposición 
+\[
+ H(z)=H_2(z)H_1(z)=\left(\dfrac{1}{\displaystyle 1-\sum_{k=1}^N a_kz^{-k}}\right)\left(\sum_{k=0}^M b_kz^{-k}\right)
+\]
+o equivalentemente, mediante el par de ecuaciones
+\[
+ V(z)=H_1(z)X(z)=\left(\sum_{k=0}^M b_kz^{-k}\right)X(z)
+\]
+y
+\[
+ Y(z)=H_2(z)V(z)=\left(\dfrac{1}{\displaystyle 1-\sum_{k=1}^N a_kz^{-k}}\right)V(z).
+\]
+ 
+Por otro lado, la figura \ref{fig:structures_general_difference_equation_direct_form_II} implementa a \(H(z)\) como
+\[
+ H(z)=H_1(z)H_2(z)=\left(\sum_{k=0}^M b_kz^{-k}\right)\left(\dfrac{1}{\displaystyle 1-\sum_{k=1}^N a_kz^{-k}}\right),
+\]
+o equivalentemente, mediante las ecuaciones 
+\[
+ W(z)=H_2(z)X(z)=\left(\dfrac{1}{\displaystyle 1-\sum_{k=1}^N a_kz^{-k}}\right)X(z)
+\]
+y
+\[
+ Y(z)=H_1(z)W(z)=\left(\sum_{k=0}^M b_kz^{-k}\right)W(z)
+\] 
+En el dominio del tiempo, la figura \ref{fig:structures_general_difference_equation_direct_form_II} puede representarse mediante el par de ecuaciones en diferencias
+\begin{align*}
+ w[n]&=\sum_{k=1}^N a_k w[n-k]+x[n]\\
+ y[n]&=\sum_{k=0}^M b_k w[n-k].
+\end{align*}
+ 
+Los diagramas de bloque de las figuras \ref{fig:structures_general_difference_equation_direct_form_I} y \ref{fig:structures_general_difference_equation_direct_form_II} tiene varias diferencias importantes. En la figura \ref{fig:structures_general_difference_equation_direct_form_I}, los ceros de \(H(z)\), dados por \(H_1(z)\) se implementan primero, seguidos de los polos, representados por \(H_2(z)\). En la figura \ref{fig:structures_general_difference_equation_direct_form_II}, los polos se implementan primero, seguido de los ceros. Teóricamente, el orden de implementación no afecta la función del sistema global. Sin embargo, cuando una ecuación en diferencias se implementa con aritmética de precisión finita, como ocurre en la práctica, puede haber una diferencia significativa entre los dos sistemas. Otra diferencia importante concerne a la cantidad de elementos de retardo de los dos sistemas. Ambos sistemas en las figuras \ref{fig:structures_general_difference_equation_direct_form_I} y \ref{fig:structures_general_difference_equation_direct_form_II} tienen \(N+M\) elementos de retardo. Sin embargo, el diagrama de bloques de la figura \ref{fig:structures_general_difference_equation_direct_form_II} puede modificarse observando que la misma señal \(w[n]\) está almacenada en las dos cadenas de elementos de retardo. En consecuencia, las dos cadenas de retardos pueden colapsarse en un única cadena de retardos, como se muestra en la figura \ref{fig:structures_general_difference_equation_canonic_form}.
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.42\textwidth}
+    \includegraphics[width=\textwidth]{figuras/structures_general_difference_equation_canonic_form.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.48\textwidth}
+    \caption{
+     Ecuación en diferencias en forma canónica obtenida mediante la combinación de los retardos en la figura \ref{fig:structures_general_difference_equation_direct_form_II}. 
+    }\label{fig:structures_general_difference_equation_canonic_form}
+  \end{minipage}
+\end{figure} 
+ 
+La cantidad total de retardos en la figura \ref{fig:structures_general_difference_equation_canonic_form} es menor o igual que la cantidad de retardos en las figuras \ref{fig:structures_general_difference_equation_direct_form_I} y \ref{fig:structures_general_difference_equation_direct_form_II}, y de hecho, es la mínima cantidad de retardos para implementar el sistema con función del sistema dado por la ecuación \ref{eq:structures_difference_equation_general_system_function}. Concretamente, la cantidad mínima de elementos de retardo requerida es \(\max(N,\,M)\). Una implementación con el número mínimo de elementos de retardos es referida como implementación en \emph{forma canónica}. El diagrama de bloques de la figura \ref{fig:structures_general_difference_equation_direct_form_I} es referido como implementación en \emph{forma directa I} del sistema de orden \(N\) debido a que es una realización directa de la ecuación en diferencias satisfecha por la entrada \(x[n]\) y la salida \(y[n]\). El diagrama de la figura \ref{fig:structures_general_difference_equation_canonic_form} es referido como implementación en \emph{forma directa II} o \emph{forma canónica}.
+ 
+\section{Representación en grafos de flujo de ecuaciones en diferencias con coeficientes lineales} 
+ 
+En esta sección se introduce a la representación en grafo de flujo de señales de una ecuación en diferencias, que es esencialmente lo mismo que la representación en diagramas de bloques excepto por algunas diferencias de notación. Lo que sigue está basado en la sección 4.1 de \cite{oppenheim75digital}.
+
+\subsection{Representación en grafos de flujo de sistemas en tiempo discreto}
+
+Un grafo de flujo de señales es una red de \emph{ramas} con dirección que conectan \emph{nodos}. Asociado a cada nodo hay una variable o valor del nodo. El valor asociado al nodo \(k\) se denotará \(w_k\), o, como las variables de nodos de sistemas digitales son secuencias, a menudo se indicará explícitamente con la notación \(w_k[n]\). La rama \((jk)\) denota a la rama con origen en el nodo \(j\) y destino en el nodo \(k\), con la dirección de \(j\) a \(k\) indicada por una flecha en la rama. Esto se muestra en la figura \ref{fig:structures_flow_graph_branch_and_nodes}.
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.3\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_flow_graph_branch_and_nodes.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.6\textwidth}
+  \caption{
+   Nodos y ramas en un grafo de flujo. 
+   }\label{fig:structures_flow_graph_branch_and_nodes}
+ \end{minipage}
+\end{figure} 
+Cada rama tiene una señal de entrada y una señal de salida. La señal de entrada desde el nodo \(j\) a la rama \((jk)\) es el valor del nodo \(w_j\) y la señal de salida de la rama \((jk)\) en el nodo \(k\) se denotará \(v_{jk}\). La dependencia de la salida de una rama con la entrada a la rama se denotará
+\[
+ v_{jk}=f_{jk}[w_j],
+\]
+es decir, \(f_{jk}[\;]\) indica la transformación de la entrada a la rama en la salida de la rama.
+
+Para representar la inyección de entradas externas o fuentes al grafo se emplean \emph{nodos fuente}. Un nodo fuente no tiene ramas entrantes. El valor del nodo del nodo fuente \(j\) se denotará como \(x_j\) o \(x_j[n]\) y la salida de una rama que conecta el nodo fuente \(j\) con el nodo \(k\) se denotará como \(s_{jk}\) o \(s_{jk}[n]\). 
+
+Las salidas de un grafo de flujo es a través de \emph{nodos sumideros}, que son nodos que solo tienen entradas. El valor del nodo de un nodo sumidero \(k\) será denotado como \(y_k\) o \(y_k[n]\) y la salida de una rama que conecta al nodo \(j\) con el nodo sumidero \(k\) se denotará como \(r_{jk}\) o \(r_{jk}[n]\).
+
+Por definición el valor del nodo en cada nodo del grafo es la suma de la salida de todas las ramas que entran al nodo. En ocasiones es conveniente notacionalmente asumir que hay una rama en cada dirección entre cada par de nodos en la red y también que cada nodo fuente está conectado a cada nodo del grafo, aunque la salida de algunas ramas será nula. Con esta notación y asumiendo que hay \(N\) nodos en el grafo numerados de 1 a \(N\), \(M\) nodos fuente numerados de 1 a \(M\) y \(P\) nodos sumideros numerados de 1 a \(P\), el conjunto de ecuaciones representadas por el grafo es
+\begin{equation}\label{eq:structures_flow_graph_general_equations}
+ \begin{aligned}
+   w_k&=\sum_{j=1}^N v_{jk}+\sum_{j=1}^M s_{jk},\qquad k=1,\,2,\,\dots,\,N\\
+   y_k&=\sum_{j=1}^N r_{jk},\qquad k=1,\,2,\,\dots,\,P.
+ \end{aligned}
+\end{equation}
+
+Para ilustrar estos conceptos considérese el grafo de flujo de la figura \ref{fig:structures_flow_graph_ecuations_example}. En este caso, las variables de rama son secuencias. Hay un nodo fuente conectado al nodo 1 y un nodo sumidero conectado al nodo 3.
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.58\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_flow_graph_ecuations_example.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.32\textwidth}
+  \caption{
+   Grafo de flujo de un sistema de primer orden en forma directa II. 
+   }\label{fig:structures_flow_graph_ecuations_example}
+ \end{minipage}
+\end{figure} 
+Las ecuaciones \ref{eq:structures_flow_graph_general_equations} para este grafo son
+\begin{align*}
+ w_1[n]&=s_{11}[n]+v_{41}[n]\\
+ w_2[n]&=v_{12}[n]\\
+ w_3[n]&=v_{23}[n]+v_{43}[n]\\
+ w_4[n]&=v_{24}[n\\
+ y[n]&=r_{31}[n],
+\end{align*}
+y las salidas de rama son
+\begin{align*}
+ s_{11}[n]&=x[n]\\
+ v_{12}[n]&=f_{12}(w_1[n])=w_1[n]\\
+ v_{23}[n]&=f_{23}(w_2[n])=w_2[n]\\
+ v_{43}[n]&=f_{43}(w_4[n])=bw_4[n]\\
+ v_{41}[n]&=f_{41}(w_4[n])=aw_4[n]\\
+ v_{24}[n]&=f_{24}(w_2[n])=w_2[n-1]\\
+ r_{31}[n]&=w_3[n].
+\end{align*}
+Este conjunto de ecuaciones puede resolverse para \(y[n]\) en términos de \(x[n]\) con la ayuda de la transformada \(z\) para obtener la ecuación en diferencias 
+\[
+ y[n]=ay[n-1]+x[x]+bx[n-1].
+\]
+
+En el caso de sistemas en tiempo discreto invariantes en el tiempo caracterizados por ecuaciones en diferencias, el diagrama de flujo puede representar relaciones entre transformadas \(z\). En este caso, cada rama se representa por su función de transferencia. De esta forma,
+\[
+ V_{jk}(z)=F_{jk}(z)W_j(z).
+\]
+En estos casos, la transmitancia de cada rama se coloca al lado de la flecha  que indica la dirección de la rama. Se asume que una rama que no indica explícitamente la transmitancia tiene transmitancia unidad.
+
+Cuando todas las ramas en un grafo de flujo pueden ser representadas mediante transmitancias, el conjunto de ecuaciones que representan al grafo es un conjunto de ecuaciones lineales, y la manipulación del grafo es equivalente a la manipulación de este conjunto de ecuaciones. Por lo tanto, una descripción alternativa de un diagrama de flujo lineal es mediante dicho conjunto de ecuaciones, que pueden representarse en forma matricial, como se considera en la siguiente sección.
+
+A continuación se ilustra el empleo de grafos de flujo mediante un ejemplo. 
+ 
+\paragraph{Ejemplo: determinación de la función del sistema a partir del grafo de flujo} En este ejemplo se ilustra  el uso de la transformada \(z\) para determinar la función del sistema de un grafo de flujo. Considérese el grafo de flujo de la figura \ref{fig:example_06_03_flow_graph_non_direct}, el cual no está en forma directa. En consecuencia, la función del sistema no puede obtenerse mediante inspección del grafo. El conjunto de ecuaciones en diferencias que representan al grafo consiste en el valor de la variable de cada nodo en función de la variable de los otros nodos. En este caso, las cinco ecuaciones son
+\begin{align}
+ w_1[n]&=w_4[n]-x[n]\label{eq:structures_example_06_03_w1}\\
+ w_2[n]&=\alpha w_1[n]\label{eq:structures_example_06_03_w2}\\
+ w_3[n]&=w_2[n]+x[n]\label{eq:structures_example_06_03_w3}\\
+ w_4[n]&=w_3[n-1]\label{eq:structures_example_06_03_w4}\\
+ y[n]&=w_2[n]+w_4[n]\label{eq:structures_example_06_03_y}.
+\end{align}
+En este punto, para obtener la función del sistema es conveniente transformar el conjunto de ecuaciones al dominio \(z\), pero a modo ilustrativo se continuará en el dominio del tiempo. Sustituyendo la ecuación \ref{eq:structures_example_06_03_w1} en la ecuación \ref{eq:structures_example_06_03_w2} y la ecuación \ref{eq:structures_example_06_03_w3} en la ecuación \ref{eq:structures_example_06_03_w4}, el conjunto de ecuaciones que representa al grafo queda
+\begin{align}
+ w_2[n]&=\alpha(w_4[n]-x[n])\label{eq:structures_example_06_03_w2_2}\\
+ w_4[n]&=w_2[n-1]+x[n-1]\label{eq:structures_example_06_03_w4_2}\\
+ y[n]&=w_2[n]+w_4[n]\label{eq:structures_example_06_03_y_2}.
+\end{align}
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.65\textwidth}
+  \includegraphics[width=\textwidth]{figuras/example_06_03_flow_graph_non_direct.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.25\textwidth}
+  \caption{
+   Grafo de flujo que no está en forma directa. 
+   }\label{fig:example_06_03_flow_graph_non_direct}
+ \end{minipage}
+\end{figure} 
+Continuando en el dominio del tiempo, si se sustituye la ecuación \ref{eq:structures_example_06_03_w2_2} en la ecuación \ref{eq:structures_example_06_03_w4_2} se obtiene una ecuación en diferencias para \(w_4[n]\) en términos de la entrada \(x[n]\),
+\begin{align*}
+ w_4[n]&=\alpha(w_4[n-1]-x[n-1])+x[n-1]\\
+  &=\alpha w_4[n-1]+(1-\alpha)x[n-1].
+\end{align*}
+Esta ecuación en diferencias puede resolverse recursivamente como se hizo en algunos ejemplos de la sección \ref{sec:seq_and_sys_constant_coefficient_difference_equations} para obtener que 
+\[
+ w_4[n]=(1-\alpha)\sum_{k=0}^{n-1}\alpha^{n-1-k}x[k]=(1-\alpha)(\alpha^{n-1}u[n-1]*x[n]).
+\]
+El mismo resultado puede obtenerse aplicando la transformada \(z\) a la ecuación en diferencias. Realizando el mismo razonamiento para obtener \(w_2[n]\) en términos de la entrada \(x[n]\), pueden sustituirse las expresiones de \(w_2[n]\) y \(w_4[n]\) en la ecuación \ref{eq:structures_example_06_03_y_2} resultando en la ecuación de la salida \(y[n]\) en términos de la entrada \(x[n]\), pero dicha expresión no es recursiva. De forma similar, también recursivamente o mediante la transformada \(z\), puede encontrarse la respuesta al impulso, que en el caso de la ecuación en diferencias para \(w_4[n]\) es
+\[
+ h_4[n]=(1-\alpha)\alpha^{n-1}u[n-1],
+\]
+y por lo tanto, obtener la respuesta el impulso de la salida \(y[n]\). Sin embargo, no es directo el cálculo en el dominio del tiempo de la ecuación en diferencias involucrando únicamente muestras de la entrada y la salida.
+\\
+La función del sistema se obtiene de forma mas directa mediante la transformada \(z\). Aplicando la transformada \(z\) a las ecuaciones \ref{eq:structures_example_06_03_w2_2}-\ref{eq:structures_example_06_03_y_2}, se obtiene que 
+\begin{align}
+ W_2(z)&=\alpha[W_4(z)-X(z)]\label{eq:structures_example_06_03_W2}\\
+ W_4(z)&=z^{-1}[W_2(z)+X(z)]\label{eq:structures_example_06_03_W4}\\
+ Y(z)&=W_2(z)+W_4(z)\label{eq:structures_example_06_03_Y}.
+\end{align}
+Las ecuaciones \ref{eq:structures_example_06_03_W2} y \ref{eq:structures_example_06_03_W4} pueden resolverse para \(W_2(z)\) y \(W_4(z)\) resultando en
+\begin{align*}
+ W_2(z)&=\frac{\alpha(z^{-1}-1)}{1-\alpha z^{-1}}X(z)\\
+ W_4(z)&=\frac{z^{-1}(1-\alpha)}{1-\alpha z^{-1}}X(z)
+\end{align*}
+y la sustitución de estas ecuaciones en la ecuación \ref{eq:structures_example_06_03_Y} conduce a 
+\begin{equation}\label{eq:structures_example_06_03_system_function}
+ Y(z)=\frac{\alpha(z^{-1}-1)+z^{-1}(1-\alpha)}{1-\alpha z^{-1}}X(z)
+  =\frac{z^{-1}-\alpha}{1-\alpha z^{-1}}X(z). 
+\end{equation}
+Se concluye que la ecuación del sistema del grafo de flujo de la figura \ref{fig:example_06_03_flow_graph_non_direct} es
+\[
+ H(z)=\frac{z^{-1}-\alpha}{1-\alpha z^{-1}},
+\]
+de donde se obtiene que la respuesta al impulso es
+\[
+ h[n]=\alpha^{n-1}u[n-1]+\alpha^nu[n].
+\]
+También de la ecuación \ref{eq:structures_example_06_03_system_function} se obtiene que la ecuación en diferencias del sistema es
+\[
+ y[n]-\alpha y[n-1]=-\alpha x[n]+x[n-1],
+\]
+que si se expresa como el par de ecuaciones
+\begin{align*}
+ v[n]&=-\alpha x[n]+x[n-1]\\
+ y[n]&=\alpha y[n-1]+v[n],
+\end{align*}
+se deduce inmediatamente que el grafo de flujo en forma directa I es el mostrado en la figura \ref{fig:example_06_03_flow_graph_direct_form_I}.
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.65\textwidth}
+  \includegraphics[width=\textwidth]{figuras/example_06_03_flow_graph_direct_form_I.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.25\textwidth}
+  \caption{
+   Grafo de flujo en forma directa I equivalente al grafo de la figura \ref{fig:example_06_03_flow_graph_non_direct}. 
+   }\label{fig:example_06_03_flow_graph_direct_form_I}
+ \end{minipage}
+\end{figure} 
+Este ejemplo ilustra como la transformada \(z\) convierte las expresiones en el tiempo, que involucran retroalimentación y por lo tanto son difíciles de resolver, en ecuaciones lineales que pueden resolverse mediante técnicas algebraicas. El ejemplo también muestra que representaciones en grafos de flujo equivalentes definen algoritmos computacionales que requieren una  cantidad distinta de recursos computacionales. Comparando las figuras \ref{fig:example_06_03_flow_graph_non_direct} y \ref{fig:example_06_03_flow_graph_direct_form_I}, se observa que la implementación original requiere únicamente una multiplicación y un elemento de retardo, mientras que la implementación en forma directa I requiere dos multiplicaciones y dos elementos de retardo. La implementación en forma directa II requiere un retardo menos, pero aún requiere dos multiplicaciones.
+
+\subsection{Representación matricial de redes digitales}
+
+La ecuaciones \ref{eq:structures_flow_graph_general_equations} representadas por un diagrama de flujo expresadas en términos de transformadas \(z\) son
+\begin{equation}\label{eq:structures_flow_graph_general_equations_z_domain_alt}
+ \begin{aligned}
+   W_k(z)&=\sum_{j=1}^N V_{jk}(z)+\sum_{j=1}^M S_{jk}(z),\qquad k=1,\,2,\,\dots,\,N\\
+   Y_k(z)&=\sum_{j=1}^N R_{jk}(z),\qquad k=1,\,2,\,\dots,\,P.
+ \end{aligned}
+\end{equation}
+Si el grafo representa a un sistema lineal e invariante en el tiempo, cada rama puede representarse mediante una transmitancia. Es conveniente asumir que las ramas desde los nodos fuente a los nodos de red y desde los nodos de red a los nodos sumideros tienen transmitancia constante independiente de \(z\). No hay pérdida de generalidad en esto, ya que si es necesario, puede insertarse un nodo de red conectado a un nodo fuente y este nodo puede tener ramas con transmitancia no constante a los otros nodos de red. El mismo procedimiento puede emplarse para los nodos sumidero si es necesario. Por lo tanto
+\begin{equation*}
+ \begin{aligned}
+   V_{jk}(z)&=F_{jk}(z)W_j(z)\\
+   S_{jk}(z)&=b_{jk}X_j(z)\\
+   R_{jk}(z)&=c_{jk}W_j(z),
+ \end{aligned}
+\end{equation*}
+y sustituyendo estas ecuaciones en la ecuación \ref{eq:structures_flow_graph_general_equations_z_domain_alt} se obtiene el conjunto de ecuaciones algebraicas lineales
+\begin{equation}\label{eq:structures_flow_graph_general_equations_z_domain}
+ \begin{aligned}
+   W_k(z)&=\sum_{j=1}^N F_{jk}(z)W_j(z)+\sum_{j=1}^M b_{jk}X_j(z),\qquad k=1,\,2,\,\dots,\,N\\
+   Y_k(z)&=\sum_{j=1}^N c_{jk}W_j(z),\qquad k=1,\,2,\,\dots,\,P.
+ \end{aligned}
+\end{equation}
+Estas ecuaciones pueden escribirse en forma matricial como
+\begin{equation}\label{eq:structures_flow_graph_general_equations_z_domain_matrix}
+ \begin{aligned}
+   \W(z)&=\F^t(z)\W(z)+\B^t\X(z)\\
+   \Y(z)&=\C^t\W(z),
+ \end{aligned}
+\end{equation}
+donde \(\W(z)\) es un vector columna de valores \(W_k(z)\) con \(k=1,\,2,\,\dots,\,N\), \(\X(z)\) es un vector columna de valores \(X_k(z)\) con \(k=1,\,2,\,\dots,\,M\) y \(\Y(z)\) es un vector columna de valores \(Y_k(z)\) con \(k=1,\,2,\,\dots,\,P\). La matriz \(\F(z)\) tiene dimensiones \(N\times N\) con valores \(\F(z)=\{F_{jk}(z)\}\), la matriz \(\B(z)\) tiene dimensiones \(M\times N\) con valores \(\B=\{b_{jk}\}\) y la matriz \(\C\) tiene dimensiones \(N\times P\) con valores \(\C=\{c_{jk}\}\). Para ramas que no existen en el grafo de flujo, es decir, ramas que tienen transmitancia nula, los elementos correspondiente de las matrices es nulo.
+
+La primera ecuación en \ref{eq:structures_flow_graph_general_equations_z_domain_matrix} puede resolverse para \(\W\) mediante inversión resultando en
+\begin{equation}\label{eq:structures_flow_graph_general_equations_z_domain_transfer}
+ \begin{aligned}
+  \W(z)&=[\I-\F^t(z)]^{-1}\B^t\X(z)\\
+    &=\T^t(z)\X(z),
+ \end{aligned}
+\end{equation}
+donde
+\[
+ \T^t(z)=[\I-\F^t(z)]^{-1}\B^t
+ \qquad\qquad\textrm{o}\qquad\qquad
+ \T(z)=\B[\I-\F(z)]^{-1}=\{T_{jk}(z)\}.
+\]
+La matriz \(\T(z)\) se llama \emph{matriz función de transferencia} del sistema. Como consecuencia de la ecuación \ref{eq:structures_flow_graph_general_equations_z_domain_transfer}, la señal en el nodo \(k\)-ésimo \(\W_k(z)\) puede expresarse como
+\[
+ W_k(z)=\sum_{j=1}^M T_{jk}(z)X_j(z),
+\]
+es decir, cada variable de nodo puede expresarse como una combinación lineal de las fuentes. Si solo hay un nodo fuente no nulo, el nodo \(a\), con valor \(X_a(z)\) y hay solo un nodo sumidero con valor \(Y(z)\), la salida es
+\[
+ Y(z)=\C^t\W(z)=\C^t\T^t(z)X_a(z), 
+\]
+por lo que el sistema se caracteriza por la función del sistema
+\[
+ H(z)=\C^t\T^t(z).
+\]
+
+En el caso en que la función del sistema de cada rama es a lo sumo de primer orden, es decir, es una constante multiplicativa o una constante multiplicativa junto con un retardo unidad, los elementos de la matriz \(\F^t(z)\) en la ecuación \ref{eq:structures_flow_graph_general_equations_z_domain_matrix} son constantes o constantes multiplicadas por \(z^{-1}\). Por lo tanto, pueden separarse los elementos de la matriz que no involucran un retardo con aquellos que si para expresar a \(\F^t(z)\) como
+\[
+ \F^t(z)=\F_c^t+z^{-1}\F_d^t,
+\]
+donde \(\F_c^t\) y \(\F_d^t\) son matrices \(N\times N\) constantes. La primera ecuación en \ref{eq:structures_flow_graph_general_equations_z_domain_matrix} puede escribirse como
+\[
+ \W(z)=\F_c^t\W(z)+z^{-1}\F_d^t\W(z)+\B^t\X(z).
+\]
+Como \(\F_c^t\) y \(\F_d^t\) son constantes, puede aplicarse la transformada \(z\) inversa obteniendo que 
+\begin{equation}\label{eq:structures_flow_graph_general_equations_n_domain_matrix}
+ \begin{aligned}
+  \w[n]&=\F_c^t\w[n]+\F_d^t\w[n-1]+\B^t\x[n]\\
+  \y[n]&=\C^t\w[n],
+ \end{aligned}
+\end{equation}
+donde la ecuación de la salida se obtiene aplicando la transformada \(z\) inversa a la segunda ecuación en \ref{eq:structures_flow_graph_general_equations_z_domain_matrix}. 
+
+\paragraph{Ejemplo} Considérese el grafo de flujo de primer orden de la figura \ref{fig:structures_flow_graph_ecuations_example}. El conjunto de ecuaciones que representan al grafo son
+\begin{equation*}
+ \begin{gathered}
+  \begin{pmatrix}
+   w_1[n]\\w_2[n]\\w_3[n]\\w_4[n]
+  \end{pmatrix}=
+  \begin{pmatrix}
+   0 & 0 & 0 & a\\
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & b\\
+   0 & 0 & 0 & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+   w_1[n]\\w_2[n]\\w_3[n]\\w_4[n]
+  \end{pmatrix}+
+  \begin{pmatrix}
+   0 & 0 & 0 & 0\\
+   0 & 0 & 0 & 0\\
+   0 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0
+  \end{pmatrix}  
+  \begin{pmatrix}
+   w_1[n-1]\\w_2[n-1]\\w_3[n-1]\\w_4[n-1]
+  \end{pmatrix}+
+  \begin{pmatrix}
+   1\\0\\0\\0
+  \end{pmatrix}x[n]\\
+  y[n]=
+  \begin{pmatrix}
+   0&0&1&0
+  \end{pmatrix}
+  \begin{pmatrix}
+   w_1[n]\\w_2[n]\\w_3[n]\\w_4[n]
+  \end{pmatrix}=w_3[n].  
+  \end{gathered}
+\end{equation*}
+Observar que la forma de las matrices \(\F_c^t\) y \(\F_d^t\) depende del orden de las ecuaciones o, equivalentemente, de la numeración de los nodos. En el caso de este grafo, se observa que las variables de nodo no pueden calcularse en secuencia, es decir, primero \(w_1[n]\), luego \(w_2[n]\), y así sucesivamente, ya que por ejemplo, se necesita \(w_4[n]\) para calcular \(w_1[n]\). Un grafo de flujo con esta característica se llama \emph{no computable}. Debe enfatizarse que esto no implica que las ecuaciones del grafo no puedan resolverse, si no que no pueden resolverse sucesivamente para cada variable de nodo. En algunos casos, la renumeración de los nodos puede transformar al grafo en computable. Puede mostrarse que una condición necesaria y suficiente para la computabilidad de un grafo es que la matriz \(\F_c^t\) tenga valores no nulos solo bajo la diagonal. Una condición necesaria y suficiente equivalente es que el grafo no tenga ramas de realimentación sin retardos.
+
+En las ecuaciones \ref{eq:structures_flow_graph_general_equations_n_domain_matrix}, el valor presente de las variables de nodo están expresadas en términos del valor presente y el valor pasado, es decir, \(w[n]\) está expresado en términos de \(w[n]\) y \(w[n-1]\). En ocasiones es conveniente que tener un representación de la red en donde los valores presentes de las variables de nodo dependan solo de sus valores pasados y el valor presente de la entrada. Esto es similar a lo que comúnmente se llama representación en variables de estado, aunque en un grafo de flujo, la cantidad de estados (nodos) es en general mayor a la cantidad de estados esenciales necesarios para representar el grafo. Una representación en variables de estado puede obtenerse a partir de las ecuaciones \ref{eq:structures_flow_graph_general_equations_n_domain_matrix}. Específicamente, escribiendo la primera ecuación en \ref{eq:structures_flow_graph_general_equations_n_domain_matrix} como 
+\[
+ (\I-\F_c^t)\w[n]=\F_d^t\w[n-1]+\B^t\x[n],
+\]
+y asumiendo que la matriz \(\I-\F_c^t\) es no singular, se puede resolver para \(\w[n]\) obteniendo que 
+\[
+ \w[n]=(\I-\F_c^t)^{-1}\F_d^t\w[n-1]+(\I-\F_c^t)^{-1}\B^t\x[n].
+\]
+Definiendo
+\[
+ \A=(\I-\F_c^t)^{-1}\F_d^t
+ \qquad\qquad\textrm{y}\qquad\qquad
+ \D=(\I-\F_c^t)^{-1}\B^t
+\]
+se obtiene la representación matricial
+\begin{equation}\label{eq:structures_flow_graph_general_equations_system_state}
+ \begin{aligned}
+  \w[n]&=\A\w[n-1]+\D\x[n]\\
+  \y[n]&=\C^t\w[n].
+ \end{aligned} 
+\end{equation}
+Puede mostrarse que si el sistema es computable, la matriz \(\I-\F_c^t\) es no singular. En consecuencia puede encontrarse una representación matricial de la forma de las ecuaciones \ref{eq:structures_flow_graph_general_equations_system_state} para todo sistema computable.
+
+\subsection{Teorema de Tellegen para filtros digitales}\label{sec:structures_tellegen_theorem}
+
+En la sección \ref{sec:structures_transposed_forms} se verán las formas traspuestas de redes digitales como una representación equivalente que tiene la misma función del sistema que la red original. Una forma de mostrar esta equivalencia es mediante el teorema de Tellegen, que se formula y se demuestra en esta sección. Esta sección está basada en la sección 4.7 de\cite{oppenheim75digital}.
+
+En el teorema Tellegen para diagramas de flujo, se consideran dos diagramas de flujo con la misma topología pero no relacionados entre si. El hecho de tener igual topología significa que hay una correspondencia uno a uno entre los nodos de las dos redes y entre las ramas en cuanto a ubicación y dirección únicamente. Notar que este requerimiento es de poca importancia. En particular, si se considera que en un diagrama  de flujo hay una rama en cada  dirección entre todos los pares de nodos, con algunas ramas con transmisión nula, cualquier par de diagramas de flujo con la misma cantidad de nodos son topológicamente equivalentes. En la discusión se adoptará la convención de que cada nodo de red tiene asociado un nodo fuente conectado mediante una rama con transmitancia unidad. Adicionalmente se asume que dicho nodo fuente no está conectado a ningún otro nodo de la red. Los nodos fuente se numeran coincidiendo con el nodo de red asociado, de forma tal que la fuente \(x_k\) es la entrada al nodo de red \(k\). Si el nodo fuente y la rama correspondiente no aparecen en el diagrama significa que el valor del nodo fuente es nulo.
+
+\paragraph{Teorema de Tellegen} Se consideran dos grafos de flujo con la misma topología. Sea \(N\) el número de nodos de red de cada grafo. Las variables de nodo, salidas de rama y valores de nodos fuente de la primera red se denotan \(w_k\), \(v_{jk}\) y \(x_k\) respectivamente, y \(w'_k\), \(v'_{jk}\) y \(x'_k\) denotan los valores correspondientes de la segunda red. Entonces se cumple que 
+\begin{equation}\label{eq:structures_flow_grap_tellegen_theorem}
+ \sum_{k=1}^N\sum_{j=1}^N(w_kv'_{jk}-w'_kv_{jk})+\sum_{k=1}^N(w_kx'_k-w'_kx_k)=0.
+\end{equation}
+La prueba de la ecuación \ref{eq:structures_flow_grap_tellegen_theorem} se obtiene casi directamente de la definición de grafo de flujo. Recordando que las variables de nodo son (ver la ecuación \ref{eq:structures_flow_graph_general_equations})
+\[
+ w_k=\sum_{j=1}^N v_{jk}+\sum_{j=1}^M s_{jk},
+\]
+con la convención respecto a los nodos fuente se cumple que 
+\begin{equation}\label{eq:structures_flow_grap_tellegen_theorem_network_nodes_values}
+ w_k=\sum_{j=1}^N v_{jk}+x_k. 
+\end{equation}
+Reemplazando este resultado en la identidad trivial
+\[
+ \sum_{k=1}^N(w_kw'_k-w'_kw_k)=0
+\]
+se obtiene que 
+\[
+ \sum_{k=1}^N\left[w_k\left(\sum_{j=1}^N v'_{jk}+x'_k\right)-w'_k\left(\sum_{j=1}^N v_{jk}+x_k\right)\right]=0,
+\]
+que es la ecuación \ref{eq:structures_flow_grap_tellegen_theorem}.
+
+La ecuación \ref{eq:structures_flow_grap_tellegen_theorem} será referida como el teorema de Tellegen para grafos de flujo o redes digitales. La derivación solo depende de la ecuación \ref{eq:structures_flow_grap_tellegen_theorem_network_nodes_values} y por lo tanto no requiere que el grafo de flujo sea lineal. Se puede mostrar que si las variables \(W_k\), \(W'_k\), \(V_{jk}\), \(V'_{jk}\), \(X_k\) y \(X'_k\) se obtienen mediante una operación lineal de las variables \(w_k\), \(w'_k\), \(v_{jk}\), \(v'_{jk}\), \(x_k\) y \(x'_k\) respectivamente, se cumple que 
+\begin{equation}\label{eq:structures_flow_grap_tellegen_theorem_z_domain}
+ \sum_{k=1}^N\sum_{j=1}^N(W_kV'_{jk}-W'_kV_{jk})+\sum_{k=1}^N(W_kX'_k-W'_kX_k)=0.
+\end{equation}
+En consecuencia, el teorema de Tellegen se cumple para las variables del grafo en el dominio del tiempo (ecuación \ref{eq:structures_flow_grap_tellegen_theorem}) y en el dominio \(w_1[n]\) \(z\) (ecuación \ref{eq:structures_flow_grap_tellegen_theorem_z_domain}).
+
+Los diagramas de flujo en la figura \ref{fig:structures_flow_graph_tellegen_theorem_example} ilustran el concepto de topologías equivalentes. En ambos diagramas se agregaron ramas con transmitancia nula para que ambos diagramas tengan ramas con igual ubicación y dirección, como requiere el teorema de Tellegen.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.7\textwidth]{figuras/structures_flow_graph_tellegen_theorem_example.pdf}
+ \caption{\label{fig:structures_flow_graph_tellegen_theorem_example} Ejemplo de dos diagramas de flujo que son topológicamente equivalentes y por lo tanto satisfacen las hipótesis de teorema de Tellegen.}
+ \end{center}
+\end{figure}
+Se verificará que estas redes cumplen con el teorema Tellegen. Los valores de nodo y las salidas de rama de la primera red son
+\[
+ \begin{array}{lcl}
+  w_1[n]=x[n]&\qquad\qquad\qquad\qquad &v_{12}[n]=w_1[n-1]\\
+  w_2[n]=w_1[n-1]& &v_{13}[n]=b_0w_1[n]\\
+  w_3[n]=b_0w_1[n]+b_1w_2[n]& &v_{23}[n]=b_1w_2[n],
+ \end{array}
+\]
+y los de la segunda red son
+\[
+ \begin{array}{lcl}
+  w'_1[n]=aw'_3[n]+x'[n]&\qquad\qquad\qquad\qquad &v'_{31}[n]=aw'_3[n]\\
+  w'_2[n]=w'_1[n]& &v'_{12}[n]=w'_1[n]\\
+  w'_3[n]=w'_2[n-1]& &v'_{23}[n]=w'_2[n-1].
+ \end{array}
+\]
+Escribiendo la ecuación \ref{eq:structures_flow_grap_tellegen_theorem_network_nodes_values} para las variables que no son nulas, se tiene que 
+\begin{align*}
+ &\left\{w_1[n]v'_{31}[n]+w_2[n]v'_{12}[n]+w_3[n]v'_{23}[n]\right\}\\
+ &\qquad-\left\{w'_2[n]v_{12}[n]+w'_3[n](v_{13}[n]+v_{23}[n])\right\}\\
+ &\qquad+w_1[n]x'_1[n]-w'_1[n]x[n]\\
+ &=\left\{x[n]aw'_3[n]+w_1[n-1]w'_1[n]+(b_0w_1[n]+b_1w_2[n])w'_2[n-1]\right\}\\
+ &\qquad-\left\{w'_1[n]w_1[n-1]+w'_2[n-1](b_0w_1[n]+b_1w_2[n])\right\}\\
+ &\qquad+x[n]x'[n]-(aw'_3[n]+x'[n])x[n]\\
+ &=0,
+\end{align*}
+que es lo que se quería comprobar.
+
+\subsubsection{Redes digitales recíprocas e interrecíprocas}
+
+Para la noción de reciprocidad de redes digitales, se considera una red digital excitada por dos conjuntos distintos de fuentes. La transformada \(z\) de los valores de los nodos fuente son \(X_k\) y \(X'_k\) y los valores correspondientes de los nodos de red son \(W_k\) y \(W'_k\). La red se dice \emph{recíproca} si para todo par de distribuciones de señales se cumple que 
+\begin{equation}\label{eq:structures_flow_graph_reciprocity_condition}
+ \sum_{k=1}^N[W_kX'_k-W'_kX_k]=0. 
+\end{equation}
+Como una consecuencia de la reciprocidad considérese dos nodos \(a\) y \(b\) de la red. Adicionalmente, sean todos los valores de los nodos fuente \(X_k\) nulos excepto \(X_a\) y todos los valores de los nodos fuente \(X'_k\) nulos excepto \(X'_b\). Por lo tanto, de la ecuación \ref{eq:structures_flow_graph_reciprocity_condition} se cumple que 
+\[
+ W_bX'_b=W'_aX_a,
+\]
+y si \(X_a=X'_b\) resulta en que 
+\[
+ W_b=W'_a.
+\]
+Esto significa que si se excita el nodo \(a\) y se observa la salida del nodo \(b\), para un grafo recíproco, la misma excitación en el nodo \(b\) producirá la misma salida en el nodo \(a\).
+
+Las redes digitales pueden no ser recíprocas. Un concepto vinculado mas útil para redes digitales es el de \emph{interreciprocidad}. En este caso, se consideran dos grafos de flujo distintos. Sean \(X_k\) los valores de los nodos fuente y \(W_k\) los valores de los nodos de red de una de las redes y \(X'_k\) y \(W'_k\) los valores de los nodos fuente y los nodos de red de la otra red. Las dos redes se dicen interrecíprocas si 
+\begin{equation}\label{eq:structures_flow_graph_interreciprocity_condition}
+ \sum_{k=1}^N[W_kX'_k-W'_kX_k]=0. 
+\end{equation}
+Si bien esta ecuación es similar a la ecuación \ref{eq:structures_flow_graph_reciprocity_condition} es importante tener en cuenta que para reciprocidad ambas redes solo difieren en las fuentes mientras que para interreciprocidad tanto las fuentes como las transmitancias de las ramas pueden diferir en ambas redes. Una red que es recíproca es interrecíproca con sigo misma. Por otro lado, dos redes pueden ser interrecíprocas sin que ninguna de ellas sea recíproca.
+
+\subsubsection{Prueba del teorema de transposición}
+
+Una propiedad útil de las redes digitales es que son interrecíprocas con su transpuesta. El transpuesto de un diagrama de flujo se obtiene invirtiendo la dirección de todas las ramas pero manteniendo la transmitancia.
+
+Se considera una red digital donde \(W_k\) denota la variable del nodo de red \(k\)-ésimo. La transmisión del nodo \(j\) al nodo \(k\) se denota \(F_{jk}\), y por lo tanto,
+\begin{equation}\label{eq:structures_flow_graph_transpose_interreciprocal_proof_transm_prime}
+ V_{jk}=F_{jk}W_j. 
+\end{equation}
+En la red transpuesta el nodo de red \(k\)-ésimo se denota \(W'_k\) y la transmitancia de la rama entre los nodos \(j\) y \(k\) se denota \(F'_{jk}\), de forma tal que 
+\begin{equation}\label{eq:structures_flow_graph_transpose_interreciprocal_proof_transm_unprime}
+ V'_{jk}=F'_{jk}W'_j. 
+\end{equation}
+Por definición de red transpuesta se cumple que
+\[
+ F'_{jk}=F_{kj}.
+\]
+Para probar que una  red y su transpuesta son interrecíprocas, es decir, para probar que se cumple la ecuación \ref{eq:structures_flow_graph_interreciprocity_condition} en las condiciones mencionadas, se emplea el hecho de que una red y su transpuesta tienen la misma topología y por lo tanto, se cumple el teorema de Tellegen dado por la ecuación \ref{eq:structures_flow_grap_tellegen_theorem_z_domain},
+\[
+ \sum_{k=1}^N\sum_{j=1}^N(W_kV'_{jk}-W'_kV_{jk})+\sum_{k=1}^N(W_kX'_k-W'_kX_k)=0.
+\]
+Reemplazando las ecuaciones \ref{eq:structures_flow_graph_transpose_interreciprocal_proof_transm_prime} y \ref{eq:structures_flow_graph_transpose_interreciprocal_proof_transm_unprime} en esta ecuación se obtiene que 
+\[
+ \sum_{k=1}^N\sum_{j=1}^N(W_kF'_{jk}W'_j-W'_kF_{jk}W_j)+\sum_{k=1}^N(W_kX'_k-W'_kX_k)=0.
+\]
+o equivalentemente
+\[
+ \sum_{k=1}^N\sum_{j=1}^NW_kW'_jF'_{jk}-\sum_{k=1}^N\sum_{j=1}^NW'_kW_jF_{jk}+\sum_{k=1}^N(W_kX'_k-W'_kX_k)=0.
+\]
+Intercambiando los índices de la primer doble sumatoria se obtiene que 
+\[
+ \sum_{k=1}^N\sum_{j=1}^N(W'_kW_jF'_{kj}-W'_kW_jF_{jk})+\sum_{k=1}^N(W_kX'_k-W'_kX_k)=0,
+\] 
+pero como las redes son transpuestas y por lo tanto \(F'_{kj}=F_{jk}\), la doble sumatoria se anula resultando en que 
+\begin{equation}\label{eq:structures_flow_graph_transpose_interreciprocal_proof}
+ \sum_{k=1}^N(W_kX'_k-W'_kX_k)=0, 
+\end{equation}
+lo que prueba que una red y su transpuesta son interrecíprocas.  
+ 
+Una consecuencia importante de este hecho es que para redes con entrada única y salida única, una red y su transpuesta tienen la misma función de transferencia. Para mostrar esto a partir de la ecuación \ref{eq:structures_flow_graph_transpose_interreciprocal_proof} se consideran dos nodos cualquiera \(a\) y \(b\). Adicionalmente, sean nulos todos los nodos fuentes excepto \(X_a\) en la red original y excepto \(X'_b\) en la red transpuesta. De esta forma, de la ecuación \ref{eq:structures_flow_graph_transpose_interreciprocal_proof},
+\[
+ W_bX'_b=W'_aX_a.
+\]
+Por lo tanto, si la misma excitación es aplicada en el nodo \(a\) en la red original y en el nodo \(b\) en la red transpuesta, es decir, \(X'_b=X_a\), la misma respuesta se observa en el nodo \(a\) en la red transpuesta que en el nodo \(b\) en la red original, es decir, \(W'_a=W_b\). Esto se muestra esquemáticamente en la figura \ref{fig:structures_flow_graph_transpose_interreciprocal}
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.8\textwidth]{figuras/structures_flow_graph_transpose_interreciprocal.pdf}
+ \caption{\label{fig:structures_flow_graph_transpose_interreciprocal} Ilustración de la interreciprocidad de redes transpuestas. Para sistemas de una entrada y una salida, la función de transferencia de redes transpuestas es la misma.}
+ \end{center}
+\end{figure}
+ 
+\section{Estructuras básicas para sistemas IIR}\label{sec:structures_basic_iir}
+
+En la sección \ref{sec:structures_block_diagram_representation} se introdujo dos estructuras equivalentes para la representación de sistemas LTI con función del sistema como en la ecuación \ref{eq:structures_difference_equation_general_system_function}. En esta sección se presentan los grafos de flujo de esos sistemas y se desarrollan otras estructuras comunes en redes de grafos equivalentes. Una consideración para la elección entre diversas estructuras equivalentes es la complejidad computacional. Por ejemplo, puede preferirse el menor número posible de multiplicadores por una constante para incrementar la velocidad y el menor número posible de retardos para reducir la memoria requerida. En la elección también hay otros factores, como la capacidad de particionar el algoritmo para la implementación en multiprocesadores, o la sensibilidad de la estructura de grafo a la representación numérica con precisión finita. 
+
+\subsection{Formas directas}
+
+En la sección \ref{sec:structures_block_diagram_representation} se obtuvo la representación en diagrama de bloques de la forma directa I (figura \ref{fig:structures_general_difference_equation_direct_form_I}) y la forma directa II o forma canónica directa (figura \ref{fig:structures_general_difference_equation_canonic_form}) de sistemas LTI con entrada y salida que satisfacen una ecuación en diferencias de la forma dada por la ecuación \ref{eq:structures_difference_equation_general} con función del sistema correspondiente dada por la ecuación \ref{eq:structures_difference_equation_general_system_function}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.82\textwidth]{figuras/structures_flow_graph_direct_form_I.pdf}
+ \caption{\label{fig:structures_flow_graph_direct_form_I} Diagrama de flujo de una estructura en forma directa I de un sistema de orden \(N\).}
+ \end{center}
+\end{figure}
+En las figuras \ref{fig:structures_flow_graph_direct_form_I} y \ref{fig:structures_flow_graph_direct_form_II} se muestra el grafo de flujo de la estructura en forma directa I y en forma directa II respectivamente. Nuevamente se asumió por conveniencia que \(N=M\).
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.64\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_flow_graph_direct_form_II.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.26\textwidth}
+  \caption{
+   Diagrama de flujo de una estructura en forma directa II de un sistema de orden \(N\).
+   }\label{fig:structures_flow_graph_direct_form_II}
+ \end{minipage}
+\end{figure} 
+
+\subsection{Forma en cascada}
+
+Las estructuras en forma directa surgen directamente de la función del sistema \(H(z)\) expresada como cociente de polinomios en la variable \(z^{-1}\). Factorizando los polinomios del numerador y del denominador, \(H(z)\) se puede expresar como
+\begin{equation}\label{eq:structures_iir_cascade_form_general_system_function}
+ H(z)=A\dfrac{\displaystyle\prod_{k=1}^{M_1}(1-f_kz^{-1})\prod_{k=1}^{M_2}(1-g_kz^{-1})(1-g^*_kz^{-1})}{\displaystyle\prod_{k=1}^{N_1}(1-c_kz^{-1})\prod_{k=1}^{N_2}(1-d_kz^{-1})(1-d^*_kz^{-1})}, 
+\end{equation}
+donde \(M=M_1+2M_2\) y \(N=N_1+2N_2\), los factores de primer orden representan ceros reales en \(f_k\) y  polos reales en \(c_k\), y los factores de segundo orden representan pares de ceros complejos conjugados en \(g_k\) y \(g^*_k\) y pares de polos complejos conjugados en \(d_k\) y \(d^*_k\). Esto es la distribución mas general de polos y ceros cuando todos los coeficientes en la ecuación \ref{eq:structures_difference_equation_general_system_function} son reales. La ecuación \ref{eq:structures_iir_cascade_form_general_system_function} sugiere una clase de estructuras que consiste en la cascada de sistemas de primer y segundo orden. Hay una considerable libertad en la elección de la composición de los subsistemas y en el orden de los subsistemas en la cascada. En la practica, puede ser deseable implementar la cascada con requerimientos de memoria y cálculo mínimo. En este sentido, una estructura modular ventajosa en muchas implementaciones se obtiene combinando pares de factores reales y pares de complejos conjugados en factores de segundo orden de forma que la ecuación \ref{eq:structures_iir_cascade_form_general_system_function} puede expresarse como
+\begin{equation}\label{eq:structures_iir_cascade_form_second_order_system_function}
+ H(z)=\prod_{k=1}^{N_s}\frac{b_{0k}+b_{1k}z^{-1}+b_{2k}z^{-2}}{1+a_{1k}z^{-1}+a_{2k}z^{-2}},  
+\end{equation}
+donde \(N_s=\lfloor(N+1)/2\rfloor\). Al expresar \(H(z)\) de esta forma, se asume que \(M\leq N\) y los polos y ceros reales se combinaron de a pares. Si hay un número impar de ceros, uno de los coeficientes \(b_{2k}\) es cero, y lo análogo con los polos. Las estructuras de segundo orden individuales pueden implementarse empleando cualquiera de las formas directas, pero la forma directa II emplea menor cantidad de retardos y multiplicaciones. Una estructura en cascada de un sistema de orden seis empleando tres subsistemas de segundo orden en forma directa II se muestra en la figura \ref{fig:structures_flow_graph_iir_cascade_direct_form_II}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.96\textwidth]{figuras/structures_flow_graph_iir_cascade_direct_form_II.pdf}
+ \caption{\label{fig:structures_flow_graph_iir_cascade_direct_form_II} Estructura en cascada de un sistema de orden seis empleando tres subsistemas de segundo orden en forma directa II.}
+ \end{center}
+\end{figure}
+Las ecuaciones en diferencias correspondientes a una estructura en cascada general de subsistemas de segundo orden son
+\begin{align*}
+ y_0[n]&=x[n],\\
+ w_k[n]&=a_{1k}w_k[n-1]+a_{2k}w_k[n-2]+y_{k-1}[n],\qquad k=1,\,2,\,\dots,\,N_s,\\
+ y_k[n]&=b_{0k}w_k[n]+b_{1k}w_k[n-1]+b_{2k}w_k[n-2],\qquad k=1,\,2,\,\dots,\,N_s,\\
+ y[n]&=y_{N_s}[n].
+\end{align*}
+
+Puede verse que se pueden formar una cantidad variada de sistemas teóricamente equivalentes emparejando los polos y los ceros de distintas formas y ordenando los subsistemas de segundo orden de formas distintas. Efectivamente, si hay \(N_s\) secciones de segundo orden, hay \(N_s!\) formas distintas de emparejar ceros con polos y \(N_s!\) formas distintas de ordenar los subsistemas en la cascada, resultando en un total de \((N_s!)^2\) sistemas distintos equivalentes. Si bien todos los sistemas tienen la misma función del sistema y la misma relación entrada-salida, el comportamiento al emplear aritmética de precisión finita puede ser muy diferente.
+
+Finalmente, se realizan algunos comentarios respecto a la cantidad de operaciones de las estructuras. Cada subsistema de segundo orden de la estructura en cascada tiene cinco constantes multiplicativas cuando se define mediante la ecuación \ref{eq:structures_iir_cascade_form_second_order_system_function}. Como comparación, asúmase que \(M=N\) en \(H(z)\) dado por la ecuación \ref{eq:structures_difference_equation_general_system_function} y además, que \(N\) es un número par, y por lo tanto \(N_s=N/2\). De esta forma, las estructuras de forma directa I y II tienen \(2N+1\) constantes multiplicativas, mientras que la estructura en cascada definida por la ecuación \ref{eq:structures_iir_cascade_form_second_order_system_function} tiene \(5N/2\) constantes multiplicativas. Para el sistema de orden seis de la figura \ref{fig:structures_flow_graph_iir_cascade_direct_form_II} se requieren 15 multiplicadores, mientras que las formas directas requieren 13 multiplicadores. Otra definición de la forma en cascada es
+\[
+ H(z)=b_0\prod_{k=1}^{N_s}\frac{1+\tilde{b}_{1k}z^{-1}+\tilde{b}_{2k}z^{-2}}{1+a_{1k}z^{-1}+a_{2k}z^{-2}}, 
+\]
+donde \(b_0\) es el primer coeficiente en el numerador en la ecuación \ref{eq:structures_difference_equation_general_system_function} y \(\tilde{b}_{ik}=b_{ik}/b_{0k}\) para \(i=1,\,2\) y \(k=1,\,2,\,\dots,\,N_s\). Esta forma de \(H(z)\) sugiere la cascada de secciones de segundo orden con cuatro multiplicadores con una única constante de ganancia global \(b_0\), resultando en un total de \(2N+1\) multiplicadores, igual que las formas directas.
+
+\subsection{Forma en paralelo}
+
+Como alternativa de factorización de los polinomios del numerador y denominador de \(H(z)\), una función del sistema racional como la dada por la ecuación \ref{eq:structures_difference_equation_general_system_function} o \ref{eq:structures_iir_cascade_form_general_system_function} se puede expandir en fracciones simples como (ver la sección \ref{sec:z_transform_partial_fraction_expansion})
+\begin{equation}\label{eq:structures_iir_parallel_form_general_system_function}
+ H(z)=\sum_{k=0}^{N_p}C_kz^{-k}+\sum_{k=1}^{N_1}\frac{A_k}{1-c_kz^{-k}}+\sum_{k=1}^{N_2}\frac{B_k(1-e_kz^{-1})}{(1-d_kz^{-1})(1-d^*_kz^{-1})}, 
+\end{equation}
+donde \(N=N_1+2N_2\). Si \(M>N\), es decir, si la función racional es impropia, \(N_p=M-N\); en caso contrario, la primera sumatoria en la ecuación \ref{eq:structures_iir_parallel_form_general_system_function} no se incluye. Si los coeficientes \(a_k\) y \(b_k\) son reales en la ecuación \ref{eq:structures_difference_equation_general_system_function}, las constantes \(A_k\), \(B_k\), \(C_k\), \(c_k\) y \(e_k\) son todas reales. Expresado de esta forma, el sistema puede interpretarse como el paralelo de sistemas IIR de primer y segundo orden, con posiblemente \(N_p\) caminos de escalado y retardo. Alternativamente, se puede agrupar a los polos reales de a pares para expresar a \(H(z)\) como
+\[
+ H(z)=\sum_{k=0}^{N_p}C_kz^{-k}+\sum_{k=1}^{N_s}\frac{e_{0k}-e_{1k}z^{-1}}{1+a_{1k}z^{-1}+a_{2k}z^{-2}}, 
+\]
+donde, al igual que en la forma en cascada, \(N_s=\lfloor(N+1)/2\rfloor\), y si \(N_p=M-N\) es negativo, la primera sumatoria no esta presente. Un ejemplo con \(N=M=6\) se muestra en la figura \ref{fig:structures_flow_graph_iir_parallel_form}. Las ecuaciones en diferencias generales correspondientes a una estructura en paralelo de subsistemas de segundo orden son
+\[
+\begin{array}{rcll}
+ w_k[n]&=&a_{1k}w_k[n-1]+a_{2k}w_k[n-2]+x[n],&\qquad k=1,\,2,\,\dots,\,N_s,\\[\medskipamount]
+ y_k[n]&=&e_{0k}w_k[n]+e_{1k}w_k[n-1],&\qquad k=1,\,2,\,\dots,\,N_s,\\[\medskipamount]
+ y[n]&=&\displaystyle\sum_{k=0}^{N_p}C_kx[n-k]+\sum_{k=1}^{N_s}y_k[n].&
+\end{array}
+\]
+Si \(M<N\), la primera sumatoria en la ecuación de \(y[n]\) no se incluye.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.76\textwidth]{figuras/structures_flow_graph_iir_parallel_form.pdf}
+ \caption{\label{fig:structures_flow_graph_iir_parallel_form} Estructura de forma en paralelo de un sistema de sexto orden \(N=M=6\) con los polos reales y complejos agrupados de a pares.}
+ \end{center}
+\end{figure}
+
+\paragraph{Ejemplo: ilustración de estructuras en paralelo} Sea el sistema con función del sistema
+\[
+ H(z)=\dfrac{1+2z^{-1}+z^{-2}}{1-0.75z^{-1}+0.125z^{-2}}.
+\]
+Para expresar la función del sistema en forma en paralelo, hay que descomponerlo en fracciones simples como en la ecuación \ref{eq:structures_iir_parallel_form_general_system_function}. En este caso, la función del sistema es racional impropia con \(N_p=2-2=0\). El término \(C_0\) de la ecuación \ref{eq:structures_iir_parallel_form_general_system_function} se obtiene mediante división larga con los polinomios del numerador y denominador ordenados en orden reverso, como se explicó en la sección \ref{sec:z_transform_partial_fraction_expansion}, de la siguiente forma:
+\[
+\setlength\extrarowheight{10pt}
+\begin{array}[t]{cccc}
+                       & 8 &   &    \\[\medskipamount]
+\cline{2-4}
+0.125z^{-2}-0.75z^{-1}+1 
+                \bigg) & z^{-2} & +2z^{-1} & +1 \\
+                       & z^{-2} & -6z^{-1} & +8  \\[\medskipamount]
+\cline{2-4}
+                       &    & -8z^{-1} & -7  
+\end{array}
+\]
+Esto indica que 
+\[
+ H(z)=\dfrac{1+2z^{-1}+z^{-2}}{1-0.75z^{-1}+0.125z^{-2}}=8+\dfrac{-7+8z^{-1}}{1-0.75z^{-1}+0.125z^{-2}}.
+\]
+Esta es la expresión del sistema en forma en paralelo con una estructura de segundo orden y se muestra en la figura \ref{fig:structures_example_06_06_flow_graph}. Considerando que el polinomio del denominador tiene raíces reales \(0.5\) y \(0.25\), el sistema también se puede expresar como el paralelo de estructuras de primer orden continuando con la expansión en fracciones simples,
+\[
+ H(z)=8+\dfrac{A_1}{1-0.5z^{-1}}+\dfrac{A_2}{1-0.5z^{-1}},
+\]
+donde \(A_1\) y \(A_2\) se obtienen mediante la ecuación \ref{eq:z_transform_rational_function_simple_fractions_A_k} como
+\begin{align*}
+ A_1&=\frac{-7+8z^{-1}}{1-0.25z^{-1}}\bigg|_{z=0.5}=\dfrac{9}{0.5}=18\\
+ A_2&=\frac{-7+8z^{-1}}{1-0.5z^{-1}}\bigg|_{z=0.25}=\dfrac{25}{-1}=-25,
+\end{align*}
+es decir,
+\[
+ H(z)=8+\dfrac{9}{1-0.5z^{-1}}-\dfrac{25}{1-0.5z^{-1}},
+\]
+cuyo diagrama de flujo se muestra en la figura \ref{fig:structures_example_06_06_flow_graph}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/structures_example_06_06_flow_graph.pdf}
+ \caption{\label{fig:structures_example_06_06_flow_graph} Estructuras de forma en paralelo con subsistemas de segundo orden y con subsistemas de primer orden correspondientes al ejemplo.}
+ \end{center}
+\end{figure}
+
+\subsection{Estructuras de muestreo en frecuencia} 
+ 
+Todos los grafos de flujo en esta sección tienen bucles de realimentación. Estos bucles son necesarios, pero no suficientes, para generar sistemas con respuesta al impulso infinita. Si una función del sistema tiene polos, el correspondiente diagrama de bloques o grafo de flujo tendrá bucles de realimentación. Sin embargo, ni los polos de la función del sistema ni los bucles de realimentación son suficientes para que la respuesta al impulso sea infinitamente larga. Esto es porque los polos pueden cancelarse con ceros. Una clase de sistemas con bucles de realimentación pero respuesta al impulso finita son los \emph{sistemas de muestreo en frecuencia}, y se introducen a continuación. Lo siguiente está basado en la sección 9.2.3 de \cite{proakis06digital}. Ver también la sección 4.5.4 de \cite{oppenheim75digital}.
+
+Los sistemas de muestreo en frecuencia son estructuras alternativas de sistemas FIR en los cuales los parámetros que caracterizan al filtro son los valores de la respuesta en frecuencia en lugar de la respuesta al impulso. Para su diseño se parte especificando la respuesta en frecuencia deseada en el conjunto equiespaciado de frecuencias
+\[
+ \omega_k=\frac{2\pi}{N}(k+\alpha),
+ \qquad\qquad k=0,\,1,\,\dots,\,N-1,
+\]
+donde \(\alpha=0\) o \(\alpha=1/2\). Estas frecuencias se muestran en la figura \ref{fig:frequency_sampling_zeros} cuando \(N\) es par e impar. Notar que cuando \(\alpha=1/2\), las frecuencias se desplazan \(\pi/N\) radianes respecto a cuando \(\alpha=0\) manteniendo la estructura de puntos complejos conjugados en el plano complejo.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.8\textwidth]{figuras/frequency_sampling_zeros.pdf}
+ \caption{\label{fig:frequency_sampling_zeros} Frecuencias en donde se especifica la respuesta en frecuencia deseada de un sistema de muestreo en frecuencia.}
+ \end{center}
+\end{figure}
+En el caso de un sistema con respuesta al impulso real, hay que especificar únicamente la respuesta en frecuencia en el semiplano superior, es decir, para
+\[
+ k=0,\,1,\,\dots,\,\frac{N}{2}\pm1
+ \qquad\qquad\textrm{cuando }N\textrm{ es par},
+\]
+donde el signo positivo corresponde al caso en que \(\alpha=0\) y el signo negativo al caso en que \(\alpha=1/2\) (ver la figura \ref{fig:frequency_sampling_zeros}) y
+\[
+ k=0,\,1,\,\dots,\,\frac{N-1}{2}
+ \qquad\qquad\textrm{cuando }N\textrm{ es impar}.
+\]
+Especificando la respuesta en frecuencia del sistema en dichas frecuencias, se quiere calcular la función del sistema. Para hacerlo, se parte considerando que la respuesta en frecuencia es
+\[
+ H(e^{j\omega})=\sum_{n=0}^{N-1}h[n]e^{-j\omega n}
+\]
+y los valores especificados de \(H(e^{j\omega})\) en las frecuencias \(\omega_k\) son
+\begin{equation}\label{eq:structures_freq_sampling_dft}
+ \tilde{H}[k]=H(e^{j2\pi(k+\alpha)/N})=\sum_{n=0}^{N-1}h[n]e^{-j2\pi(k+\alpha)n/N},
+ \qquad\qquad 
+ k=0,\,1,\,\dots,\,N-1. 
+\end{equation}
+El conjunto de valores \(\tilde{H}[k]\) se llaman muestras en frecuencia de \(H(e^{j\omega})\). En el caso en que \(\alpha=0\), \(\tilde{H}[k]\) es la \emph{transformada discreta de Fourier} (\emph{DFT}, Discrete Fourier Transform) de \(N\) puntos de \(h[n]\), como se verá mas adelante en el capítulo \ref{}. También en dicho capítulo se verá que la ecuación \ref{eq:structures_freq_sampling_dft} puede invertirse para obtener la respuesta al impulso \(h[n]\) en función de las muestras en frecuencia \(\tilde{H}[k]\) como
+\begin{equation}\label{eq:structures_freq_sampling_idft}
+ h[n]=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{H}[k]e^{j2\pi(k+\alpha)n/N},
+ \qquad\qquad 
+ n=0,\,1,\,\dots,\,N-1.  
+\end{equation}
+Este resultado puede comprobarse sustituyendo esta ecuación en la ecuación \ref{eq:structures_freq_sampling_dft} y observando que se obtiene una identidad. Cuando \(\alpha=0\), la ecuación \ref{eq:structures_freq_sampling_idft} es la \emph{transformada discreta de Fourier inversa} (\emph{IDFT}, Inverse Discrete Fourier Transform) de \(\tilde{H}[k]\) (ver el capítulo \ref{}). Continuando, la función del sistema es
+\begin{align*}
+ H(z)&=\sum_{n=0}^{N-1}h[n]z^{-n}\\
+  &\overset{(a)}{=}\sum_{n=0}^{N-1}\left\{\frac{1}{N}\sum_{k=0}^{N-1}\tilde{H}[k]e^{j2\pi(k+\alpha)n/N}\right\}z^{-n}\\
+  &=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{H}[k]\sum_{n=0}^{N-1}\left[e^{j2\pi(k+\alpha)/N}z^{-1}\right]^n\\
+  &=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{H}[k]\frac{1-e^{j2\pi(k+\alpha)}z^{-N}}{1-e^{j2\pi(k+\alpha)/N}z^{-1}},
+\end{align*}
+donde en \((a)\) se reemplazó \(h[n]\) por el resultado de la ecuación \ref{eq:structures_freq_sampling_idft}. Considerando que \(e^{j2\pi(k+\alpha)}=e^{j2\pi\alpha}\) resulta en que la función del sistema es
+\begin{equation}\label{eq:structures_freq_sampling_system_function}
+ H(z)=\frac{1-e^{j2\pi\alpha}z^{-N}}{N}\sum_{k=0}^{N-1}\frac{\tilde{H}[k]}{1-e^{j2\pi(k+\alpha)/N}z^{-1}}.
+\end{equation}
+Se observa que la función del sistema tiene ceros en 
+\[
+ z_k=e^{j2\pi(k+\alpha)/N}
+ \qquad\qquad 
+ k=0,\,1,\,\dots,\,N-1,  
+\]
+que se muestran en la figura \ref{fig:frequency_sampling_zeros} para valores específicos de \(N\), y polos en las mismas posiciones. Además, se caracteriza por el conjunto de muestras en frecuencia \(\tilde{H}[k]\) en lugar de la respuesta al impulso \(h[n]\). Se confirmará que \(H(z_m)=\tilde{H}[m]\) cuando \(z_m=e^{j2\pi(m+\alpha)/N}\) para \(m=0,\,1,\,\dots,\,N-1\). Se parte evaluando a la función del sistema \ref{eq:structures_freq_sampling_system_function} en \(z_m\),
+\begin{align*}
+ H(z_m)&\overset{(a)}{=}\frac{1}{N}\sum_{k=0}^{N-1}\frac{\tilde{H}[k](1-e^{j2\pi\alpha}z^{-N})}{1-z_kz^{-1}}\Bigg|_{z=z_m}\\
+  &\overset{(b)}{=}\frac{1}{N}\,\frac{\tilde{H}[m](1-e^{j2\pi\alpha}z^{-N})}{1-z_mz^{-1}}\Bigg|_{z=z_m}\\
+  &\overset{(c)}{=}\frac{\tilde{H}[m]}{N}\,\frac{(-e^{j2\pi\alpha})(-N)z^{-(N+1)}}{(-z_m)(-1)z^{-2}}\Bigg|_{z=z_m}\\
+  &=\tilde{H}[m]\,\frac{e^{j2\pi\alpha}z_m^{-N}}{z_mz_m^{-1}}\\
+  &=\tilde{H}[m]\,e^{j2\pi\alpha}e^{-j2\pi(m+\alpha)}\\
+  &\overset{(d)}{=}\tilde{H}[m],
+\end{align*}
+donde en \((a)\) se consideró que la expresión no se puede evaluar directamente porque cuando \(k=m\) queda una indeterminación 0/0, en \((b)\) se tuvo en cuenta que todos los sumandos de la sumatoria se anulan excepto cuando \(k=m\), ya que si \(k\neq m\) se anula el numerador pero no el denominador, y cuando \(k=m\) se anula tanto el numerador como el denominador y en \((c)\) se aplicó la regla de L'Hôpital para evaluar a la indeterminación. Esto concluye la confirmación.
+
+De la ecuación del sistema \ref{eq:structures_freq_sampling_system_function}, se observa que este sistema FIR consiste en la cascada de un sistema FIR, dado por el factor que multiplica a la sumatoria, con el paralelo de sistemas IIR de primer orden. La ubicación de los ceros del sistema FIR coincide con la ubicación de los polos de los sistemas IIR, y dichos polos y ceros tienen la frecuencia en donde la respuesta en frecuencia deseada es especificada. En la figura \ref{fig:structures_frequency_sampling_flow_graph} se muestra el diagrama de flujo del sistema. Los factores de ganancia \(\tilde{H}[k]\) de los sistemas IIR en paralelo son números complejos, así como las ganancias \(z_k=e^{j2\pi(k+\alpha)/N}\) de los bucles de realimentación. 
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.72\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_frequency_sampling_flow_graph.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.18\textwidth}
+  \caption{
+   Diagrama de flujo de la estructura de muestreo en frecuencia, cuya función del sistema está dada por la ecuación \ref{eq:structures_freq_sampling_system_function}.
+   }\label{fig:structures_frequency_sampling_flow_graph}
+ \end{minipage}
+\end{figure}   
+
+En el caso en que \(h[n]\) es real, la implementación del sistema de muestreo en frecuencia involucra únicamente parámetros reales. Para ver esto, se considerará únicamente el caso en que \(\alpha=0\), pero lo mismo se cumple para \(\alpha=1/2\). De la ecuación \ref{eq:structures_freq_sampling_dft} puede comprobarse que si \(h[n]\) es real, se cumple que (ver la figura \ref{fig:frequency_sampling_zeros})
+\[
+ \begin{array}{lcl}
+  N\textrm{ par:} & \qquad\qquad &N\textrm{ impar:}\\[\medskipamount]
+  \tilde{H}[0],\,\tilde{H}[N/2]\textrm{ reales} & \qquad\qquad & \tilde{H}[0]\textrm{ real}\\
+  \tilde{H}[N-k]=\tilde{H}^*[k],\qquad k=1,\,\dots,\,\dfrac{N}{2}-1 & \qquad\qquad & 
+  \tilde{H}[N-k]=\tilde{H}^*[k],\qquad k=1,\,\dots,\,\dfrac{N-1}{2}.
+ \end{array}
+\]
+Por lo tanto, si \(N\) es par, la ecuación del sistema \ref{eq:structures_freq_sampling_system_function} puede escribirse como (ver el problema 6.51de\cite{oppenheim2009discrete})
+\begin{align*}
+ H(z)&=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}\left(\frac{\tilde{H}[k]}{1-e^{j2\pi k/N}z^{-1}}+\frac{\tilde{H}[N-k]}{1-e^{j2\pi(N-k)/N}z^{-1}}\right)\right\}\\
+  &=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}\left(\frac{\tilde{H}[k]}{1-e^{j2\pi k/N}z^{-1}}+\frac{\tilde{H}^*[k]}{1-e^{-j2\pi k/N}z^{-1}}\right)\right\}\\
+  &=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}\frac{\tilde{H}[k](1-e^{-j2\pi k/N}z^{-1})+\tilde{H}^*[k](1-e^{j2\pi k/N}z^{-1})}{(1-e^{j2\pi k/N}z^{-1})(1-e^{-j2\pi k/N}z^{-1})}\right\}\\
+  &=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}\frac{\tilde{H}[k]+\tilde{H}^*[k]-(\tilde{H}[k]e^{-j2\pi k/N}+\tilde{H}^*[k]e^{j2\pi k/N})z^{-1}}{1-2\cos(2\pi k/N)z^{-1}+z^{-2}}\right\}.
+\end{align*}
+Expresando \(\tilde{H}[k]=|\tilde{H}[k]|e^{j\theta[k]}\), resulta en
+\[
+ H(z)=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}2|\tilde{H}[k]|\frac{\cos(\theta[k])-\cos(\theta[k]-2\pi k/N)}{1-2\cos(2\pi k/N)z^{-1}+z^{-2}}\right\}.
+\]
+De esta forma, el paralelo de filtros IIR en la figura \ref{fig:structures_frequency_sampling_flow_graph} consiste en filtros de primer orden y de segundo orden todos con coeficientes reales. Expresiones similares pueden obtenerse para \(N\) impar y \(\alpha=1/2\).
+
+\paragraph{Ejemplo: sistema de muestreo en frecuencia} Este ejemplo es el problema 6.39 de \cite{oppenheim2009discrete}. Se considera el sistema FIR con respuesta al impulso
+\begin{equation}\label{eq:structures_problem_06_39_impulse_response}
+ h[n]=
+ \left\{ 
+ \begin{array}{ll}
+  \dfrac{1}{15}\left(1+\cos\left[\dfrac{2\pi}{15}(n-n_0)\right]\right), & 0\leq n\leq 14\\
+  0, & \textrm{en otro caso}.
+ \end{array}
+ \right. 
+\end{equation}
+En la figura se muestra la respuesta al impulso para \(n_0=0\) y \(n_0=15/2\). Observar que para \(n_0=15/2\) la respuesta al impulso cumple que \(h[n]=h[15-n]\) para todo \(n\), es decir, es simétrica respecto al punto \(15/2\). Para \(n_0=0\), la condición \(h[n]=h[15-n]\) no se cumple cuando \(n=0\), por lo que no hay simetría en ese caso.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.92\textwidth]{figuras/structures_problem_06_39_impulse_response.pdf}
+ \caption{\label{fig:structures_problem_06_39_impulse_response} Respuestas al impulso correspondientes a la ecuación \ref{eq:structures_problem_06_39_impulse_response} para \(n_0=0\) y \(n_0=15/2\).}
+ \end{center}
+\end{figure}
+\\
+Se calculará la función del sistema. Para eso, aplicando la transformada \(z\) a la respuesta al impulso \ref{eq:structures_problem_06_39_impulse_response} se observa que 
+\begin{align*}
+ H(z)&=\sum_{n=0}^{14}\dfrac{1}{15}\left(1+\cos\left[\dfrac{2\pi}{15}(n-n_0)\right]\right)z^{-n}\\
+  &=\dfrac{1}{15}\sum_{n=0}^{14}\left[1+\frac{e^{j2\pi(n-n_0)/15}+e^{-j2\pi(n-n_0)/15}}{2}\right]z^{-n}\\
+  &=\dfrac{1}{15}\left(\sum_{n=0}^{14}z^{-n}+\frac{e^{-j2\pi n_0/15}}{2}\sum_{n=0}^{14}e^{j2\pi n/15}z^{-n}
+   +\frac{e^{j2\pi n_0/15}}{2}\sum_{n=0}^{14}e^{-j2\pi n/15}z^{-n}\right)\\
+  &=\dfrac{1}{15}\left(\frac{1-z^{-15}}{1-z^{-1}}
+   +\frac{e^{-j2\pi n_0/15}}{2}\cdot\frac{1-e^{j2\pi}z^{-15}}{1-e^{j2\pi/15}z^{-1}}
+   +\frac{e^{j2\pi n_0/15}}{2}\cdot\frac{1-e^{-j2\pi}z^{-15}}{1-e^{-j2\pi/15}z^{-1}}\right), 
+\end{align*}
+resultando en que 
+\begin{equation}\label{eq:structures_problem_06_39_z_transform}
+ H(z)=\dfrac{1-z^{-15}}{15}\left(\frac{1}{1-z^{-1}}
+   +\frac{e^{-j2\pi n_0/15}}{2}\cdot\frac{1}{1-e^{j2\pi/15}z^{-1}}
+   +\frac{e^{j2\pi n_0/15}}{2}\cdot\frac{1}{1-e^{-j2\pi/15}z^{-1}}\right).
+\end{equation}
+El factor \((1-z^{-15})\)  en la función del sistema introduce ceros en \(z=e^{j2\pi k/15}\) para \(k=0,\,1,\,\dots,\,14\), y en este caso, solo hay tres polos en \(z=1\), \(z=e^{j2\pi/15}\) y \(z=e^{-j2\pi/15}\), que se cancelan con los ceros cuando \(k=0\), \(k=1\) y \(k=14\) respectivamente. Esta cancelación de los polos hace que el sistema tenga respuesta al impulso finita. Notar que la función del sistema \ref{eq:structures_problem_06_39_z_transform} tiene la forma de la ecuación \ref{eq:structures_freq_sampling_system_function} de un sistema de muestreo en frecuencia. Comparando ambas ecuaciones se deduce que la respuesta en frecuencia cumple que 
+\[
+ H(e^{j2\pi k/15})=
+ \left\{ 
+ \begin{array}{ll}
+  1,& k=0,\\[\medskipamount]
+  \dfrac{e^{-j2\pi n_0/15}}{2}, &k=1,\\[\medskipamount]
+  0, & k=2,\,3,\,\dots,\,13,\\[\medskipamount]
+  \dfrac{e^{j2\pi n_0/15}}{2}, &k=14.
+ \end{array}
+ \right.
+\]
+Para \(n_0=0\) los factores \(e^{\pm j2\pi n_0/15}=1\) en la ecuación \ref{eq:structures_problem_06_39_z_transform} y para \(n_0=15/2\) los factores \(e^{\pm j2\pi n_0/15}=e^{\pm j\pi}=-1\) en dicha ecuación. Por lo tanto, para \(n_0=0\) y \(n_0=15/2\) la función del sistema es respectivamente
+\[
+ H(z)=\dfrac{1-z^{-15}}{15}\left(\frac{1}{1-z^{-1}}\pm\frac{1/2}{1-e^{j2\pi/15}z^{-1}}
+   \pm\frac{1/2}{1-e^{-j2\pi/15}z^{-1}}\right).
+\]
+y la respuesta en frecuencia cumple que 
+\begin{equation}\label{eq:structures_problem_06_39_freq_samples}
+ H(e^{j2\pi k/15})=
+ \left\{ 
+ \begin{array}{ll}
+  1,& k=0, \\[\medskipamount]
+  \pm\dfrac{1}{2}, &k=1, \\[\medskipamount]
+  0, & k=2,\,3,\,\dots,\,13, \\[\medskipamount]
+  \pm\dfrac{1}{2}, &k=14.
+ \end{array}
+ \right. 
+\end{equation}
+Para continuar, se calculará la respuesta en frecuencia para \(n_0=0\) y \(n_0=15/2\). Para hacerlo, se evalúa \(H(z)\) en \(z=e^{j\omega}\),
+\begin{align*}
+ H(e^{j\omega})&=\dfrac{1-e^{-j15\omega}}{15}\left(\frac{1}{1-e^{-j\omega}}\pm\frac{1/2}{1-e^{j2\pi/15}e^{-j\omega}}\pm\frac{1/2}{1-e^{-j2\pi/15}e^{-j\omega}}\right)\\
+  &=\frac{e^{-j15\omega/2}(e^{j15\omega/2}-e^{-j15\omega/2})}{15}\Bigg\{\frac{1}{e^{-j\omega/2}(e^{j\omega/2}-e^{-j\omega/2})}\\
+  &\qquad\pm\frac{1/2}{e^{-j(\omega-2\pi/15)/2}\left[e^{j(\omega-2\pi/15)/2}-e^{-j(\omega-2\pi/15)/2}\right]}\\
+  &\qquad\pm\frac{1/2}{e^{-j(\omega+2\pi/15)/2}\left[e^{j(\omega+2\pi/15)/2}-e^{-j(\omega+2\pi/15)/2}\right]}\Bigg\}\\
+  &=\frac{e^{-j15\omega/2}2j\sen(15\omega/2)}{15}\Bigg\{\frac{e^{j\omega/2}}{2j\sen(\omega/2)}
+   \pm\dfrac{\dfrac{e^{j(\omega-2\pi/15)/2}}{2}}{2j\sen[(\omega-2\pi/15)/2]}
+   \pm\dfrac{\dfrac{e^{j(\omega+2\pi/15)/2}}{2}}{2j\sen[(\omega+2\pi/15)/2]}\Bigg\},
+\end{align*}
+y sacando de factor común \(e^{j\omega/2}\) en la expresión entre corchetes y eliminando el factor \(2j\) en el numerador y el denominador, resulta en
+\begin{equation}\label{eq:structures_problem_06_39_freq_response}
+ H(e^{j\omega})=\frac{e^{-j7\omega}\sen(15\omega/2)}{15}\Bigg\{\frac{1}{\sen(\omega/2)}
+   \pm\dfrac{e^{-j\pi/15}}{2\sen[(\omega-2\pi/15)/2]}
+   \pm\dfrac{e^{j\pi/15}}{2\sen[(\omega+2\pi/15)/2]}\Bigg\}, 
+\end{equation}
+donde el signo positivo corresponde a \(n_0=0\) y el signo negativo a \(n_0=15/2\). Se continuará desarrollando la expresión para \(n_0=15/2\), correspondiente a los signos negativos en la ecuación \ref{eq:structures_problem_06_39_freq_response}. Sacando denominador común, el factor entre corchetes es
+\begin{equation}\label{eq:structures_problem_06_39_freq_response_tmp}
+ \begin{aligned}
+   \frac{1}{4\sen(\omega/2)\sen[(\omega-2\pi/15)/2]\sen[(\omega+2\pi/15)/2]}
+ \Big\{&
+   4\sen[(\omega-2\pi/15)/2]\sen[(\omega+2\pi/15)/2]\\
+ &-2e^{-j\pi/15}\sen(\omega/2)\sen[(\omega+2\pi/15)/2]\\
+ &-2e^{j\pi/15}\sen(\omega/2)\sen[(\omega-2\pi/15)/2]
+ \Big\}.
+ \end{aligned}
+\end{equation}
+Aplicando la identidad trigonométrica 
+\[
+ \sin\theta\,\sin\varphi=\frac{\cos(\theta-\varphi)-\cos(\theta+\varphi)}{2},
+\]
+el numerador queda
+\begin{align*}
+ &2[\cos(2\pi/15)-\cos\omega]-e^{-j\pi/15}[\cos(\pi/15)-\cos(\omega+\pi/15)]-e^{j\pi/15}[\cos(\pi/15)-\cos(\omega-\pi/15)]\\
+ &=2\cos(2\pi/15)-2\cos\omega-(e^{j\pi/15}+e^{-j\pi/15})\cos(\pi/15)+e^{-j\pi/15}\cos(\omega+\pi/15)+e^{j\pi/15}\cos(\omega-\pi/15)\\
+ &\overset{(a)}{=}2\cos(2\pi/15)-2\cos\omega-2\cos(\pi/15)\cos(\pi/15)+e^{-j\pi/15}[\cos\omega\cos(\pi/15)-\sen\omega\sen(\pi/15)]\\
+ &\qquad+e^{j\pi/15}[\cos\omega\cos(\pi/15)+\sen\omega\sen(\pi/15)]\\
+ &=2\cos(2\pi/15)-2\cos\omega-2\cos^2(\pi/15)+(e^{j\pi/15}+e^{-j\pi/15})\cos\omega\cos(\pi/15)\\
+ &\qquad+(e^{j\pi/15}-e^{-j\pi/15})\sen\omega\sen(\pi/15)\\
+ &=2\cos(2\pi/15)-2\cos\omega-2\cos^2(\pi/15)+2\cos\omega\cos^2(\pi/15)+2j\sen\omega\sen^2(\pi/15),
+\end{align*}
+donde en \((a)\) se empleó la identidad trigonométrica \(\cos(\alpha\pm\beta)=\cos\alpha\cos\beta\mp\sin\alpha\sin\beta\). Aplicando la identidad trigonométrica \(\cos(2\theta )=\cos^{2}\theta-\sin^{2}\theta\) al primer sumando de la última igualdad y eliminando el factor 2, que se cancela con el factor 4 en el denominador de la ecuación \ref{eq:structures_problem_06_39_freq_response}, se obtiene que 
+\begin{align*}
+ &\cos^2(\pi/15)-\sen^2(\pi/15)-\cos\omega-\cos^2(\pi/15)+\cos\omega\cos^2(\pi/15)+j\sen\omega\sen^2(\pi/15)\\
+ &=-\sen^2(\pi/15)-\cos\omega[1-\cos^2(\pi/15)]+j\sen\omega\sen^2(\pi/15)\\
+ &=-\sen^2(\pi/15)-\cos\omega\sen^2(\pi/15)+j\sen\omega\sen^2(\pi/15)\\
+ &=-\sen^2(\pi/15)(1+\cos\omega-j\sen\omega)\\
+ &=-\sen^2(\pi/15)(1+e^{-j\omega})\\
+ &=-\sen^2(\pi/15)e^{-j\omega/2}(e^{j\omega/2}+e^{-j\omega/2})\\
+ &=-2e^{-j\omega/2}\sen^2(\pi/15)\cos(\omega/2)
+\end{align*}
+Finalmente, combinando este resultado con las ecuaciones \ref{eq:structures_problem_06_39_freq_response} y \ref{eq:structures_problem_06_39_freq_response_tmp} resulta en que la respuesta en frecuencia cuando \(n_0=15/2\) es
+\begin{equation}\label{eq:structures_problem_06_39_freq_response_symmetric}
+ H(e^{j\omega})=-e^{-j15\omega/2}\dfrac{\sen^2(\pi/15)\cos(\omega/2)\sen(15\omega/2)}{15\sen(\omega/2)\sen[(\omega-2\pi/15)/2]\sen[(\omega+2\pi/15)/2]}. 
+\end{equation}
+Observar que la respuesta en frecuencia tiene la forma
+\[
+ H(e^{j\omega})=A_e(e^{j\omega})e^{-j15\omega/2},
+\]
+donde \(A_e(e^{j\omega})\) es una función real, par y periódica en \(\omega\). Esto implica que el sistema tiene fase lineal generalizada (ver la ecuación \ref{eq:transform_analysis_generalizaed_lineal_phase_fir_symmetric_freq}) siempre que \(n_0=15k/2\) donde \(k\) es un número entero impar, acorde al hecho de que la respuesta el impulso es simétrica en ese caso. En la figura \ref{fig:structures_problem_06_39_freq_response} se muestra la respuesta en frecuencia para \(n_0=0\) y \(n_0=15/2\). Como es de esperar, se observa que la respuesta en frecuencia cumple con los valores de las muestras en frecuencia dados por la ecuación \ref{eq:structures_problem_06_39_freq_samples}. 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/structures_problem_06_39_freq_response.pdf}
+ \caption{\label{fig:structures_problem_06_39_freq_response} Respuesta en magnitud y respuesta en fase para \(n_0=0\) y \(n_0=15/2\) dadas por la ecuación \ref{eq:structures_problem_06_39_freq_response}. Cuando \(n_0=15/2\) la respuesta al impulso es simétrica y el sistema es de fase lineal generalizada.}
+ \end{center}
+\end{figure}
+La función del sistema \ref{eq:structures_problem_06_39_z_transform} se puede reescribir como
+\begin{align*}
+ H(z)&=\dfrac{1-z^{-15}}{15}\left[\frac{1}{1-z^{-1}}
+   +\frac{1}{2}\cdot\frac{e^{-j2\pi n_0/15}(1-e^{-j2\pi/15}z^{-1})+e^{j2\pi n_0/15}(1-e^{j2\pi/15}z^{-1})}{(1-e^{j2\pi/15}z^{-1})(1-e^{-j2\pi/15}z^{-1})}\right]\\
+     &=\dfrac{1-z^{-15}}{15}\left\{\frac{1}{1-z^{-1}}
+   +\frac{1}{2}\cdot\frac{e^{j2\pi n_0/15}+e^{-j2\pi n_0/15}-\left[e^{j2\pi(n_0+1)/15}+e^{-j2\pi(n_0+1)/15}\right]z^{-1}}{1-\left(e^{j2\pi/15}-e^{-j2\pi/15}\right)z^{-1}+z^{-2}}\right\}\\
+     &=\dfrac{1-z^{-15}}{15}\left\{\frac{1}{1-z^{-1}}
+   +\frac{\cos(2\pi n_0/15)-\cos\left[2\pi(n_0+1)/15\right]z^{-1}}{1-2\cos(2\pi/15)z^{-1}+z^{-2}}\right\}.
+\end{align*}
+La función del sistema indica que el sistema se puede implementar como la cascada de un sistema FIR, dado por el factor que multiplica al término entre corchetes, con el paralelo de un sistemas IIR de primer orden con uno de segundo orden, dados por el término entre corchetes. En la figura \ref{fig:structures_problem_06_39_flow_graph} se muestra el diagrama de flujos del sistema, donde \(\alpha=\cos(2\pi n_0/15)\), \(\beta=-\cos\left[2\pi(n_0+1)/15\right]\) y \(\gamma=2\cos(2\pi/15)\).
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.72\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_problem_06_39_flow_graph.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.18\textwidth}
+  \caption{
+   Diagrama de flujo de una estructura en forma directa II de un sistema de orden \(N\).
+   }\label{fig:structures_problem_06_39_flow_graph}
+ \end{minipage}
+\end{figure}  
+
+\section{Formas transpuestas}\label{sec:structures_transposed_forms}
+
+La teoría de grafos de flujo lineales de señales provee una variedad de procedimientos para transformar grafos de diferentes formas manteniendo incambiada la respuesta global entre la entrada y la salida. Uno de esos procedimientos es el de transposición, como se mostró en la sección \ref{sec:structures_tellegen_theorem}. 
+
+La transposición de un grafo de flujo consiste en invertir la dirección de todas las ramas del grafo manteniendo la transmitancia e invirtiendo los roles de la entrada y la salida de forma que los nodos fuente pasan a ser nodos sumideros y viceversa. Como se mostró en la sección \ref{sec:structures_tellegen_theorem}, para sistemas de un entrada y una salida el grafo de flujo resultante tiene la misma función del sistema.
+
+\paragraph{Ejemplo: forma transpuesta de una sección de segundo orden} Se considera el sistema en forma directa II de la figura \ref{fig:structures_flow_graph_transposed_example_06_08}. Las ecuaciones en diferencias correspondientes son
+\begin{align*}
+ w[n]&=a_1w[n-1]+a_2w[n-2]+x[n]\\
+ y[n]&=b_0w[n]+b_1w[n-1]+b_2w[n-2].
+\end{align*}
+En la misma figura se muestra el diagrama de flujo transpuesto. Las ecuaciones en diferencias son
+\begin{equation}\label{eq:structures_flow_graph_transposed_example_06_08}
+ \begin{aligned}
+  v_0[n]&=b_0x[n]+v_1[n-1]\\
+  y[n]&=v_0[n]\\
+  v_1[n]&=a_1y[n]+b_1x[n]+v_2[n-1]\\
+  v_2[n]&=a_2y[n]+b_2x[n].  
+ \end{aligned}
+\end{equation}
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.8\textwidth]{figuras/structures_flow_graph_transposed_example_06_08.pdf}
+ \caption{\label{fig:structures_flow_graph_transposed_example_06_08} Sistema de segundo orden en forma directa II y su forma transpuesta.}
+ \end{center}
+\end{figure}
+Ambos grupos de ecuaciones son formas distintas de organizar el cálculo de las muestras \(y[n]\) de la salida a partir de las muestras \(x[n]\) de la entrada, y no es obvio que sean equivalentes. Una forma de mostrarlo es mediante la transformada \(z\), calculando en ambos casos el cociente \(H(z)=Y(z)/X(z)\) y comparando los resultados. Para mostrarlo en el dominio del tiempo puede sustituirse la segunda ecuación en \ref{eq:structures_flow_graph_transposed_example_06_08} en la primera, y la cuarta ecuación en la tercera obteniendo en que 
+\begin{align*}
+ y[n]&=b_0x[n]+v_1[n-1]\\
+ v_1[n]&=a_1y[n]+b_1x[n]+a_2y[n-1]+b_2x[n-1], 
+\end{align*}
+y al sustituir la segunda ecuación en la primera de este resultado se concluye que 
+\[
+ y[n]=a_1y[n-1]+a_2y[n-2]+b_0x[n]+b_1x[n-1]+b_2x[n-2].
+\]
+Además, como el sistema original está en forma directa II, de la sección \ref{sec:structures_block_diagram_representation} se sabe que cumple la misma ecuación en diferencias. Por lo tanto, en condiciones iniciales nulas, ambos sistemas son equivalentes.
+
+El teorema de la transposición puede aplicarse a cualquiera de las estructuras discutidas previamente. Por ejemplo, el resultado de aplicar el teorema a la estructura en forma directa I de la figura \ref{fig:structures_flow_graph_direct_form_I} se muestra en la figura \ref{fig:structures_flow_graph_transpose_direct_form_I}, y la estructura obtenida mediante la transposición de la estructura en forma directa II de la figura \ref{fig:structures_flow_graph_direct_form_II} se muestra en la figura \ref{fig:structures_flow_graph_transpose_direct_form_II}. 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.71\textwidth]{figuras/structures_flow_graph_transpose_direct_form_I.pdf}
+ \caption{\label{fig:structures_flow_graph_transpose_direct_form_I} Diagrama de flujo obtenido al aplicar el teorema de la transposición a al estructura en forma directa I de la figura \ref{fig:structures_flow_graph_direct_form_I}.}
+ \end{center}
+\end{figure}
+Si un grafo de flujo es transpuesto, el número de ramas de retardo y ramas de coeficientes multiplicativos permanece incambiado. Por lo tanto, estructura en forma directa II transpuesta también es canónica. Las estructuras transpuestas derivadas de formas directas son también directas, en el sentido de que pueden construirse por inspección del numerador y el denominador de la función del sistema.
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.64\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_flow_graph_transpose_direct_form_II.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.26\textwidth}
+  \caption{
+   Diagrama de flujo obtenido al aplicar el teorema de la transposición a al estructura en forma directa II de la figura \ref{fig:structures_flow_graph_direct_form_II}.
+   }\label{fig:structures_flow_graph_transpose_direct_form_II}
+ \end{minipage}
+\end{figure} 
+
+Comparando las figuras \ref{fig:structures_flow_graph_direct_form_II} y \ref{fig:structures_flow_graph_transpose_direct_form_II} se observa que mientras la estructura en forma directa II implementa primero los polos y luego los ceros, la forma directa II transpuesta implementa primero los ceros y luego los polos. Esta diferencia puede ser importante en presencia de cuantización cuando el sistema se implementa  mediante precisión finita. 
+
+\section{Estructuras básicas para sistemas FIR}
+
+Las estructuras en forma directa, en cascada y en paralelo discutidas en la sección \ref{sec:structures_block_diagram_representation} y \ref{sec:structures_basic_iir} son las estructuras násicas mas comunes para sistemas IIR. Aunque las estructuras en forma directa y en cascada para sistemas IIR incluyen a los sistemas FIR como caso especial, existen formas adicionales específicas para sistemas FIR.
+
+\subsection{Forma directa}
+
+En el caso de sistemas FIR, la función del sistema tiene únicamente ceros (excepto por polos en \(z=0\)), y como los coeficientes \(a_k\) son todos nulos, la ecuación en diferencias \ref{eq:structures_difference_equation_general} se reduce a 
+\[
+ y[n]=\sum_{k=0}^M b_k x[n-k].
+\]
+Esta expresión se reconoce como la convolución discreta entre \(x[n]\) y la respuesta al impulso
+\[
+ h[n]=
+ \left\{
+ \begin{array}{ll}
+  b_n, & n=0,\,1,\,\dots,\,M,\\
+  0, &\textrm{en otro caso.}
+ \end{array}
+ \right.
+\]
+En este caso, las estructuras en forma directa I y en forma directa II en las figuras \ref{fig:structures_flow_graph_direct_form_I} y \ref{fig:structures_flow_graph_direct_form_II} se reducen ambas a la estructura directa FIR de la figura \ref{fig:structures_flow_graph_direct_form_I_FIR}. Debido a la cadena de elementos de retardo a lo largo de la parte superior del diagrama, esta estructura es también referida como estructura de \emph{línea de retardo} o estructura de \emph{filtro transversal}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.76\textwidth]{figuras/structures_flow_graph_direct_form_I_FIR.pdf}
+ \caption{\label{fig:structures_flow_graph_direct_form_I_FIR} Realización en forma directa de un sistema FIR.}
+ \end{center}
+\end{figure}
+
+La forma directa transpuesta de un sistema FIR se obtiene aplicando el teorema de la transposición al grafo de la figura \ref{fig:structures_flow_graph_direct_form_I_FIR}, que es equivalente a establecer los coeficientes \(a_k\) en cero en las figuras \ref{fig:structures_flow_graph_transpose_direct_form_I} y \ref{fig:structures_flow_graph_transpose_direct_form_II}.
+
+\subsection{Forma en cascada}
+
+La forma en cascada para filtros FIR se obtiene factorizando la función del sistema polinómica. Concretamente, se expresa \(H(z)\) como
+\[
+ H(z)=\sum_{n=0}^Mh[n]z^{-n}=\prod_{k=1}^{M_s}(b_{0k}+b_{1k}z^{-1}+b_{2k}z^{-2}),
+\]
+donde \(M_s=\lfloor(M+1)/2\). Si \(M\) es impar, uno de los coeficientes \(b_{2k}\) es nulo, ya que en ese caso \(H(z)\) tiene un número impar de ceros reales. El grafo de flujo se muestra en la figura \ref{fig:structures_flow_graph_direct_form_II_FIR}, y es idéntico al de la figura \ref{fig:structures_flow_graph_iir_cascade_direct_form_II} con los coeficientes \(a_{1k}\) y \(a_{2k}\) nulos. Cada una de las secciones de segundo orden emplea la forma directa de la figura \ref{fig:structures_flow_graph_direct_form_I_FIR}. Una alternativa es emplear formas directas transpuestas de segundo orden, o equivalentemente, aplicar el teorema de la transposición al grafo de flujo de la figura \ref{fig:structures_flow_graph_direct_form_II_FIR}. 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.88\textwidth]{figuras/structures_flow_graph_direct_form_II_FIR.pdf}
+ \caption{\label{fig:structures_flow_graph_direct_form_II_FIR} Realización en cascada de un sistema FIR.}
+ \end{center}
+\end{figure}
+
+\subsection{Estructuras para sistemas FIR de fase lineal}
+
+En la sección \ref{sec:transform_analysis_generalized_linear_phase_causal} se mostró que un filtro FIR causal tiene fase lineal generalizada si la respuesta al impulso satisaface las condiciones de simetría \ref{eq:transform_analysis_generalizaed_lineal_phase_fir_symmetric_impulse} o \ref{eq:transform_analysis_generalizaed_lineal_phase_fir_antisymmetric_impulse}, es decir,
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_symmetry_conditions}
+ h[M-n]=h[n]
+ \qquad\qquad
+ \textrm{o}
+ \qquad\qquad
+ h[M-n]=-h[n],
+ \qquad\qquad
+ n=0,\,1,\,\dots,\,M. 
+\end{equation}
+Con estas condiciones, el número de coeficientes puede ser esencialmente dividido a la mitad. Para ver esto, considérese la siguiente manipulación de la convolución discreta, asumiendo que \(M\) es un entero par, lo que corresponde a sistemas FIR tipo I o tipo III (ver la figura \ref{fig:transform_analysis_lineal_phase_fir_types}),
+\begin{align*}
+ y[n]&=\sum_{k=0}^Mh[k]x[n-k]\\
+   &=\sum_{k=0}^{M/2-1}h[k]x[n-k]+h[M/2]x[n-M/2]+\sum_{k=M/2+1}^Mh[k]x[n-k]\\
+   &\overset{(a)}{=}\sum_{k=0}^{M/2-1}h[k]x[n-k]+h[M/2]x[n-M/2]+\sum_{l=M/2-1}^0h[M-l]x[n-M+l]\\
+   &\overset{(b)}{=}\sum_{k=0}^{M/2-1}h[k]x[n-k]+h[M/2]x[n-M/2]+\sum_{k=0}^{M/2-1}h[M-k]x[n-M+k],
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(l=M-k\) en la segunda sumatoria y en \((b)\) se invirtieron los limites y se renombró a \(l\) como \(k\) en la segunda sumatoria. Para sistemas de tipo I se emplea la condición de simetría en \ref{eq:structures_flow_graph_fir_lineal_phase_symmetry_conditions} para obtener que 
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_I}
+ y[n]=\sum_{k=0}^{M/2-1}h[k](x[n-k]+x[n-M+k])+h[M/2]x[n-M/2].
+\end{equation}
+Para sistemas de tipo III se emplea la condición de antisimetría en \ref{eq:structures_flow_graph_fir_lineal_phase_symmetry_conditions} para obtener
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_III}
+ y[n]=\sum_{k=0}^{M/2-1}h[k](x[n-k]-x[n-M+k]).
+\end{equation}
+Observar que el producto fuera de la sumatoria se anula ya que \(h[M/2]=0\) para sistemas de tipo III (ver la figura \ref{fig:transform_analysis_lineal_phase_fir_types}).
+Realizando el mismo razonamiento cuando \(M\) es un entero impar, se obtiene que la ecuación correspondiente para sistemas de tipo II es 
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_II}
+ y[n]=\sum_{k=0}^{(M-1)/2}h[k](x[n-k]+x[n-M+k]).
+\end{equation}
+y para  sistemas de tipo IV es
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_IV}
+ y[n]=\sum_{k=0}^{(M-1)/2}h[k](x[n-k]-x[n-M+k]).
+\end{equation}
+
+Las ecuaciones \ref{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_I}-\ref{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_IV} implican \(M/2+1\) (tipo I), \(M/2\) (tipo III) y \((M+1)/2\) (tipos II y IV) coeficientes multiplicativos en la estructura de forma directa general de la figura \ref{fig:structures_flow_graph_direct_form_I_FIR}. En la figura \ref{fig:structures_flow_graph_lineal_phase_FIR_type_I} se muestra el grafo de flujo correspondiente a la ecuación \ref{eq:structures_flow_graph_fir_lineal_phase_difference_eq_type_I}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.72\textwidth]{figuras/structures_flow_graph_lineal_phase_FIR_type_I.pdf}
+ \caption{\label{fig:structures_flow_graph_lineal_phase_FIR_type_I} Estructura en forma directa de un sistema FIR de fase lineal tipo I.}
+ \end{center}
+\end{figure}
+
+En la discusión sobre los sistemas de fase lineal de la sección \ref{sec:transform_analysis_generalized_linear_phase_causal} se mostró que las condiciones de simetría \ref{eq:structures_flow_graph_fir_lineal_phase_symmetry_conditions} causan que los ceros ocurran en pares inversos, es decir, si \(z_0\) es un cero de \(H(z)\), \(1/z_0\) también es un cero de \(H(z)\). Además, si \(h[n]\) es real, los ceros ocurren en pares de complejos conjugados. Como consecuencia, los ceros reales que no pertenecen a la circunferencia unidad ocurren en pares de números inversos. Los ceros complejos que no están en la circunferencia unidad ocurren en grupos de cuatro, correspondiendo a complejos conjugados e inversos. Si un cero está sobre el círculo unidad, si inverso es también su conjugado. Por lo tanto, ceros complejos sobre el círculo unidad ocurren en pares. Finalmente, como los ceros en \(z=\pm1\) son su propio conjugado e inverso, pueden ocurrir solos. Los cuatro casos se resumen en la figura \ref{fig:structures_flow_graph_lineal_phase_FIR_zeros}, donde los ceros complejos \(z_1\), \(z^*_1\), \(1/z_1\) y \(1/z^*_1\) que no están sobre la circunferencia unidad forman un grupo de cuatro. Los ceros reales \(z_2\) y \(1/z_2\) que no están sobre la circunferencia unidad forman un grupo de dos, así como los ceros complejos \(z_3\) y \(z^*_3\) sobre la circunferencia unidad. El cero \(z_4\) real sobre la circunferencia unidad puede aparecer solo. 
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.49\textwidth}
+  \includegraphics[width=\textwidth]{figuras/structures_flow_graph_lineal_phase_FIR_zeros.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.41\textwidth}
+  \caption{
+     Simetría sde los ceros de un sistema FIR de fase lineal.
+  }\label{fig:structures_flow_graph_lineal_phase_FIR_zeros}
+ \end{minipage}
+\end{figure}
+Si \(H(z)\) tiene los ceros mostrados en la figura \ref{fig:structures_flow_graph_lineal_phase_FIR_zeros} puede factorizarse como el producto de factores de primer, segundo y cuarto orden. Cada uno de estos factores tienen la misma simetría que los coeficientes de \(H(z)\). En consecuencia, el sistema puede implementarse como la cascada de sistemas FIR de primer, segundo y cuarto orden. Por ejemplo, la función del sistema correspondiente al diagrama de ceros de la figura \ref{fig:structures_flow_graph_lineal_phase_FIR_zeros} puede expresarse como
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_system_function_symmetry}
+ H(z)=h[0](1+z^{-1})(1+az^{-1}+z^{-2})(1+bz^{-1}+z^{-2})(1+cz^{-1}+dz^{-2}+cz^{-3}+z^{-4}) 
+\end{equation}
+donde
+\[
+ a=-\left(z_2+\frac{1}{z_2}\right),
+ \qquad\qquad
+ b=-2\Re\{z_3\},
+ \qquad\qquad
+ c=-2\Re\left\{z_1+\frac{1}{z_1}\right\},
+ \qquad\qquad
+ d=2+\left|z_1+\frac{1}{z_1}\right|^2.
+\]
+Esto es porque el segundo factor polinómico en la ecuación \ref{eq:structures_flow_graph_fir_lineal_phase_system_function_symmetry} corresponde a los ceros reales, y por lo tanto,
+\begin{equation}\label{eq:structures_flow_graph_fir_lineal_phase_system_function_symmetry_tmp}
+ (1-z_2z^{-1})\left(1-\frac{z^{-1}}{z_2}\right)=1-\left(z_2+\frac{1}{z_2}\right)z^{-1}+z^{-2}, 
+\end{equation}
+el tercer factor polinómico en la ecuación \ref{eq:structures_flow_graph_fir_lineal_phase_system_function_symmetry} corresponde a los ceros complejos sobre el círculo unidad y entonces
+\[
+ (1-z_3z^{-1})(1-z_3^*z^{-1})=1-(z_3+z_3^*)z^{-1}+|z_3|^2z^{-2}=1-2\Re\{z_3\}z^{-1}+z^{-2},
+\]
+donde en la última igualdad se tuvo en cuenta que \(|z_3|=1\). El cuarto factor polinómico en la ecuación \ref{eq:structures_flow_graph_fir_lineal_phase_system_function_symmetry} corresponde al grupo de cuatro ceros complejos, y si se agrupan de a pares inversos en factores de segundo orden como en la ecuación \ref{eq:structures_flow_graph_fir_lineal_phase_system_function_symmetry_tmp}, se puede escribir como
+\begin{align*}
+ &\left[1-\left(z_1+\frac{1}{z_1}\right)z^{-1}+z^{-2}\right]\left[1-\left(z_1^*+\frac{1}{z_1^*}\right)z^{-1}+z^{-2}\right]\\
+ &\qquad=1-\left(z_1+\frac{1}{z_1}+z_1^*+\frac{1}{z_1^*}\right)z^{-1}+\left[2+\left(z_1+\frac{1}{z_1}\right)\left(z_1^*+\frac{1}{z_1^*}\right)\right]z^{-2}\\
+ &\qquad\qquad-\left(z_1+\frac{1}{z_1}+z_1^*+\frac{1}{z_1^*}\right)z^{-3}+z^{-4}\\
+ &\qquad=1-2\Re\left\{z_1+\frac{1}{z_1}\right\}z^{-1}+\left(2+\left|z_1+\frac{1}{z_1}\right|^2\right)z^{-2}-2\Re\left\{z_1+\frac{1}{z_1}\right\}z^{-3}+z^{-4}.
+\end{align*}
+
+
+\section{Filtros lattice}
+
+Un estructura en cascada útil e interesante es basada en la conexión en cascada de la estructura básica mostrada en la figura\ref{fig:structures_lattice_building_blocks}. En la figura, el bloque básico que compone la cascada tiene dos entradas y dos salidas, y su implementación para el caso de una estructura lattice FIR se muestra en la misma figura.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.96\textwidth]{figuras/structures_lattice_building_blocks.pdf}
+ \caption{\label{fig:structures_lattice_building_blocks} Bloque constitutivo de una estructura lattice FIR. Se muestra una representación en diagrama de bloques genérico de dos entradas y dos salidas y su implementación como grafo de flujo.}
+ \end{center}
+\end{figure}
+En la figura \ref{fig:structures_lattice_building_blocks_connection} se muestra la conexión en cascada de \(M\) de esos bloques básicos con la entrada \(x[n]\) alimentando ambas entradas del bloque 1 y con salida \(y[n]\) la primer salida del bloque \(M\), de forma que el sistema global tiene una entrada y una salida. La segunda salida del bloque \(M\) se ignora. Si bien la estructura en cascada puede tomar muchas formas distintas dependiendo de la definición del bloque constitutivo, se limitará la atención a la implementación en la figura \ref{fig:structures_lattice_building_blocks}, la cual conduce a una clase de filtros FIR e IIR ampliamente usada.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/structures_lattice_building_blocks_connection.pdf}
+ \caption{\label{fig:structures_lattice_building_blocks_connection} Conexión en cascada de \(M\) bloques constitutivos.}
+ \end{center}
+\end{figure}
+
+\subsection{Filtros lattice FIR}\label{sec:structures_lattice_fir}
+
+Si la estructura en forma de mariposa del grafo de flujo la figura \ref{fig:structures_lattice_building_blocks} es empleada como bloque básico en la cascada de la figura \ref{fig:structures_lattice_building_blocks_connection} se obtiene el grafo de flujo mostrado en la figura \ref{fig:structures_lattice_building_blocks_connection_fir}, cuya forma motiva el nombre de \emph{filtro lattice} (\emph{filtro en celosía}). Los coeficientes \(k_1,\,k_2,\,\dots,\, k_M\) son referidos como parámetros \(k\) de la estructura. En el capítulo \ref{} se verá que los parámetros \(k\) tienen un significado especial en el contexto de modelado todo polos de señales, y que el filtro lattice de la figura \ref{fig:structures_lattice_building_blocks_connection_fir} es una estructura de implementación para predicción lineal de señales. En este capítulo solo se ilustra el empleo de filtros lattice para implementar funciones de transferencia FIR e IIR todo polos.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/structures_lattice_building_blocks_connection_fir.pdf}
+ \caption{\label{fig:structures_lattice_building_blocks_connection_fir} Grafo de flujo de un filtro lattice FIR basado en la conexión en cascada de \(M\) bloques básicos de dos puertos como el de la figura \ref{fig:structures_lattice_building_blocks}.}
+ \end{center}
+\end{figure}
+
+Las variables de nodo \(a^{(i)}[n]\) y \(b^{(i)}[n]\) en la figura \ref{fig:structures_lattice_building_blocks_connection_fir} son secuencias intermedias que dependen de la entrada mediante el conjunto de ecuaciones en diferencias 
+\begin{equation}\label{eq:structures_lattice_difference_equations_set_general}
+ \begin{aligned}
+  a^{(0)}[n]&=b^{(0)}[n]=x[n]\\
+  a^{(i)}[n]&=a^{(i-1)}[n]-k_ib^{(i-1)}[n-1]
+  \qquad\qquad i=1,\,2,\,\dots,\,M\\
+  b^{(i)}[n]&=b^{(i-1)}[n-1]-k_ia^{(i-1)}[n]
+  \qquad\qquad i=1,\,2,\,\dots,\,M\\
+  y[n]&=a^{(M)}[n].
+ \end{aligned}
+\end{equation}
+Observar que las ecuaciones deben calcularse en el orden \(i=0,\,1,\,\dots,\,M\) ya que  la salida de la etapa \((i-1)\) se necesita como entrada de la etapa \((i)\).
+
+La estructura lattice de la figura \ref{fig:structures_lattice_building_blocks_connection_fir} es claramente un sistema LTI por tratarse de un grafo de flujo lineal únicamente con ramas con retardos y constantes. Además, no hay bucles de realimentación, lo que implica que el sistema tiene respuesta al impulso de duración finita. Concretamente, considérese la respuesta al impulso desde \(x[n]\) a la variable de nodo \(a^{(i)}[n]\). Con \(x[n]=\delta[n]\) es claro que \(a^{(i)}[0]=1\) para todo \(i\), ya que el impulso se propaga sin retardo por la rama superior de todas las etapas. Todos los otros caminos hacia cualquier variable de nodo \(a^{(i)}[n]\) o \(b^{(i)}[n]\) pasan por al menos una rama de retardo, siendo el camino de mayor retardo el camino por la rama inferior de todas las etapas y luego subiendo a la variable de nodo \(a^{(i)}[n]\) a través de la rama  con coeficiente \(-k_i\). Este camino produce un retardo total de \(i\) muestras, por lo que la respuesta al impulso tiene un largo de \(i+1\) muestras.
+
+En lo que sigue, se asume que \(a^{(i)}[n]\) y \(b^{(i)}[n]\) son las respuestas al impulso a la salida de la etapa \(i\) en lugar de las variables de nodo correspondientes a cualquier entrada \(x[n]\), y las respectivas transformadas \(z\) \(A^{(i)}(z)\) y \(B^{(i)}(z)\) son la función de transferencia entre la entrada y los nodos \(i\)-ésimos. En consecuencia, la función de transferencia entre la entrada y el nodo \(i\)-ésimo superior es
+\begin{equation}\label{eq:structures_lattice_Ai_z_transform}
+ A^{(i)}(z)=\sum_{n=0}^{i}a^{(i)}[n]z^{-n}=1-\sum_{m=1}^{i}\alpha^{(i)}_mz^{-m}, 
+\end{equation}
+donde en el lado derecho de la igualdad, los coeficientes \(\alpha^{(i)}_m\) para \(m\leq i\) se componen de sumas de productos de los coeficientes \(k_j\) con \(j\leq m\). En particular, como ya se mencionó, el coeficiente para el mayor retardo entre la entrada y el nodo \(i\)-ésimo superior es \(\alpha^{(i)}_i=k_i\). Con esta notación, la respuesta al impulso desde \(x[n]\) a la variable de nodo \(a^{(i)}[n]\) es
+\[
+ a^{(i)}[n]=
+ \left\{ 
+  \begin{array}{ll}
+   1 & n=0\\
+   -\alpha^{(i)}_n & 1\leq n\leq i\\
+   0 & \textrm{en otro caso.}
+  \end{array}
+ \right.
+\]
+
+Del diagrama de flujo de la figura \ref{fig:structures_lattice_building_blocks} o aplicando la transformada \(z\) a las ecuaciones en diferencias \ref{eq:structures_lattice_difference_equations_set_general}, se obtiene que 
+\begin{align}
+ A^{(i)}(z)&=A^{(i-1)}(z)-k_iz^{-1}B^{(i-1)}(z)
+ \label{eq:structures_lattice_difference_equations_z_transform_Ai}\\
+ B^{(i)}(z)&=-k_iA^{(i-1)}(z)+z^{-1}B^{(i-1)}(z)
+ \label{eq:structures_lattice_difference_equations_z_transform_Bi},
+\end{align}
+donde \(B^{(i)}(z)\) es la función de transferencia entre la entrada y el nodo \(i\)-ésimo inferior. Además, en la entrada
+\begin{equation}\label{eq:structures_lattice_difference_equations_z_transform_A0B0}
+ A^{(0)}(z)=B^{(0)}(z)=1.
+\end{equation}
+
+Empleando las ecuaciones \ref{eq:structures_lattice_difference_equations_z_transform_Ai} y \ref{eq:structures_lattice_difference_equations_z_transform_Bi} y comenzando con la ecuación \ref{eq:structures_lattice_difference_equations_z_transform_A0B0}, se puede calcular \(A^{(i)}(z)\) y \(B^{(i)}(z)\)  recursivamente hasta cualquier valor de \(i\). Se mostrará que al hacerlo, el patrón de la relación entre \(A^{(i)}(z)\) y \(B^{(i)}(z)\) que surge es
+\begin{equation}\label{eq:structures_lattice_Bz_Az_relation}
+ B^{(i)}(z)=z^{-i}A^{(i)}(1/z),
+\end{equation}
+o equivalentemente, reemplazando \(z\) por \(1/z\),
+\begin{equation}\label{eq:structures_lattice_Az_Bz_relation}
+ A^{(i)}(z)=z^{-i}B^{(i)}(1/z).
+\end{equation}
+La prueba puede hacerse mediante inducción, es decir, verificando que si la expresión es cierta para algún valor \(i-1\), se cumple para el valor \(i\). Se parte observando que para \(i=0\), la validez de las identidades \ref{eq:structures_lattice_Bz_Az_relation} y \ref{eq:structures_lattice_Az_Bz_relation} se obtiene inmediatamente de la ecuación \ref{eq:structures_lattice_difference_equations_z_transform_A0B0}. Además, para \(i=1\)
+\begin{align*}
+ A^{(1)}(z)&=A^{(0)}(z)-k_1z^{-1}B^{(0)}(z)\\
+   &=1-k_1z^{-1}\\
+ B^{(1)}(z)&=-k_1A^{(0)}(z)+z^{-1}B^{(0)}(z)\\
+   &=-k_1+z^{-1}\\
+   &=z^{-1}(1-k_1z)\\
+   &=z^{-1}A^{(1)}(1/z),
+\end{align*}
+y para \(i=2\),
+\begin{align*}
+ A^{(2)}(z)&=A^{(1)}(z)-k_2z^{-1}B^{(1)}(z)\\
+   &=1-k_1z^{-1}-k_2z^{-1}(-k_1+z^{-1})\\
+   &=1-k_1(1-k_2)z^{-1}-k_2z^{-2}\\
+ B^{(2)}(z)&=-k_2A^{(1)}(z)+z^{-1}B^{(1)}(z)\\
+   &=-k_2(1-k_1z^{-1})+z^{-1}(-k_1+z^{-1})\\
+   &=-k_2-k_1(1-k_2)z^{-1}+z^{-2}\\
+   &=z^{-2}[1-k_1(1-k_2)z-k_2z^{2}]\\
+   &=z^{-2}A^{(2)}(1/z).
+\end{align*}
+Para probar el resultado general, se asume que las ecuaciones \ref{eq:structures_lattice_Bz_Az_relation} y \ref{eq:structures_lattice_Az_Bz_relation} se cumplen para \(i-1\) y se sustituyendo esos resultados en la ecuación \ref{eq:structures_lattice_difference_equations_z_transform_Bi}, se obtiene que
+\begin{align*}
+ B^{(i)}(z)&=-k_iz^{-(i-1)}B^{(i-1)}(1/z)+z^{-1}z^{-(i-1)}A^{(i-1)}(1/z)\\
+  &=z^{-i}A^{(i-1)}(1/z)-k_iz^{-(i-1)}B^{(i-1)}(1/z)\\
+  &=z^{-i}[A^{(i-1)}(1/z)-k_iz^{-1}B^{(i-1)}(1/z)]\\
+  &=z^{-i}A^{(i)}(1/z),
+\end{align*}
+que es lo que se quería probar.
+
+Las funciones de transferencia \(A^{(i)}(z)\) y \(B^{(i)}(z)\) son polinomios de orden \(i\), y es particularmente útil obtener una relación directa entre los coeficientes de los polinomios. Con el fin de obtener una expresión de los coeficientes \(\alpha^{(i)}_m\) en términos de \(\alpha^{(i-1)}_m\) y \(k_i\) se parte de la ecuación \ref{eq:structures_lattice_Ai_z_transform} de la función de transferencia para el nodo \(i-1\),
+\begin{equation}\label{eq:structures_lattice_Ai_z_transform_tmp}
+ A^{(i-1)}(z)=1-\sum_{m=1}^{i-1}\alpha^{(i-1)}_mz^{-m}
+\end{equation}
+y se combina con la ecuación \ref{eq:structures_lattice_Bz_Az_relation} para el mismo nodo, resultando en
+\[
+ B^{(i-1)}(z)=z^{-(i-1)}A^{(i-1)}(1/z)=z^{-(i-1)}\left[1-\sum_{m=1}^{i-1}\alpha^{(i-1)}_mz^{m}\right].
+\]
+Luego, sustituyendo este resultado y la ecuación \ref{eq:structures_lattice_Ai_z_transform_tmp} en la ecuación \ref{eq:structures_lattice_difference_equations_z_transform_Ai}, se observa que 
+\begin{align*}
+ A^{(i)}(z)&=\left[1-\sum_{m=1}^{i-1}\alpha^{(i-1)}_mz^{-m}\right]-k_iz^{-1}\left(z^{-(i-1)}\left[1-\sum_{m=1}^{i-1}\alpha^{(i-1)}_mz^{m}\right]\right)\\
+  &\overset{(a)}{=}\left[1-\sum_{m=1}^{i-1}\alpha^{(i-1)}_mz^{-m}\right]-k_iz^{-i}\left[1-\sum_{l=i-1}^{1}\alpha^{(i-1)}_{i-l}z^{i-l}\right]\\
+  &=1-\sum_{m=1}^{i-1}\alpha^{(i-1)}_mz^{-m}+\sum_{l=1}^{i-1}k_i\alpha^{(i-1)}_{i-l}z^{-l}-k_iz^{-i}
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(l=i-m\) en la segunda sumatoria. Finalmente, combinando ambas sumatorias resulta en
+\[
+ A^{(i)}(z)=1-\sum_{m=1}^{i-1}\left[\alpha^{(i-1)}_m-k_i\alpha^{(i-1)}_{i-m}\right]z^{-m}-k_iz^{-i}.
+\]
+Comparando este resultado con la ecuación \ref{eq:structures_lattice_Ai_z_transform} se concluye que 
+\begin{equation}\label{eq:structures_lattice_alpha_recursion}
+ \begin{aligned}
+  \alpha^{(i)}_m&=\alpha^{(i-1)}_m-k_i\alpha^{(i-1)}_{i-m},\qquad\qquad m=1,\,2\,\dots,i-1,\\
+  \alpha^{(i)}_i&=k_i.
+ \end{aligned}
+\end{equation}
+Estas ecuaciones son la recursión buscada entre los coeficientes de \(A^{(i)}(z)\) y \(A^{(i-1)}(z)\). Observar que como se mencionó previamente, el coeficiente correspondiente a \(z^{-i}\), que representa al mayor retardo, es \(-k_i\). Estas ecuaciones junto con la ecuación \ref{eq:structures_lattice_Bz_Az_relation} también determinan la función de transferencia \(B^{(i)}(z)\), ya que sustituyendo la ecuación \ref{eq:structures_lattice_Ai_z_transform} en la ecuación \ref{eq:structures_lattice_Bz_Az_relation} se observa que 
+\begin{align*}
+ B^{(i)}(z)&=z^{-i}\left[1-\sum_{m=1}^i\alpha^{(i)}_mz^{m}\right]\\
+  &=z^{-i}-\sum_{m=1}^{i}\alpha^{(i)}_mz^{m-i}\\
+  &\overset{(a)}{=}z^{-i}-\sum_{l=i-1}^{0}\alpha^{(i)}_{i-l}z^{-l}\\
+  &=-\sum_{m=0}^{i-1}\alpha^{(i)}_{i-m}z^{-m}+z^{-i}.
+\end{align*}
+Por lo tanto, si
+\[
+ B^{(i)}(z)=\sum_{n=0}^ib^{(i)}[n]z^{-n}=\sum_{m=0}^i\beta^{(i)}_mz^{-m},
+\]
+los coeficientes \(\beta^{(i)}_m\) del polinomio de la función de transferencia \(B^{(i)}(z)\) son
+\begin{align*}
+ \beta^{(i)}_m&=\alpha^{(i)}_{i-m},\qquad\qquad m=0,\,1\,\dots,i-1,\\
+ \beta^{(i)}_i&=1.
+\end{align*}
+Observar en la figura \ref{fig:structures_lattice_building_blocks_connection_fir} que el resultado es acorde al hecho de que el único camino sin retardo entre la entrada y la variable de nodo \(b^{(i)}[n]\) es el camino por las ramas superiores y luego descendiendo al nodo por la rama de constante \(-k_i\), que corresponde en la ecuación al coeficiente \(\beta^{(i)}_0=\alpha^{(i)}_{i}=-k_i\), y también al hecho de que el único camino con retardo de \(i\) muestras, correspondiente al mayor retardo, es el que va por las ramas inferiores y no pasa por ninguna rama con constante multiplicativa, por lo que el coeficiente es \(\beta^{(i)}_i=1\).
+
+La recursión de la ecuación \ref{eq:structures_lattice_alpha_recursion} puede expresarse de forma matricial. Denotando como \(\alphabf_{i-1}\) al vector de los coeficientes de la función de transferencia \(A^{(i-1)}(z)\) y como \(\check{\alphabf}_{i-1}\) al mismo vector con los elementos en orden invertido, es decir,
+\[
+ \alphabf_{i-1}=
+ \begin{bmatrix}
+  \alpha^{(i-1)}_1 & \alpha^{(i-1)}_2 & \cdots & \alpha^{(i-1)}_{i-1}
+ \end{bmatrix}^T
+ \qquad\qquad\textrm{y}\qquad\qquad
+ \check{\alphabf}_{i-1}=
+ \begin{bmatrix}
+  \alpha^{(i-1)}_{i-1} & \alpha^{(i-1)}_{i-2} & \cdots & \alpha^{(i-1)}_{1}
+ \end{bmatrix}^T,
+\]
+la ecuación \ref{eq:structures_lattice_alpha_recursion} se puede escribir en forma matricial como
+\begin{equation}\label{eq:structures_lattice_alpha_recursion_matrix}
+ \alphabf_{i}=
+ \begin{bmatrix}
+  \alphabf_{i-1} \\ \cdots \\ 0
+ \end{bmatrix}^T
+ -k_i 
+  \begin{bmatrix}
+  \check{\alphabf}_{i} \\ \cdots \\ -1
+ \end{bmatrix}^T.
+\end{equation}
+La recursión de las ecuaciones \ref{eq:structures_lattice_alpha_recursion} o \ref{eq:structures_lattice_alpha_recursion_matrix} son la base de un algoritmo para el análisis de una estructura lattice FIR para obtener la función de transferencia. Se parte del grafo de flujo de la figura \ref{fig:structures_lattice_building_blocks_connection_fir} donde se especifican los parámetros \(k\) \(\{k_1,\,k_2,\,\dots,\,k_M\}\). Luego se emplean las ecuaciones \ref{eq:structures_lattice_alpha_recursion} recursivamente para calcular la función de transferencia del filtro FIR de orden sucesivamente mas alto hasta llegar al final de la cascada, obteniendo
+\begin{equation}\label{eq:structures_lattice_AM_z_transform}
+ A(z)=1-\sum_{m=1}^{M}\alpha_mz^{-m}=\frac{Y(z)}{X(z)},
+\end{equation}
+donde
+\[
+ \alpha_m=\alpha^{(M)}_m,
+ \qquad\qquad 
+ m=1,\,2,\,\dots,\,M.
+\]
+En la figura \ref{fig:structures_lattice_k_to_alpha} se muestra la implementación en el lenguaje Python de una función para obtener los coeficientes de la función de transferencia a partir de los parámetros \(k\).
+\begin{figure}
+\begin{center}
+\lstinputlisting{figuras/structures_lattice_k_to_alpha.py}
+\caption{\label{fig:structures_lattice_k_to_alpha} Implementación en el lenguaje Python de la conversión de los parámetros \(k\) a los coeficientes de la función de transferencia. Tener en cuenta que en el lenguaje Python, la indexación de los vectores comienza en 0, y por lo tanto, es levemente diferente a la indexación empleada en la explicación de la conversión.}
+\end{center}
+\end{figure}
+
+También es de interés obtener los parámetros \(k\) de una estructura lattice FIR que implementa una función de transferencia dada, es decir, se quiere obtener el conjunto de parámetros \(k\) de la estructura lattice en la figura \ref{fig:structures_lattice_building_blocks_connection_fir} a partir del polinomio \(A(z)\) de la ecuación \ref{eq:structures_lattice_AM_z_transform}. Esto puede hacerse invirtiendo la recursión de las ecuaciones \ref{eq:structures_lattice_alpha_recursion} o \ref{eq:structures_lattice_alpha_recursion_matrix} para obtener sucesivamente la función de transferencia \(A^{(i-1)}(z)\) en términos de \(A^{(i)}(z)\) para \(i=M,\,M-1,\,\dots,\,2\). Los parámetros \(k\) surgen como consecuencia del proceso, ya que \(k_i=\alpha^{(i)}_i\).
+
+Concretamente, se asume que se especifican los coeficientes \(\alpha^{(M)}_m=\alpha_m\) para \(m=1,\,2,\,\dots,\,M\) y se quiere obtener los parámetros \(k\) \(\{k_1,\,k_2,\,\dots,\,k_M\}\) para implementar la función de transferencia como una estructura lattice. Para hacerlo, se parte de la última etapa de la estructura lattice FIR, es decir, con \(i=M\). De la ecuación \ref{eq:structures_lattice_alpha_recursion},
+\[
+ k_M=\alpha^{(M)}_M=\alpha_M.
+\]
+Se continúa invirtiendo la ecuación \ref{eq:structures_lattice_alpha_recursion} o la ecuación \ref{eq:structures_lattice_alpha_recursion_matrix} para obtener \(\alphabf_{M-1}\), el vector de coeficientes de la función de transferencia desde la entrada a la etapa \(i=M-1\), y así sucesivamente hasta llegar a \(i=1\).
+
+Para obtener la fórmula general de recursión de \(\alpha^{(i-1)}_m\) en términos de \(\alpha^{(i)}_m\) de la ecuación \ref{eq:structures_lattice_alpha_recursion}, se observa que el término \(\alpha^{(i-1)}_{i-m}\) debe ser eliminado. Para hacerlo, se reemplaza \(m\) por \(i-m\) en la ecuación \ref{eq:structures_lattice_alpha_recursion} y se multiplican ambos lados de la igualdad por \(k_i\) para obtener
+\[
+ k_i\alpha^{(i)}_{i-m}=k_i\alpha^{(i-1)}_{i-m}-k_i^2\alpha^{(i-1)}_m,
+\]
+y sumando este resultado con la ecuación \ref{eq:structures_lattice_alpha_recursion} resulta en
+\[
+ \alpha^{(i)}_m+k_i\alpha^{(i)}_{i-m}=\alpha^{(i-1)}_m-k^2_i\alpha^{(i-1)}_m,
+\]
+de donde surge que 
+\begin{equation}\label{eq:structures_lattice_alpha_inverse_recursion}
+ \alpha^{(i-1)}_m=\frac{\alpha^{(i)}_m+k_i\alpha^{(i)}_{i-m}}{1-k_i^2},
+  \qquad\qquad 
+ m=1,\,2,\,\dots,\,i-1, 
+\end{equation}
+que es la expresión que se necesita para hacer la recursión. Con \(\alpha^{(i-1)}_m\) calculado para \(m=1,\,2,\,\dots,\,i-1\), la ecuación \ref{eq:structures_lattice_alpha_recursion} indica que
+\begin{equation}\label{eq:structures_lattice_alpha_inverse_recursion_k}
+ k_{i-1}=\alpha^{(i-1)}_{i-1}. 
+\end{equation}
+Por lo tanto, comenzando con los coeficientes conocidos \(\alpha^{M}_m=\alpha_m\) para \(m=1,\,2,\,\dots,\,M\), se emplean las ecuaciones \ref{eq:structures_lattice_alpha_inverse_recursion} para calcular \(\alpha^{M-1}_m\) para \(m=1,\,2,\,\dots,\,M-1\) y de la ecuación \ref{eq:structures_lattice_alpha_inverse_recursion_k}, \(k_{M-1}=\alpha^{(M-1)}_{M-1}\) 
+\begin{figure}
+\begin{center}
+\lstinputlisting{figuras/structures_lattice_alpha_to_k.py}
+\caption{\label{fig:structures_lattice_alpha_to_k} Implementación en el lenguaje Python del cálculo de los parámetros \(k\) a partir de los coeficientes de la función de transferencia.}
+\end{center}
+\end{figure}
+
+\paragraph{Parámetros \(k\) para un sistema FIR de tercer orden} Se considera el sistema FIR mostrado en la figura \ref{fig:structures_lattice_example_06_09_FIR_direct}, cuya función de transferencia es
+\[
+ A(z)=1-0.9z^{-1}+0.64z^{-2}-0.576z^{-3}.
+\]
+En consecuencia, \(M=3\) y los coeficientes \(\alpha^{(3)}_k\) de la ecuación \ref{eq:structures_lattice_AM_z_transform} son
+\[
+ \alpha^{(3)}_1=0.9,
+ \qquad\qquad 
+ \alpha^{(3)}_2=-0.64,
+ \qquad\qquad
+ \alpha^{(3)}_3=0.576.
+\]
+ \begin{figure}[!htb]
+  \begin{minipage}[c]{0.55\textwidth}
+    \includegraphics[width=\textwidth]{figuras/structures_lattice_example_06_09_FIR_direct.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.35\textwidth}
+    \caption{
+     Estructura FIR en forma directa.
+    }\label{fig:structures_lattice_example_06_09_FIR_direct}
+  \end{minipage}
+\end{figure}
+Se quieren calcular los parámetros \(k\) de la estructura lattice equivalente. Se comienza observando que \(k_3=\alpha^{(3)}_3=0.576\). Luego hay que calcular los coeficientes de la función de transferencia \(A^{(2)}(z)\), para lo que se emplea la ecuación \ref{eq:structures_lattice_alpha_inverse_recursion}, resultando en
+\[
+ \alpha^{(2)}_1=\frac{\alpha^{(3)}_1+k_3\alpha^{(3)}_2}{1-k_3^2}=0.795,
+ \qquad\qquad
+ \alpha^{(2)}_2=\frac{\alpha^{(3)}_2+k_3\alpha^{(3)}_1}{1-k_3^2}=-0.182,
+\]
+y de la ecuación \ref{eq:structures_lattice_alpha_inverse_recursion_k}, \(k_2=\alpha^{(2)}_2=-0.182\). Finalmente, se aplica nuevamente la ecuación \ref{eq:structures_lattice_alpha_inverse_recursion} para obtener \(A^{(1)}(z)\),
+\[
+ \alpha^{(1)}_1=\frac{\alpha^{(2)}_1+k_2\alpha^{(2)}_1}{1-k_2^2}=0.673,
+\]
+donde se identifica que \(k_1=\alpha^{(1)}_1=0.673\). La estructura lattice equivalente se muestra en la figura \ref{fig:structures_lattice_example_06_09_lattice}
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.78\textwidth]{figuras/structures_lattice_example_06_09_lattice.pdf}
+ \caption{\label{fig:structures_lattice_example_06_09_lattice} Estructura lattice con la misma función de transferencia que la estructura FIR de la figura \ref{fig:structures_lattice_example_06_09_FIR_direct}.}
+ \end{center}
+\end{figure}
+\\
+También puede realizarse el proceso inverso empleando las ecuaciones \ref{eq:structures_lattice_alpha_recursion} para obtener la función de transferencia \(A(z)\) a partir de los parámetros \(k\) de la estructura lattice. De la segunda ecuación en \ref{eq:structures_lattice_alpha_recursion}, \(\alpha^{(1)}_1=k_1=0.673\), quedando determinada \(A^{(1)}(z)\). Luego, de las ecuaciones \ref{eq:structures_lattice_alpha_recursion},
+\[
+ \alpha^{(2)}_1=\alpha^{(1)}_1-k_2\alpha^{(1)}_{1}=0.795,
+ \qquad\qquad 
+ \alpha^{(2)}_2=k_2=-0.182,
+\]
+determinado \(A^{(2)}(z)\). Finalmente, se aplican las ecuaciones \ref{eq:structures_lattice_alpha_recursion} nuevamente para obtener
+\[
+ \alpha^{(3)}_1=\alpha^{(2)}_1-k_3\alpha^{(2)}_{2}=0.9,
+ \qquad\qquad
+ \alpha^{(3)}_2=\alpha^{(2)}_2-k_3\alpha^{(2)}_{1}=-0.64,
+ \qquad\qquad 
+ \alpha^{(3)}_3=k_3=0.576,
+\] 
+que son los coeficientes de la función de transferencia en la ecuación \ref{eq:structures_lattice_AM_z_transform}.
+
+\subsection{Estructura lattice todo polos}
+
+Una estructura lattice para implementar la función de transferencia todo polos \(H(z)=1/A(z)\) puede obtenerse de la estructura lattice FIR de la sección previa observando que \(H(z)\) es el filtro inverso de la función de transferencia \(A(z)\) del sistema FIR . Para hacerlo, se asume que la salida \(y[n]=a^{M}[n]\) es dada y se quiere calcular la entrada \(x[n]=a^{(0)}[n]\) que produce dicha salida. Esto se logra realizando los cálculos desde la derecha hacia la izquierda en la estructura de la figura \ref{fig:structures_lattice_building_blocks_connection_fir}. Específicamente, expresando \(A^{(i-1)}(z)\) en términos \(A^{(i)}(z)\) en la ecuación \ref{eq:structures_lattice_difference_equations_z_transform_Ai} y dejando a la ecuación \ref{eq:structures_lattice_difference_equations_z_transform_Bi} incambiada, se obtiene el par de ecuaciones
+\begin{align}
+ A^{(i-1)}(z)&=A^{(i)}(z)+k_iz^{-1}B^{(i-1)}(z)
+ \label{eq:structures_lattice_all_poles_difference_equations_z_transform_Ai}\\
+ B^{(i)}(z)&=-k_iA^{(i-1)}(z)+z^{-1}B^{(i-1)}(z)
+ \label{eq:structures_lattice_all_poles_difference_equations_z_transform_Bi},
+\end{align}
+que tienen la representación en grafo de flujo de la figura \ref{fig:structures_lattice_all_poles_building_blocks}. 
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.43\textwidth}
+    \includegraphics[width=\textwidth]{figuras/structures_lattice_all_poles_building_blocks.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.47\textwidth}
+    \caption{
+     Diagrama de flujo de una etapa de un sistema lattice todo polos.
+    }\label{fig:structures_lattice_all_poles_building_blocks}
+  \end{minipage}
+\end{figure}
+Notar que ahora el flujo de la señal es desde \(i\) a \(i-1\) por las ramas de la parte superior del diagrama y desde \(i-1\) a \(i\) por las ramas de la parte inferior. La conexión en cascada de \(M\) etapas como la de la figura \ref{fig:structures_lattice_all_poles_building_blocks} con los valores de \(k_i\) apropiados en cada etapa toma una entrada \(a^{(M)}[n]\) y produce la salida \(a^{(0)}[n]\), como se muestra en la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection}. Finalmente, la condición \(x[n]=a^{(0)}[n]=b^{(0)}[n]\) en las terminales de la última etapa produce la realimentación que propaga a \(b^{(i)}[n]\) en dirección inversa. Esta realimentación es necesaria para un sistema IIR.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/structures_lattice_all_poles_building_blocks_connection.pdf}
+ \caption{\label{fig:structures_lattice_all_poles_building_blocks_connection} Grafo de flujo de un sistema lattice todo polos.}
+ \end{center}
+\end{figure}
+
+El conjunto de ecuaciones en diferencias representado por la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection} es\footnote{Observar que debido a la deducción basada en el sistema lattice FIR, se nombró \(y[n]\) a la entrada y \(x[n]\) a la salida, contrariamente a la convención usual. Esta nomenclatura es arbitraria y puede restituirse una vez concluida la deducción.}
+\begin{equation}\label{eq:structures_lattice_difference_equations_set_all_poles}
+ \begin{aligned}
+  a^{(M)}[n]&=y[n]\\
+  a^{(i-1)}[n]&=a^{(i)}[n]+k_ib^{(i-1)}[n-1]\\
+  b^{(i)}[n]&=b^{(i-1)}[n-1]+k_ia^{(i-1)}[n]\\
+  x[n]&=a^{(0)}[n]=b^{(0)}[n].  
+ \end{aligned}
+\end{equation}
+\begin{align*}
+\end{align*}
+Debido a la realimentación en la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection} y las ecuaciones que representan al sistema, deben especificarse condiciones iniciales para todas las variables de nodo asociadas a retardos. Típicamente se establece \(b^{(i)}[-1]=0\) para condiciones iniciales de reposo. 
+
+La deducción en la presente sección permite afirmar que todo el análisis realizado en la sección \ref{sec:structures_lattice_fir} para el sistema lattice FIR es válido para el sistema lattice todo polos de la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection}. Si se desea determinar la implementación lattice de un sistema todo polos con función de transferencia \(H(z)=1/A(z)\) se puede emplear los algoritmos de las figuras \ref{fig:structures_lattice_alpha_to_k} y \ref{fig:structures_lattice_k_to_alpha} para obtener los parámetros \(k\) a partir de los coeficientes del polinomio del denominador y viceversa.
+
+\paragraph{Ejemplo: implementación lattice de un sistema IIR} Como ejemplo, considérese el sistema IIR  dado por la función de transferencia
+\begin{align*}
+ H(z)&=\frac{1}{1-0.9z^{-1}+0.64z^{-2}-0.576z^{-3}}\\
+  &=\frac{1}{(1-0.8z^{-1})(1+0.8z^{-1})(1-0.9z^{-1})},
+\end{align*}
+que es el sistema inverso del sistema del ejemplo de la sección \ref{sec:structures_lattice_fir}. La figura \ref{fig:structures_lattice_example_06_10_IIR_direct} muestra la implementación en forma directa del sistema, mientras que la figura \ref{fig:structures_lattice_example_06_10_lattice} muestra el sistema lattice IIR equivalente con los parámetros \(k\) calculados como en el ejemplo de la sección \ref{sec:structures_lattice_fir}. Observar que la estructura lattice tiene la misma cantidad de retardos que la forma directa pero el doble de multiplicadores. Esto se cumple para cualquier orden \(M\), como es evidente de la observación de las estructuras.
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.31\textwidth}
+    \includegraphics[width=\textwidth]{figuras/structures_lattice_example_06_10_IIR_direct.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.59\textwidth}
+    \caption{
+     Diagrama de flujo del sistema IIR en forma directa.
+    }\label{fig:structures_lattice_example_06_10_IIR_direct}
+  \end{minipage}
+\end{figure}
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.78\textwidth]{figuras/structures_lattice_example_06_10_lattice.pdf}
+ \caption{\label{fig:structures_lattice_example_06_10_lattice} Estructura lattice con la misma función de transferencia que la estructura de la figura \ref{fig:structures_lattice_example_06_10_IIR_direct}.}
+ \end{center}
+\end{figure}
+
+Dado que la estructura lattice de la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection} es un sistema IIR, es necesario considerar su estabilidad. En el capítulo \ref{capitulo13} se verá que una condición necesaria y suficiente para que todos los ceros del polinomio \(A(z)\) estén dentro de círculo unidad es que \(|k_i|<1\) para \(i=1,\,2,\,\dots,\,M\). Esto se ve en el ejemplo anterior, en donde los polos de la función de transferencia \(H(z)\) están dentro de círculo unidad y todos los parámetros \(k\) tienen valor absoluto menor que 1. Para sistemas IIR, la garantía de estabilidad inherente a la condición \(|k_i|<1\) es particularmente importante. Si bien la estructura lattice requiere el doble de multiplicaciones por muestra de salida que la forma directa, es insensible a la cuantización de los parámetros \(k\). Esta propiedad es la razón de la popularidad de los filtros lattice en diversas aplicaciones, como por ejemplo, en síntesis de voz.
+
+\subsection{Generalización de los sistemas lattice}
+
+En las secciones previas se vió que los sistemas FIR y los sistemas IIR tienen una representación como estructura lattice. Cuando la función del sistema tiene tanto polos como ceros, es posible obtener una estructura lattice en base a una modificación de la estructura lattice todo polos de la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection}. La deducción de esto no se hará, pero se resume en la sección \ref{capitulo11}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3393,6 +5071,8 @@ En la figura \ref{fig:example_05_19_freq_responses} se muestra la respuesta en f
 
  
 
+ 
+ 
  
  
  
