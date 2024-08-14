@@ -954,7 +954,7 @@ donde las unidades de \(t\) son segundos y en los instantes de muestreo \(t=n\) 
 \[
  y_i(t)=G_i\sen\left\{\omega_i\left[t-\tau_\phi(\omega_i)\right]\right\},
 \]
-donde el retardo de fase \(\tau_\phi(\omega_i)\) tiene el mismo valor que en el caso discreto pero las unidades son segundos en lugar de adimensionado o muestras. En la sección 4.5 de \cite{oppenheim2009discrete} se da una interpretación de un retardo no entero. 
+donde el retardo de fase \(\tau_\phi(\omega_i)\) tiene el mismo valor que en el caso discreto pero las unidades son segundos en lugar de adimensionado o muestras. En el ejemplo de la sección \ref{sec:sampling_continuous_procesing_discrete_signals} se da una interpretación de un retardo no entero. 
 
 \paragraph{Ejemplo: respuesta en frecuencia del sistema de media móvil} La respuesta al impulso del sistema de media móvil está dado por la ecuación \ref{eq:seq_and_sys_system_moving_average} es (ver la ecuación \ref{eq:seq_and_sys_system_moving_average_impulse})
 \[
@@ -1056,7 +1056,7 @@ Se obtuvo que
 \end{equation}
 En este caso, \(x[n]\) no es absolutamente ni cuadráticamente sumable, y \(|X(e^{j\omega})|\) no es finita para todo \(\omega\). La igualdad matemática  
 \[
- \sum_{n=-\infty}e^{j\omega n}e^{-j\omega_0}=\sum_{r=-\infty}^\infty2\pi\delta(\omega-\omega_0+2\pi r),
+ \sum_{n=-\infty}^\infty e^{j\omega n}e^{-j\omega_0n}=\sum_{r=-\infty}^\infty2\pi\delta(\omega-\omega_0+2\pi r),
 \]
 que proviene de sustituir \(x[n]=e^{j\omega_0n}\) en la ecuación \ref{eq:seq_and_sys_dtft_definition} e igualar el resultado con la ecuación \ref{eq:seq_and_sys_complex_exponential_dtft}, debe interpretarse en el sentido de las funciones generalizadas. Con \(\omega_0=0\) se obtiene el par de transformadas
 \begin{equation}\label{eq:seq_and_sys_constant_dtft_pair}
@@ -1760,9 +1760,9 @@ donde \(c_k\) y \(d_k\) son las raíces de numerador y denominador respectivamen
   X(z)=\sum_{r=0}^{M-N}B_rz^{-r}+\sum_{k=1,\,k\neq i}^N\frac{A_k}{1-d_kz^{-1}}+\sum_{m=1}^s\frac{C_m}{(1-d_iz^{-1})^m}.  
  \end{equation}
  Los coeficientes \(A_k\) y \(B_r\) se obtienen como antes. Los coeficientes \(C_m\) se obtienen de la ecuación
- \[
-  C_m=\frac{1}{(s-m)!(-d_i)^{s-m}}\left\{\frac{d^{s-m}}{dw^{s-m}}\left[(1-d_iw)^sX(w^{-1})\right]\right\}_{w=d_i^{-1}}.
- \]
+ \begin{equation}\label{eq:z_transform_rational_function_simple_fractions_3_Cm}
+  C_m=\frac{1}{(s-m)!(-d_i)^{s-m}}\left\{\frac{d^{s-m}}{dw^{s-m}}\left[(1-d_iw)^sX(w^{-1})\right]\right\}_{w=d_i^{-1}}.  
+ \end{equation}
 \end{enumerate}
 
 La ecuación \ref{eq:z_transform_rational_function_simple_fractions_3} es la forma mas general de la expansión en funciones simples de una transformada \(z\) racional expresada como función de \(z^{-1}\) para el caso en que \(M\geq N\) y \(d_i\) es un polo múltiple de orden \(s\). Si hay mas de un polo múltiple, la ecuación \ref{eq:z_transform_rational_function_simple_fractions_3} tendrá un término como el tercer sumando por cada polo múltiple. Si el grado \(M\) del numerador es menor al grado \(N\) del denominador, el término polinómico en la ecuación \ref{eq:z_transform_rational_function_simple_fractions_3} desaparece.
@@ -2059,6 +2059,1038 @@ Efectivamente,
  \lim_{z\to0}X(z)=\lim_{z\to0}\sum_{n=-\infty}^0 x[n]z^{-n}=x[0]+\lim_{z\to0}\sum_{n=1}^\infty x[-n]z^{n}=x[0].
 \]
 
+\chapter{Muestreo de señales en tiempo continuo}
+
+\section{Introducción}
+
+Las señales en tiempo discreto pueden tener distintos orígenes, pero la ocurrencia mas común es como representación de señales en tiempo continuo muestreadas. En este capítulo se incluye un resumen del capítulo 4 de \cite{oppenheim2009discrete}, omitiendo en general los conceptos mas básicos.
+
+\section{Muestreo periódico}
+
+Típicamente, la representación de señales en tiempo continuo mediante señales en tiempo discreto se obtiene a través del muestreo periódico, es decir, una secuencia de muestras \(x[n]\) se obtiene de una señal \(x_c(t)\) en tiempo continuo de acuerdo a la relación
+\begin{equation}\label{eq:sampling_periodic_sampling_definition}
+ x[n]=x_c(nT),
+ \qquad\qquad 
+ -\infty<n<\infty, 
+\end{equation}
+donde \(T\) es el \emph{período de muestreo}, y su inverso, \(f_s=1/T\), es la \emph{frecuencia de muestreo}, cuyas unidades son muestras por segundo. La frecuencia de muestreo también puede expresarse como \(\Omega_s=2\pi/T\) para representar frecuencias en radianes por segundo.
+
+El sistema que implementa la ecuación \ref{eq:sampling_periodic_sampling_definition} será referido como \emph{conversor ideal de tiempo continuo a discreto (C/D)}, y se ilustra en el diagrama de la figura \ref{fig:sampling_continous_discrete_converter}. Observar que el único parámetro necesario para definir el conversor C/D ideal es el período de muestreo, o equivalentemente, la frecuencia de muestreo. 
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.39\textwidth}
+    \includegraphics[width=\textwidth]{figuras/sampling_continous_discrete_converter.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.51\textwidth}
+    \caption{
+     Representación en diagrama de bloques del conversor ideal de tiempo continuo a tiempo discreto (C/D).
+    }\label{fig:sampling_continous_discrete_converter}
+  \end{minipage}
+\end{figure}
+
+La operación de muestreo es en general no invertible, es decir, dada la salida \(x[n]\), no es posible en general reconstruir a la entrada \(x_c(t)\) del muestreador, ya que muchas señales en tiempo continuo pueden producir la misma secuencia de muestras de salida. Sin embargo, es posible eliminar esta ambigüedad restringiendo el contenido de frecuencias de las señales de entrada al muestreador, como se verá mas adelante. 
+
+Es conveniente expresar el proceso de muestreo en las dos etapas que se ilustran en la figura \ref{fig:sampling_continous_discrete_converter_block_diagram}, que consiste en la modulación con un tren de impulsos periódico seguida de la conversión del tren de impulsos a una secuencia. El tren de impulsos periódico es
+\[
+ s(t)=\sum_{n=-\infty}^\infty\delta(t-nT),
+\]
+donde \(\delta(t)\) es la función impulso unitario o delta de Dirac. El producto entre \(s(t)\) y \(x_c(t)\) es por lo tanto
+\[
+ x_s(t)=x_c(t)s(t)=x_c(t)\sum_{n=-\infty}^\infty\delta(t-nT)=\sum_{n=-\infty}^\infty x_c(t)\delta(t-nT),
+\]
+y empleando la propiedad \(x(t)\delta(t)=x(0)\delta(t)\) del impulso unitario, resulta en
+\begin{equation}\label{eq:sampling_xs_modulated_impulse_train}
+ x_s(t)=\sum_{n=-\infty}^\infty x_c(nT)\delta(t-nT), 
+\end{equation}
+que indica que el área del impulso en el instante \(nT\) es igual al valor de la señal en tiempo continuo en ese instante.
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.59\textwidth}
+    \includegraphics[width=\textwidth]{figuras/sampling_continous_discrete_converter_block_diagram.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.31\textwidth}
+    \caption{
+     Representación matemática del proceso de conversión C/D.
+    }\label{fig:sampling_continous_discrete_converter_block_diagram}
+  \end{minipage}
+\end{figure}
+
+La figura \ref{fig:sampling_cd_conversion_math_representation} ilustra las dos etapas del proceso de conversión C/D para dos frecuencias de muestreo distintas. Observar que los impulsos \(x_c(nT)\delta(t-nT)\) están representados por flechas de altura proporcional a su área. La diferencia esencial entre \(x_s(t)\) y \(x[n]\) es que \(x_s(t)\) es una señal en tiempo continuo que es nula excepto en los múltiplos de \(T\). Por otro lado, la secuencia \(x[n]\) es indexada en la variable entera \(n\), lo que produce una normalización temporal, como se aprecia en la figura. La secuencia \(x[n]\) no contiene información temporal explícita sobre el período de muestreo \(T\). Adicionalmente, la muestras de \(x_c(t)\) son representadas por números finitos en \(x[n]\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_cd_conversion_math_representation.pdf}
+ \caption{\label{fig:sampling_cd_conversion_math_representation} \(x_s(t)\) y \(x[n]\) para dos períodos de muestreo distintos, \(T_1\) y \(2T_1\). El tren de impulsos modulado \(x_s(t)\) es una señal en tiempo continuo. La secuencia de números \(x[n]\) es de variable entera \(n\) y no contiene la información temporal del período de muestreo.}
+ \end{center}
+\end{figure}
+
+\section{Representación del muestreo en el dominio de la frecuencia}\label{sec:sampling_frequency_domain_representation}
+
+Para derivar la relación en el dominio de la frecuencia entre la entrada y la salida del conversor C/D, se considera la transformada de Fourier de \(x_s(t)=x_c(t)s(t)\). Por ser el producto de dos señales, el teorema de la modulación (ver por ejemplo, la sección 4.5 de \cite{oppenheim1997signals}) indica que la transformada de Fourier es 
+\[
+ X_s(j\Omega)=\frac{1}{2\pi}X_c(j\Omega)*S(j\Omega),
+\]
+donde \(X_c(j\Omega)\) y \(S(j\Omega)\) son las transformadas de Fourier de \(x_c(t)\) y \(s(t)\) respectivamente. La transformada del tren de impulsos periódico \(s(t)\) es otro tren de impulsos periódico con período la frecuencia de muestreo \(\Omega_s=2\pi/T\) en radianes por segundo,
+\[
+S(j\Omega)=\frac{2\pi}{T}\sum_{k=-\infty}^{\infty}\delta(\Omega-k\Omega_s),
+\]
+como se muestra en el apéndice \ref{ap:continous_fourier_transforms} (ver la ecuación \ref{eq:continous_fourier_transform_impulse_train}). Combinando ambos resultados, se observa que
+\begin{align*}
+X_s(j\Omega)&=\frac{1}{2\pi}X_c(j\Omega)*\left[\frac{2\pi}{T}\sum_{k=-\infty}^{\infty}\delta(\Omega-k\Omega_s)\right]\\
+  &=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c(j\Omega)*\delta(\Omega-k\Omega_s),
+\end{align*}
+obteniendo que 
+\begin{equation}\label{eq:sampling_freq_Xs_fourier_transform}
+ X_s(j\Omega)=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c(j(\Omega-k\Omega_s)). 
+\end{equation}
+Esta ecuación da la relación entre la transformada de Fourier de la entrada y la transformada de Fourier de la salida del modulador en la figura \ref{fig:sampling_continous_discrete_converter_block_diagram}. Indica que la transformada de Fourier del tren de impulsos modulado \(x_s(t)\) consiste en copias de la transformada de Fourier de \(x_c(t)\) desplazadas múltiplos enteros de la frecuencia de muestreo y superpuestas. La figura \ref{fig:sampling_impulse_modulator_frequency_representation} ilustra la representación en el dominio de la frecuencia de la modulación con el tren de impulsos periódico. La señal en tiempo continuo tiene espectro \(X_c(j\Omega)\) de banda limitada, con \(X_c(j\Omega)=0\) cuando \(|\Omega|>\Omega_N\). También se muestra el espectro \(S(j\Omega)\) del tren de impulsos periódico para dos períodos de muestreo distintos, y el espectro del tren de impulsos modulado \(X_s(j\Omega)\), que está dado por la ecuación \ref{eq:sampling_freq_Xs_fourier_transform} y consiste en la convolución de \(X_c(j\Omega)\) y \(S(j\Omega)\). Se observa que en el caso en que
+\[
+ \Omega_s-\Omega_N\geq\Omega_N
+ \qquad\qquad\textrm{o}\qquad\qquad
+ \Omega_s\geq2\Omega_N,
+\]
+la copias de \(X_c(j\Omega)\) centradas en múltiplos de \(\Omega_s\) no se solapan, y cuando se suman como indica la ecuación \ref{eq:sampling_freq_Xs_fourier_transform} permanecen copias intactas de \(X_c(j\Omega)\) en los múltiplos de \(\Omega_s\), excepto por el factor de escala \(1/T\). En consecuencia, \(x_c(t)\) puede recuperarse a partir de \(x_s(t)\) mediante un pasabajos ideal.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_impulse_modulator_frequency_representation.pdf}
+ \caption{\label{fig:sampling_impulse_modulator_frequency_representation} Representación en el dominio de la frecuencia del proceso de modulación con un tren de impulsos periódico. En el caso en que se cumple que \(\Omega_s>2\Omega_N\), las copias de \(X_c(j\Omega)\) que componen a \(X_s(j\Omega)\) no se solapan.}
+ \end{center}
+\end{figure}
+
+El proceso de reconstrucción ideal se muestra en la figura \ref{fig:sampling_impulse_modulator_frequency_representation_reconstruction}. Asumiendo que se cumple que \(\Omega_s>2\Omega_N\), cuando el tren de impulsos modulado se filtra con un pasabajos ideal con respuesta en frecuencia \(H_r(j\Omega)\), el espectro de la señal obtenida es
+\[
+ X_r(j\Omega)=H_r(j\Omega)X_s(j\Omega).
+\]
+Si el pasabajos tiene ganancia \(T\) y frecuencia corte \(\Omega_c\) tal que 
+\begin{equation}\label{eq:sampling_sampling_freq_condition}
+ \Omega_N<\Omega_c<\Omega_s-\Omega_N, 
+\end{equation}
+se cumple que 
+\[
+ X_r(j\Omega)=X_c(j\Omega),
+\]
+y por lo tanto, \(x_r(t)=x_c(t)\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.88\textwidth]{figuras/sampling_impulse_modulator_frequency_representation_reconstruction.pdf}
+ \caption{\label{fig:sampling_impulse_modulator_frequency_representation_reconstruction} Proceso de reconstrucción de la señal en tiempo continuo a partir del tren de impulsos modulado empleando un pasabajos ideal.}
+ \end{center}
+\end{figure}
+
+Si la desigualdad de la ecuación \ref{eq:sampling_sampling_freq_condition} no se cumple, es decir, \(\Omega_s<2\Omega_N\), las copias de \(X_c(j\Omega)\) se solapan, como se muestra en la figura \ref{fig:sampling_impulse_modulator_frequency_representation}, y \(X_c(j\Omega)\) no puede recuperarse mediante el filtrado pasabajos. En ese caso, la salida reconstruida está relacionada con la entrada mediante una distorsión referida como \emph{aliasing}.
+
+En la figura \ref{fig:sampling_aliasing_sinusoid} se ilustra el efecto de aliasing en el dominio de la frecuencia para la señal sinusoidal
+\[
+ x_c(t)=\cos\Omega_0t,
+\]
+cuya transformada de Fourier es
+\[
+X_c(j\omega)=\pi\delta\left(\Omega-\Omega_0\right)+\pi\delta\left(\Omega+\Omega_0\right),
+\]
+como se muestra en el apéndice \ref{ap:continous_fourier_transforms} (ver la ecuación \ref{eq:continous_fourier_transform_cosine})
+Se considera por un lado el caso en que \(\Omega_0<\Omega_s/2\), donde no hay aliasing, y la señal recuperada es
+\[
+ x_r(t)=\cos\Omega_0t,
+\]
+idéntica a la señal original. También se muestra el caso con aliasing donde \(\Omega_s/2<\Omega_0<\Omega_s\). Como se observa en la figura, la señal recuperada es
+\[
+ x_r(t)=\cos(\Omega_s-\Omega_0)t.
+\]
+La señal recuperada cambió de identidad (adoptó un alias) transformándose en una señal de menor frecuencia como consecuencia del proceso de muestreo y reconstrucción.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/sampling_aliasing_sinusoid.pdf}
+ \caption{\label{fig:sampling_aliasing_sinusoid} Efecto de aliasing en el dominio de la frecuencia en el muestreo de señales sinusoidales.}
+ \end{center}
+\end{figure}
+En la figura \ref{fig:sampling_aliasing_sinusoid_time_domain} se muestra el efecto de aliasing en el dominio del tiempo. 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.9\textwidth]{figuras/sampling_aliasing_sinusoid_time_domain.pdf}
+ \caption{\label{fig:sampling_aliasing_sinusoid_time_domain} Efecto de aliasing en el dominio del tiempo en el muestreo de señales sinusoidales.}
+ \end{center}
+\end{figure} 
+
+La discusión precedente es la base del teorema de muestreo de Nyquist, que se formula a continuación:
+
+\paragraph{Teorema de muestreo de Nyquist-Shannon} Sea \(x_c(t)\) una señal de banda limitada con
+\[
+ X_c(j\Omega)=0,
+ \qquad\qquad\textrm{para}\qquad\qquad
+ |\Omega|\geq \Omega_N.
+\]
+Entonces, \(x_c(t)\) esta unívocamente determinada por sus muestras \(x[n]=x_c(nT)\), \(n=0,\,\pm1,\,\pm2,\dots\), si
+\[
+ \Omega_s=\frac{2\pi}{T}\geq 2\Omega_N.
+\]
+El teorema establece que si una señal se muestrea a una frecuencia de muestreo superior al doble de la frecuencia máxima que contiene la señal, las muestras determinan unívocamente a la señal. La mayor frecuencia que contiene la señal, \(\Omega_N\), se llama \emph{frecuencia de Nyquist}. El doble de la frecuencia de Nyquist, \(2\Omega_N\), es decir, la frecuencia que tiene que ser superada por la frecuencia de muestreo para poder recuperar la señal, se llama \emph{tasa de Nyquist}. El teorema de muestreo es referido como \emph{teorema de muestreo de Nyquist-Shannon}, ya que fue conjeturado por Nyquist en 1928 y demostrado por Shannon en 1949.
+
+Hasta el momento, solo se consideró la modulación con el tren de impulsos en la figura \ref{fig:sampling_continous_discrete_converter_block_diagram}. El objetivo ahora es expresar \(X(e^{j\omega})\), la transformada de Fourier en tiempo discreto de \(x[n]\) en términos de \(X_s(j\Omega)\) y \(X_c(j\Omega)\). Para hacerlo, se considera una expresión alternativa a la ecuación \ref{eq:sampling_freq_Xs_fourier_transform} para \(X_s(j\Omega)\).  Aplicando la transformada de Fourier de tiempo continuo (ver el apéndice \ref{ap:continous_fourier_transforms}) a la ecuación \ref{eq:sampling_xs_modulated_impulse_train} se obtiene que 
+\begin{align*}
+ X_s(j\Omega)&=\int_{-\infty}^{\infty}\left[\sum_{n=-\infty}^{\infty}x_c(nT)\delta(t-nT)\right]e^{-j\Omega t}dt\\
+  &=\sum_{n=-\infty}^{\infty}x_c(nT)\left[\int_{-\infty}^{\infty}\delta(t-nT)e^{-j\Omega t}dt\right]\\
+  &=\sum_{n=-\infty}^{\infty}x_c(nT)e^{-j\Omega nT}.
+\end{align*}
+Además, como \(x[n]=x_c(nT)\), resulta en que
+\[
+ X_s(j\Omega)=\sum_{n=-\infty}^{\infty}x[n]e^{-j\Omega nT},
+\]
+y como
+\[
+ X(e^{j\omega})=\sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n},
+\]
+se concluye que 
+\begin{equation}\label{eq:sampling_spectrum_relation_xn_impulse_train}
+ X_s(j\Omega)=X(e^{j\omega})\big|_{\omega=\Omega T}=X(e^{j\Omega T}).
+\end{equation}
+Combinando las ecuaciones \ref{eq:sampling_freq_Xs_fourier_transform} y \ref{eq:sampling_spectrum_relation_xn_impulse_train} se obtiene que
+\begin{equation}\label{eq:sampling_spectrum_relation_xn_impulse_train_XjOmegaT}
+ X(e^{j\Omega T})=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c(j(\Omega-k\Omega_s)), 
+\end{equation}
+o equivalentemente
+\begin{equation}\label{eq:sampling_spectrum_relation_xn_impulse_train_Xjw}
+ X(e^{j\omega})=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{T}-\frac{2\pi k}{T}\right)\right]. 
+\end{equation}
+Las ecuaciones \ref{eq:sampling_spectrum_relation_xn_impulse_train}-\ref{eq:sampling_spectrum_relation_xn_impulse_train_Xjw} indican que el espectro de la señal discreta \(X(e^{j\omega})\) es una versión escalada en frecuencia de \(X_s(j\Omega)\), con el factor de escala dado por \(\omega=\Omega T\). Esto significa que dado el espectro \(X_s(j\Omega)\) del tren de pulsos modulado con la señal, para obtener el espectro \(X(e^{j\omega})\) de la señal discreta, simplemente se multiplica el eje de frecuencia analógica \(\Omega\) por \(T\). Este escalamiento también puede ser pensado como una normalización del eje de frecuencias, en donde la frecuencia analógica de muestreo \(\Omega_s\) en \(X_s(j\Omega)\) se normaliza a \(\omega=2\pi\) en \(X(e^{j\omega})\). La normalización en frecuencia en la transformación de \(X_s(j\Omega)\) a \(X(e^{j\omega})\) está directamente vinculada a que hay una normalización temporal en la transformación de \(x_s(t)\) a \(x[n]\). Específicamente, como se muestra en la figura \ref{fig:sampling_cd_conversion_math_representation}, el espaciamiento entre muestras en \(x_s(t)\) es el periodo de muestreo \(T\), mientras que en \(x[n]\) es siempre unitario. El eje temporal se normaliza con un factor de \(T\), y de forma acorde, el eje de frecuencia se normaliza por un factor de \(f_s=1/T\).
+
+\paragraph{Ejemplo: muestreo y reconstrucción de una señal sinusoidal} Se considera una sinusoide en tiempo continuo de frecuencia \(f_0=2000\) Hz y se muestrea empleando una frecuencia de muestreo de \(f_s=6000\) Hz.
+La frecuencia de la sinusoide en radianes por segundo es \(\Omega_0=2\pi f_0=4000\pi\) rad/s.
+Además, el período de muestreo y la frecuencia de muestreo son respectivamente
+\[
+ T=\frac{1}{f_s}=\frac{1}{6000}\textrm{ s}
+  \qquad\qquad\textrm{y}\qquad\qquad 
+ \Omega_s=2\pi f_s=\frac{2\pi}{T}=12000\pi\textrm{ rad/s}.
+\]
+Como \(\Omega_s>2\Omega_0\), se cumplen las condiciones del teorema de muestreo, por lo que la señal queda unívocamente determinada por las muestras, no hay aliasing y se puede reconstruir. La señal en tiempo continuo es 
+\[
+ x_c(t)=\cos(\Omega_0t)=\cos(4000\pi t).
+\]
+y la señal en tiempo discreto obtenida mediante el muestreo es
+\[
+ x[n]=x_c(nT)=\cos(4000\pi nT)=\cos\left(\frac{2\pi n}{3}\right),
+\]
+es decir, la frecuencia de la señal en tiempo discreto es \(\omega_0=2\pi/3\). La transformada de Fourier de \(x_c(t)\) es
+\[
+X_c(j\Omega)=\pi\delta(\Omega-4000\pi)+\pi\delta(\Omega+4000\pi),
+\]
+esto es, un par de impulsos en las frecuencias \(\Omega_0=\pm4000\pi\). El espectro 
+\[
+ X_s(j\Omega)=\frac{1}{T}\sum_{k=-\infty}^\infty X_c[j(\Omega-k\Omega_s)]
+\]
+consiste en copias de \(X_c(j\Omega)\) centradas en \(0,\,\pm\Omega_s,\,\pm2\Omega_s,\,\dots\). Finalmente, el espectro de la secuencia discreta es \(X(e^{j\omega})=X_s(j\omega/T)\) y se obtiene multiplicando el eje de frecuencia \(\Omega\) por \(T\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.88\textwidth]{figuras/sampling_example_04_01_cosine.pdf}
+ \caption{\label{fig:sampling_example_04_01_cosine} Transformada de Fourier en tiempo continuo de la señal sinusoidal de frecuencia \(\Omega=4000\pi\) rad/s y del tren de impulsos modulado por dicha señal con período de muestreo \(T=1/6000\) s, y transformada en tiempo discreto de la señal discreta resultante.}
+ \end{center}
+\end{figure} 
+Hay que tener en cuenta que el escalado de la variable independiente del impulso unitario produce un escalado del área, es decir, \(\delta(\omega/T)=T\delta(\omega)\)\footnote{Ver \url{https://en.wikipedia.org/wiki/Dirac_delta_function\#Scaling_and_symmetry}, por ejemplo.}. Específicamente, por ejemplo, al evaluar el impulso ubicado en la frecuencia \(\Omega=4000\pi\) en \(X_s(j\Omega)\), que es
+\[
+ \frac{\pi}{T}\delta(\Omega-4000\pi),
+\]
+en \(\omega/T\) para obtener \(X(e^{j\omega})\), queda
+\[
+ \frac{\pi}{T}\delta\left(\frac{\omega}{T}-4000\pi\right)
+  =\frac{\pi}{T}\delta\left(\frac{\omega-4000\pi T}{T}\right)
+  =\frac{\pi}{T}T\delta(\omega-4000\pi T)
+  =\pi\delta\left(\omega-\frac{2\pi}{3}\right).
+\]
+
+\paragraph{Ejemplo: aliasing en el muestreo de una señal sinusoidal} Se considera ahora que la señal sinusoidal de tiempo continuo a muestrear es
+\[
+ x_c(t)=\cos(16000\pi t)
+\]
+pero el período de muestreo es \(T=1/6000\) s, igual que en el ejemplo anterior. Este período de muestreo no satisface el criterio de Nyquist, ya que
+\[
+ \Omega_s=2\pi/T=12000\pi<2\Omega_0=32000\pi.
+\]
+En la figura \ref{fig:sampling_example_04_02_cosine_aliasing} se muestran los espectros de las señales involucradas en el proceso de muestreo. Se observa que el espectro \(X_s(j\Omega)\) del tren de impulsos modulado es igual al del ejemplo anterior en la figura \ref{fig:sampling_example_04_01_cosine}. Sin embargo, en este caso, el impulso ubicado en \(\Omega=-4000\pi\) proviene de la copia de \(X_c(j\Omega)\) centrada en \(\Omega_s=12000\pi\), es decir, de \(X_c[j(\Omega-\Omega_s)]\) en la ecuación \ref{eq:sampling_freq_Xs_fourier_transform}, y el impulso en \(\Omega=4000\pi\) proviene de la copia de \(X_c(j\Omega)\) centrada en \(\Omega_s=-12000\pi\), es decir, de \(X_c[j(\Omega+\Omega_s)]\). En consecuencia, el espectro \(X(e^{j\omega})=X_s(j\omega/T)\) de la señal discreta es igual que el del ejemplo anterior en la figura \ref{fig:sampling_example_04_01_cosine}. El motivo de esto es que la secuencia de muestras obtenida en ambos casos es la misma, ya que 
+\[
+ x[n]=\cos\left(\frac{16000\pi n}{6000}\right)=\cos\left(\frac{12000\pi n}{6000}+\frac{4000\pi n}{6000}\right)
+  =\cos\left(2\pi n+\frac{2\pi n}{3}\right)=\cos\left(\frac{2\pi n}{3}\right).
+\]
+De esta forma, se obtuvo la misma secuencia de muestras mediante el muestreo con la misma frecuencia de muestreo de dos señales en tiempo continuo distintas. 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.88\textwidth]{figuras/sampling_example_04_02_cosine_aliasing.pdf}
+ \caption{\label{fig:sampling_example_04_02_cosine_aliasing} Espectros involucrados en el proceso de muestreo de una señal sinusoidal de frecuencia \(\Omega=16000\pi\) rad/s con período de muestreo de \(T=1/6000\) s. En este caso no se cumple el criterio de Nyquist y hay aliasing. Debido a esto, el espectro \(X_s(j\Omega\) del tren de impulsos modulado y el espectro \(X(e^{j\omega})\) de la señal discreta son los mismos que en el ejemplo anterior, que se muestran en la figura \ref{fig:sampling_example_04_01_cosine}.}
+ \end{center}
+\end{figure} 
+En la figura \ref{fig:sampling_example_04_02_cosine_aliasing} también se muestra la respuesta en frecuencia \(H_r(j\Omega)\) del filtro pasabajos reconstructor correspondiente a la frecuencia de muestreo \(\Omega_s=12000\pi\) rad/s. Es claro de la figura que la señal reconstruida tendrá la frecuencia \(\Omega_0=4000\pi\), que es la frecuencia alias de la frecuencia original \(16000\pi\) respecto a la frecuencia de muestreo \(\Omega_s=12000\pi\).
+
+Estos dos ejemplos sugieren que hay una cantidad ilimitada de formas de obtener la misma secuencia de muestras mediante el muestreo periódico de una señal sinusoidal en tiempo continuo. Sin embargo, la ambigüedad es eliminada si se elige \(\Omega_s>2\Omega_0\).
+
+
+\section{Reconstrucción de una señal de banda limitada a partir de sus muestras}\label{sec:sampling_reconstruction_from_samples}
+
+En esta sección se resume el proceso de reconstrucción de la señal continua \(x_c(t)\) a partir de las muestras de la señal discreta \(x[n]\). Este proceso consiste en construir un tren de impulsos periódico a partir de \(x[n]\) y el período de muestreo \(T\) seguido del filtrado pasabajos del tren de impulsos periódico.
+
+Dada una secuencia de muestras \(x[n]\), puede construirse el tren de impulsos periódico de la ecuación \ref{eq:sampling_xs_modulated_impulse_train} como
+\begin{equation}\label{eq:sampling_modulated_impulse_train_xs_from_xn}
+ x_s(t)=\sum_{n=-\infty}^\infty x[n]\delta(t-nT), 
+\end{equation}
+donde \(T\) es el período de muestreo. En las condiciones adecuadas, la señal original puede reconstruirse mediante el filtrado pasabajos de este tren de impulsos periódico, como se ilustra en la figura \ref{fig:sampling_impulse_modulator_frequency_representation_reconstruction}. Si \(H_r(j\Omega)\) es la respuesta en frecuencia del filtro pasabajos reconstructor y \(h_r(t)\) su repuesta al impulso, la salida del filtro es
+\begin{equation}\label{eq:sampling_reconstructed_signal_xr_in_terms_hr}
+ x_r(t)=\sum_{n=-\infty}^\infty x[n]h_r(t-nT). 
+\end{equation}
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.90\textwidth]{figuras/sampling_discrete_continous_converter_block_diagram.pdf}
+ \caption{\label{fig:sampling_discrete_continous_converter_block_diagram} Diagrama de bloques del proceso de reconstrucción ideal y representación esquemática del conversor D/C.}
+ \end{center}
+\end{figure}
+Una representación en diagrama de bloques se muestra en la figura \ref{fig:sampling_discrete_continous_converter_block_diagram}. El filtro pasabajos reconstructor tiene ganancia \(T\) para compensar el factor \(1/T\) en la ecuación \ref{eq:sampling_freq_Xs_fourier_transform} y frecuencia de corte \(\Omega_c\) entre \(\Omega_N\) y \(\Omega_s-\Omega_N\), como indica la ecuación \ref{eq:sampling_sampling_freq_condition}. Una elección común y conveniente para la frecuencia de corte es \(\Omega_c=\Omega_N/2=\pi/T\), ya que es apropiada para cualquier relación entre \(\Omega_s\) y \(\Omega_N\) que cumplan con el criterio de Nyquist, es decir, que cumplan que  \(\Omega_s>2\Omega_N\). La correspondiente respuesta al impulso \(h_r(t)\) se obtiene aplicando la transformada inversa de Fourier a \(H_r(j\Omega)\) y es (ver la ecuación \ref{eq:continous_inverse_fourier_transform_rectangular_pulse} en el apéndice \ref{ap:continous_fourier_transforms})
+\begin{equation}\label{eq:sampling_reconstructor_filter_impuse_response_hr}
+ h_r(t)=\frac{\sen(\pi t/T)}{\pi t/T}. 
+\end{equation}
+La respuestas en frecuencia y la respuesta al impulso del filtro pasabajos reconstructor se muestran en la figura \ref{fig:sampling_lowpass_continuous_inverse_fourier_transform_2}
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.85\textwidth]{figuras/sampling_lowpass_continuous_inverse_fourier_transform_2.pdf}
+ \caption{\label{fig:sampling_lowpass_continuous_inverse_fourier_transform_2} Respuesta en frecuencia \(H_r(j\Omega)\) y respuesta al impulso \(h_r(t)\) del filtro pasabajos reconstructor.}
+ \end{center}
+\end{figure}
+Sustutyendo la ecuación \ref{eq:sampling_reconstructor_filter_impuse_response_hr} en la ecuación \ref{eq:sampling_reconstructed_signal_xr_in_terms_hr} se obtiene que la señal reconstruida es
+\begin{equation}\label{eq:sampling_reconstructed_signal_xr_sinc}
+ x_r(t)=\sum_{n=-\infty}^\infty x[n]\frac{\sen[\pi(t-nT)/T]}{\pi(t-nT)/T}.
+\end{equation}
+
+Previamente, se vio en el dominio de la frecuencia que si se cumplen las condiciones del teorema de muestreo, \(X_r(j\Omega)=X_c(j\Omega)\), y por lo tanto, \(x_r(t)=x_c(t)\), pero esto no es obvio a partir de la ecuación \ref{eq:sampling_reconstructed_signal_xr_sinc}. Sin embargo, puede ganarse algo de intuición observando la ecuación cuidadosamente. Para esto, considérese la ecuación \ref{eq:sampling_reconstructor_filter_impuse_response_hr} de respuesta al impulso del filtro reconstructor. Se cumple que
+\[
+h_r(0)=1\qquad\qquad\textrm{y}\qquad\qquad h_r(nT)=0,\quad\textrm{para } n=\pm1,\,\pm2,\,\dots,
+\]
+como se ve en la figura \ref{fig:sampling_lowpass_continuous_inverse_fourier_transform_2}. Esto implica que si \(x[n]=x_c(nT)\) se cumple que 
+\[
+ x_r(mT)=x_c(mT)
+\]
+para todo \(m\) entero. Es decir, la señal reconstruida es idéntica a la señal original en los instantes de muestreo, independientemente de intervalo de muestreo \(T\). 
+
+En la figura \ref{fig:sampling_dc_conversion_math_representation} se muestra la representación en el dominio del tiempo del proceso de reconstrucción de la señal en tiempo continuo a partir de las muestras. La secuencia discreta \(x[n]\) representa los valores de la señal en tiempo continuo \(x_c(t)\) en los instantes \(nT\). A partir de la señal discreta y el período de muestreo \(T\) se construye el tren de impulsos periódico \(x_s(t)\) de la ecuación \ref{eq:sampling_modulated_impulse_train_xs_from_xn}. Finalmente, el tren de impulsos es filtrado con el filtro pasabajos con respuesta al impulso \(h_r(t)\) dada por la ecuación \ref{eq:sampling_reconstructor_filter_impuse_response_hr} resultando en la señal reconstruida \(x_r(t)\) dada por la ecuación \ref{eq:sampling_reconstructed_signal_xr_sinc}. Como la figura lo sugiere, el filtro pasabajos ideal interpola entre los impulsos \(x_s(t)\) para construir la señal en tiempo continuo \(x_r(t)\). Como se mencionó, la señal reconstruida es tiene los mismos valores que la señal original \(x_c(t)\) en los instantes de muestreo, pero la justificación de que la interpolación reconstruye correctamente a la señal original si no hay aliasing proviene del análisis realizado en el dominio de la frecuencia.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_dc_conversion_math_representation.pdf}
+ \caption{\label{fig:sampling_dc_conversion_math_representation} Representación del proceso de reconstrucción de la señal a partir de las muestras en el dominio del tiempo.}
+ \end{center}
+\end{figure} 
+
+El sistema ideal para la reconstrucción de una señal de banda limitada a partir de la secuencia de muestras se denomina \emph{conversor ideal de tiempo discreto a tiempo continuo (D/C)} y su representación se ilustra en la figura \ref{fig:sampling_discrete_continous_converter_block_diagram}. Sus propiedades son mas fáciles de deducir en el dominio de la frecuencia. Para obtener la relación entre la entrada y la salida en dicho dominio, considérese la transformada de Fourier de la ecuación \ref{eq:sampling_reconstructed_signal_xr_in_terms_hr}, que es
+\begin{align*}
+ X_r(j\Omega)&\overset{(a)}{=}\sum_{n=-\infty}^\infty x[n]H_r(j\Omega)e^{-j\Omega Tn}\\
+   &=H_r(j\Omega)\sum_{n=-\infty}^\infty x[n]e^{-j\Omega Tn}
+\end{align*}
+donde en \((a)\) se empleó la propiedad de desplazamiento temporal de la transformada de Fourier de tiempo continuo, y teniendo en cuenta que la sumatoria es la transformada de Fourier en tiempo discreto de \(x[n]\) evaluada en \(\omega=\Omega T\), resulta en que 
+\begin{equation}\label{eq:sampling_reconstructed_freq_domain}
+ X_r(j\Omega)=H_r(j\Omega)X(e^{j\Omega T}). 
+\end{equation}
+De acuerdo a este resultado, \(X(e^{j\omega})\) es escalado en el eje de frecuencias. Efectivamente, la conversión de la secuencia al tren de impulsos hace que \(\omega\) sea reemplazado por \(\Omega T\), como indica la ecuación \ref{eq:sampling_spectrum_relation_xn_impulse_train}. Luego, el filtro pasabajos ideal \(H_r(j\Omega)\) selecciona el período base de la transformada de Fourier periódica \(X(e^{j\Omega T})\) y compensa al factor de escala \(1/T\) inherente al muestreo (ver la figura \ref{fig:sampling_impulse_modulator_frequency_representation_reconstruction}). De esta forma, si la secuencia \(x[n]\) se obtuvo mediante el muestreo de una señal de banda limitada a la tasa de Nyquist o mayor, la señal reconstruida \(x_r(t)\) será idéntica a la señal de banda limitada. En cualquier caso, de la ecuación   
+\ref{eq:sampling_reconstructed_freq_domain}, es claro que la salida del conversor D/C es siempre de banda limitada, de a los sumo la frecuencia de corte del filtro pasabajos, que típicamente es la mitad de la frecuencia de muestreo.
+
+\section{Procesamiento en tiempo discreto de señales en tiempo continuo}\label{sec:sampling_discrete_procesing_continuous_signals}
+
+Una aplicación importante de los sistemas en tiempo discreto es en el procesamiento de señales en tiempo continuo. Esto de lleva a cabo con el sistema general de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram}. El sistema es la cascada un conversor C/D, un sistema en tiempo discreto y un conversor D/C. El sistema global es un sistema en tiempo continuo que transforma a la señal en tiempo continuo \(x_c(t)\) en la señal en tiempo continuo \(y_r(t)\). Las propiedades del sistema global dependen de la elección del sistema de tiempo discreto y de la frecuencia de muestreo. Se asume que la frecuencia de muestreo de los conversores C/D y D/C es la misma, pero esto no es un requisito esencial.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.72\textwidth]{figuras/sampling_discrete_processing_continous_signal_block_diagram.pdf}
+ \caption{\label{fig:sampling_discrete_processing_continuous_signal_block_diagram} Procesamiento en tiempo discreto de señales en tiempo continuo.}
+ \end{center}
+\end{figure} 
+
+Para comprender el comportamiento global del sistema, se parte resumiendo las representaciones matemáticas de los conversores C/D y D/C. El conversor \(C/D\) produce la señal en tiempo discreto \(x[n]=x_c(nT)\). La DTFT de la señal obtenida se relaciona con la transformada de Fourier de tiempo continuo de la señal de entrada como (ver la ecuación \ref{eq:sampling_spectrum_relation_xn_impulse_train_Xjw})
+\begin{equation}\label{eq:sampling_cd_conversion_freq_relation}
+ X(e^{j\omega})=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{T}-\frac{2\pi k}{T}\right)\right]. 
+\end{equation}
+El conversor D/C crea la señal en tiempo continuo (ver la ecuación \ref{eq:sampling_reconstructed_signal_xr_sinc})
+\[
+ y_r(t)=\sum_{n=-\infty}^\infty y[n]\frac{\sen[\pi(t-nT)/T]}{\pi(t-nT)/T},
+\]
+donde la secuencia \(y[n]\) es la salida del sistema en tiempo discreto cuando la entrada es \(x[n]\). De la ecuación \ref{eq:sampling_reconstructed_freq_domain}, la transformada de Fourier de tiempo continuo \(Y_r(j\Omega)\) de \(y_r(t)\) y la DTFT \(Y(e^{j\omega})\) de \(y[n]\) se relacionan como
+\begin{equation}\label{eq:sampling_dc_conversion_freq_relation}
+ Y_r(j\Omega)=H_r(j\Omega)Y(e^{j\Omega T})
+ =\left\{
+  \begin{array}{ll}
+   TY(e^{j\Omega T}), & |\Omega|<\pi/T\\
+   0, & \textrm{en otro caso}.
+  \end{array}
+  \right.
+\end{equation}
+
+\subsection{Procesamiento LTI en tiempo discreto de señales en tiempo continuo}
+
+Si el sistema en tiempo discreto de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram} es LTI, la entrada y la salida de dicho sistema se relacionan como
+\[
+ Y(e^{j\omega})=H(e^{j\omega})X(e^{j\omega}),
+\]
+donde \(H(e^{j\omega})\) es la respuesta en frecuencia del sistema. Combinando esta ecuación con la ecuación \ref{eq:sampling_dc_conversion_freq_relation} se obtiene que 
+\[
+ Y_r(j\Omega)=H_r(j\Omega)H(e^{j\Omega T})X(e^{j\Omega T}),
+\]
+y sustituyendo en este resultado a la ecuación \ref{eq:sampling_cd_conversion_freq_relation} resulta en
+\[
+ Y_r(j\Omega)=H_r(j\Omega)H(e^{j\Omega T})\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\Omega-\frac{2\pi k}{T}\right)\right].
+\]
+Si \(X_c(j\Omega)=0\) para \(|\Omega|>\pi/T\), el pasabajos reconstructor ideal cancela al factor \(1/T\) y selecciona solo al término correspondiente a \(k=0\) en esta ecuación, resultando en
+\[
+ Y_r(j\Omega)
+ =\left\{
+  \begin{array}{ll}
+   H(e^{j\Omega T})X_c(j\Omega), & |\Omega|<\pi/T \\
+   0, & |\Omega|>\pi/T.
+  \end{array}
+  \right.
+\]
+Por lo tanto, si \(X_c(j\Omega)\) es de banda limitada y la frecuencia de muestreo es superior a la tasa de Nyquist, la salida se vincula con la entrada como
+\[
+ Y_r(j\Omega)=H_\textrm{eff}(j\Omega)X_c(j\Omega),
+\]
+donde
+\begin{equation}\label{eq:sampling_continous_processing_effective_freq_response}
+ H_\textrm{eff}(j\Omega)
+ =\left\{
+  \begin{array}{ll}
+   H(e^{j\Omega T}), & |\Omega|<\pi/T \\
+   0, & |\Omega|>\pi/T.
+  \end{array}
+  \right. 
+\end{equation}
+Se concluye que la respuesta en frecuencia del sistema en tiempo continuo global es equivalente a un sistema LTI cuya respuesta en frecuencia efectiva está dada por la ecuación \ref{eq:sampling_continous_processing_effective_freq_response}.
+
+\paragraph{Ejemplo: filtrado pasabajos ideal en tiempo continuo empleando un pasabajos en tiempo discreto} Se considera el sistema de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram} con el sistema LIT en tiempo discreto con respuesta en frecuencia
+\[
+ H(e^{j\omega})=
+ \left\{
+ \begin{array}{ll}
+  1, & |\omega|<\omega_c\\
+  0, & \omega_c<|\omega|\leq\pi,
+ \end{array}
+ \right.
+\]
+periódica de período \(2\pi\). Para señales de banda limitada muestreadas sobre la tasa de Nyquist, la ecuación \ref{eq:sampling_continous_processing_effective_freq_response} indica que la respuesta en frecuencia del sistema en tiempo continuo global de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram} es
+\begin{equation}\label{eq:sampling_example_04_03_effective_freq_response}
+  H_\textrm{eff}(j\Omega)
+ =\left\{
+  \begin{array}{ll}
+   1, & |\Omega T|<\omega_c\textrm{ o }|\Omega|<\omega_c/T,\\[\medskipamount]
+   0, & |\Omega T|>\omega_c\textrm{ o }|\Omega|>\omega_c/T,
+  \end{array}
+  \right.  
+\end{equation}
+que corresponde a un filtro pasabajos ideal en tiempo continuo con frecuencia de corte \(\Omega_c=\omega_c/T\).
+Como interpretación del resultado, en la figura \ref{fig:sampling_example_04_03_continuous_low_pass_filter} se muestra el espectro de la señal en cada etapa del proceso de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram}. Se muestra el espectro \(X(j\Omega)\) de la señal en tiempo continuo de banda limitada de entrada. Luego se muestra el espectro del tren de impulsos periódico modulado \(X_s(j\Omega)\), en donde se aprecia que la frecuencia de muestreo \(\Omega_s=2\pi/T\) es mayor que la tasa de Nyquist \(2\Omega_N\) y por lo tanto, se cumplen las condiciones del teorema de muestreo y no hay solapamiento entre las copias de los espectros. También se muestra la DTFT \(X(e^{j\omega})\) de la señal en tiempo discreto, que es igual a \(X_s(j\Omega)=X(e^{j\Omega T})\) evaluada en \(\omega=\Omega T\), junto con la respuesta en frecuencia \(H(e^{j\omega})\) del filtro pasabajos en tiempo discreto. La siguiente gráfica muestra \(Y(e^{j\omega})=H(e^{j\omega})X(e^{j\omega})\), la DTFT de la salida del sistema en tiempo discreto. A continuación se muestra la transformada de Fourier de la salida en función de la frecuencia en tiempo continuo \(\Omega\) junto con la respuesta en frecuencia de filtro reconstructor ideal \(H_r(j\Omega)\)  del conversor D/C. Finalmente se muestra la transformada de Fourier \(Y_r(j\Omega)\) de la salida del conversor D/C. Comparando los espectros \(X_c(j\Omega)\) y \(Y_r(j\Omega)\) se observa que el sistema se comporta como un sistema lineal e invariante en el tiempo con respuesta en frecuencia dada por la ecuación \ref{eq:sampling_example_04_03_effective_freq_response}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_example_04_03_continuous_low_pass_filter.pdf}
+ \caption{\label{fig:sampling_example_04_03_continuous_low_pass_filter} Filtrado pasabajos en tiempo continuo empleando un filtro  en tiempo discreto. Espectro de la señal en cada etapa del proceso en la configuración de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram}.}
+ \end{center}
+\end{figure}
+
+Este ejemplo ilustra algunos aspectos importantes. En primer lugar se observa que el filtro pasabajos ideal en tiempo discreto con frecuencia de corte \(\omega_c\) actúa como un filtro pasabajos ideal en tiempo continuo con frecuencia de corte \(\Omega_c=\omega_c/T\) cuando se emplea en la configuración de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram}. Esta frecuencia de corte depende de \(\omega_c\) y de \(T\). En particular, empleando un filtro pasabajos en tiempo discreto con frecuencia de corte fija, puede implementarse un filtro pasabajos en tiempo continuo con frecuencia de corte variable variando únicamente el período de muestro. Por otro lado, la ecuación \ref{eq:sampling_example_04_03_effective_freq_response} continúa siendo válida incluso con algo de aliasing presente en el proceso de muestreo de la señal en tiempo continuo, siempre y cuando esos componentes con aliasing sean eliminados por el filtro \(H()e^{j\omega}\). En particular, en la gráfica de \(X(e^{j\omega})\) en la figura \ref{fig:sampling_example_04_03_continuous_low_pass_filter} se observa que la condición para que no haya aliasing en la salida es que 
+\[
+ 2\pi-\Omega_NT\geq\omega_c,
+\]
+que es menos restrictiva que la condición de Nyquist
+\[
+ 2\pi-\Omega_NT\geq\Omega_NT.
+\]
+Ambos aspectos se ilustran en la figura \ref{fig:sampling_example_04_03_continuous_low_pass_filter_aliasing}, en donde se emplea la misma señal y el mismo filtro pasabajos en tiempo discreto que en la figura \ref{fig:sampling_example_04_03_continuous_low_pass_filter}, pero con un período de muestreo \(T\) mayor. Con este período de muestreo se produce aliasing en el muestreo de la señal continua de entrada, pero los componentes con aliasing son eliminados por el filtro pasabajos en tiempo discreto, por lo que continúa siendo válida la ecuación \ref{eq:sampling_example_04_03_effective_freq_response}. También se observa comparando los espectros \(Y_r(j\Omega)\) de las señales reconstruidas en las figuras \ref{fig:sampling_example_04_03_continuous_low_pass_filter} y \ref{fig:sampling_example_04_03_continuous_low_pass_filter_aliasing}, que la frecuencia de corte del filtro pasabjos en tiempo continuo del sistema global cambia con el cambio del período de muestreo.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_example_04_03_continuous_low_pass_filter_aliasing.pdf}
+ \caption{\label{fig:sampling_example_04_03_continuous_low_pass_filter_aliasing} Filtrado pasabajos en tiempo continuo empleando un filtro  en tiempo discreto. El período de muestreo \(T\) es tal que se produce aliasing en el muestro de la señal en tiempo continuo de entrada, pero los componentes con aliasing son filtrados por el pasabajos en tiempo discreto. Debido a que al período de muestreo es mayor que en el ejemplo de la figura \ref{fig:sampling_example_04_03_continuous_low_pass_filter}, la frecuencia de corte \(\Omega_c=\omega_c/T\) del filtro pasabajos en tiempo continuo global es menor.}
+ \end{center}
+\end{figure}
+
+Como otro ejemplo de procesamiento en tiempo continuo empleando un sistema en tiempo discreto, se considera la implementación de un diferenciador ideal para señales de banda limitada.
+
+\paragraph{Ejemplo: implementación en tiempo discreto de un diferenciador ideal de banda limitada de tiempo continuo} El sistema diferenciador ideal en tiempo continuo se define como
+\[
+ y_c(t)=\frac{d}{dt}[x_c(t)],
+\]
+y la correspondiente respuesta en frecuencia es
+\[
+ H_c(j\Omega)=j\Omega,
+\]
+que proviene del hecho de que 
+\[
+ \textrm{si}\qquad\qquad
+ x(t)\;\overset{\mathcal{F}}{\longleftrightarrow}\;X(j\Omega)
+ \qquad\qquad\textrm{entonces}\qquad\qquad
+ \frac{d}{dt}[x(t)]\;\overset{\mathcal{F}}{\longleftrightarrow}\;j\Omega X(j\Omega).
+\]
+Al considerar una implementación en la forma de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram}, la entrada se restringe a ser de banda limitada. Debido a esto, es suficiente que la respuesta en frecuencia global del sistema sea
+\[
+ H_\textrm{eff}(j\Omega)
+ =\left\{
+  \begin{array}{ll}
+   j\Omega, & |\Omega|<\pi/T \\
+   0, & |\Omega|>\pi/T.
+  \end{array}
+  \right. 
+\]
+Por lo tanto, de la ecuación \ref{eq:sampling_continous_processing_effective_freq_response}, la repuesta en frecuencia del sistema de tiempo discreto es
+\begin{equation}\label{eq:sampling_differentiator_discrete_freq_response}
+ H(e^{j\omega})=\frac{j\omega}{T},
+ \qquad
+ |\omega|<\pi, 
+\end{equation}
+y periódica con período \(2\pi\). La correspondiente respuesta al impulso se obtiene a partir de la antitransformada discreta de Fourier como
+\begin{align}
+ h[n]&=\frac{1}{2\pi}\int_{-\pi}^{\pi}\left(\frac{j\omega}{T}\right)e^{j\omega n}\,d\omega\label{eq:sampling_differentiator_impulse_response_tmp}\\
+   &=\frac{j}{2\pi T}\left(\int_{-\pi}^{0}\omega e^{j\omega n}\,d\omega+\int_{0}^{\pi}\omega e^{j\omega n}\,d\omega\right)\nonumber\\
+   &\overset{(a)}{=}\frac{j}{2\pi T}\left(\int_{\pi}^{0}\omega e^{-j\omega n}\,d\omega+\int_{0}^{\pi}\omega e^{j\omega n}\,d\omega\right)\nonumber\\
+   &=\frac{j}{2\pi T}\left(-\int_0^{\pi}\omega e^{-j\omega n}\,d\omega+\int_{0}^{\pi}\omega e^{j\omega n}\,d\omega\right)\nonumber\\
+   &=\frac{j}{2\pi T}\int_0^{\pi}\omega\left(e^{j\omega n}-e^{-j\omega n}\right)\,d\omega\nonumber\\
+   &=\frac{j}{2\pi T}\int_0^{\pi}2j\omega\sen\omega n\,d\omega\nonumber\\
+   &=-\frac{1}{\pi T}\int_0^{\pi}\omega\sen\omega n\,d\omega\nonumber
+\end{align}
+Para resolver la última integral se puede emplear integración por partes
+\[
+ \int u(\omega)v'(\omega)\,d\omega=u(\omega)v(\omega)-\int v(\omega)\,u'(\omega)d\omega
+\]
+con
+\[
+ \begin{array}{ll}
+  u(\omega)=\omega, & v'(\omega)=\sen\omega n\\
+  u'(\omega)=1, & v(\omega) = -\dfrac{1}{n}\cos\omega n
+ \end{array} 
+\]
+obteniendo que
+\begin{align*}
+ h[n]&=-\frac{1}{\pi T}\left(-\frac{\omega}{n}\cos\omega n\bigg|_{0}^{\pi}+\dfrac{1}{n}\int_{0}^{\pi}\cos\omega n\,d\omega\right)\\
+  &=-\frac{1}{\pi T}\left(-\frac{\omega}{n}\cos\omega n\bigg|_{0}^{\pi}+\dfrac{1}{n^2}\sen\omega n\bigg|_{0}^{\pi}\right)\\
+  &=\frac{1}{\pi T}\left(\frac{\pi}{n}\cos\pi n-\dfrac{1}{n^2}\sen\pi n\right),
+\end{align*}
+que se puede escribir como
+\begin{equation}\label{eq:sampling_differentiator_impulse_response}
+ h[n]=\frac{\pi n\cos\pi n-\sen\pi n}{\pi n^2T}. 
+\end{equation}
+Observar que esta ecuación tiene una indeterminación en \(n=0\). Para evaluar la respuesta al impulso en \(n=0\), puede aplicarse la regla de L'Hôpital a la ecuación \ref{eq:sampling_differentiator_impulse_response} o evaluar la ecuación \ref{eq:sampling_differentiator_impulse_response_tmp} en \(n=0\),
+\[
+ h[0]=\frac{1}{2\pi}\int_{-\pi}^{\pi}\left(\frac{j\omega}{T}\right)\,d\omega=0.
+\]
+Además, considerando que \(\cos\pi n=(-1)^n\) y \(\sen\pi n=0\), la ecuación \ref{eq:sampling_differentiator_impulse_response} se puede escribir como
+\[
+ h[n]
+  =\left\{
+  \begin{array}{ll}
+   0, & n=0 \\[\medskipamount]
+   \dfrac{(-1)^n}{nT}, & n\neq0.
+  \end{array}
+  \right. 
+\]
+Se verificará que el sistema global es efectivamente un diferenciador empleando como entrada una señal sinusoidal. Se considera como entrada a la señal \(x_c(t)=\cos\Omega_0t\) y período de muestreo \(T\) de los conversores C/D y D/C tal que \(\Omega_0<\pi/T\). La correspondiente salida del conversor C/D es
+\[
+ x[n]=\cos\Omega_0nT=\cos\omega_0n,
+\]
+donde \(\omega_0=\Omega_0T\). De la ecuación \ref{eq:seq_and_sys_sin_cos_dtft_pair}, la transformada de Fourier de \(x[n]\) es
+\[
+ X(e^{j\omega})=\pi\delta(\omega-\omega_0)+\pi\delta(\omega+\omega_0),
+ \qquad |\omega|<\pi,
+\]
+y periódica con período \(2\pi\). La correspondiente salida del sistema en tiempo discreto con respuesta en frecuencia dada por la ecuación \ref{eq:sampling_differentiator_discrete_freq_response} es
+\begin{align*}
+ Y(e^{j\omega})&=H(e^{j\omega})X(e^{j\omega})\\
+  &=\dfrac{j\omega}{T}\left[\pi\delta(\omega-\omega_0)+\pi\delta(\omega+\omega_0)\right]\\
+  &=\dfrac{j\omega_0}{T}\pi\delta(\omega-\omega_0)-\dfrac{j\omega_0}{T}\pi\delta(\omega+\omega_0),
+  \qquad |\omega|<\pi,
+\end{align*}
+donde en la última igualdad se empleó la propiedad de la función delta de Dirac \(x\delta(x-x_0)=x_0\delta(x-x_0)\). La transformada de Fourier de la señal reconstruida está dada por la ecuación \ref{eq:sampling_dc_conversion_freq_relation} y es
+\begin{align*}
+ Y_r(j\Omega)&=TY(e^{j\Omega T})\\
+  &=j\omega_0\pi\delta(\Omega T-\omega_0)-j\omega_0\pi\delta(\Omega T+\omega_0)\\
+  &=j\omega_0\pi\delta\left[T\left(\Omega-\frac{\omega_0}{T}\right)\right]-j\omega_0\pi\delta\left[T\left(\Omega+\frac{\omega_0}{T}\right)\right]\\
+  &\overset{(a)}{=}j\omega_0\pi\dfrac{\delta\left(\Omega-\dfrac{\omega_0}{T}\right)}{T}-j\omega_0\pi\dfrac{\delta\left(\Omega+\dfrac{\omega_0}{T}\right)}{T}\\
+  &\overset{(b)}{=}j\Omega_0\pi\delta(\Omega-\Omega_0)-j\Omega_0\pi\delta(\Omega+\Omega_0)\\
+  &\overset{(c)}{=}\Omega_0\left[-\frac{\pi}{j}\delta(\Omega-\Omega_0)+\frac{\pi}{j}\delta(\Omega+\Omega_0)\right],
+  \qquad|\Omega|<\pi/T,
+\end{align*}
+donde en \((a)\) se empleó la propiedad de escalado de la función delta de Dirac, que indica que \(\delta(\alpha x)=\delta(x)/|\alpha|\), en \((b)\) se consideró que \(\Omega_0=\omega_0/T\) y en \((c)\) se multiplicó la ecuación por \(j/j\). Se obtuvo que
+\[
+ Y_r(j\Omega)=-\Omega_0\left[\frac{\pi}{j}\delta(\Omega-\Omega_0)-\frac{\pi}{j}\delta(\Omega+\Omega_0)\right],
+ \qquad|\Omega|<\pi/T.
+\]
+Finalmente, aplicando la transformada inversa de Fourier se obtiene que (ver la ecuación \ref{eq:continous_fourier_transform_sine})
+\[
+ y_r(t)=-\Omega_0\sen\Omega_0t=\frac{d}{dt}[x_c(t)],
+\]
+que es lo que se quería verificar.
+
+\subsection{Invarianza al impulso}
+
+Como se mostró, el sistema de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram} es equivalente a un sistema LTI para señales de banda limitada. Supóngase que se quiere implementar un sistema en tiempo continuo con respuesta en frecuencia \(H_c(j\Omega)\) dada en la forma del diagrama de la figura \ref{fig:sampling_discrete_processing_continuous_signal_block_diagram}. Si \(H_c(j\Omega)\) es de banda limitada, la ecuación \ref{eq:sampling_continous_processing_effective_freq_response} especifica como elegir \(H(e^{j\omega})\) de forma tal que \(H_\textrm{eff}(j\Omega)=H_c(j\Omega)\). Concretamente,
+\begin{equation}\label{eq:sampling_impulse_invariance_freq_responses_relation}
+ H(e^{j\omega})=H_c(j\omega/T),
+ \qquad|\omega|<\pi, 
+\end{equation}
+con el requerimiento adicional de que \(T\) sea elegido tal que 
+\begin{equation}\label{eq:sampling_impulse_invariance_sampling_rate_condition}
+ H_c(j\Omega)=0,
+ \qquad|\Omega|>\frac{\pi}{T}. 
+\end{equation}
+Definiendo \(\Omega_N\) tal que \(H_c(j\Omega)=0\) en \(|\Omega|>\Omega_N\), este requerimiento es \(\Omega_s=2\pi/T>2\Omega_N\), es decir, el criterio de Nyquist. Bajo las condiciones de las ecuaciones \ref{eq:sampling_impulse_invariance_freq_responses_relation} y \ref{eq:sampling_impulse_invariance_sampling_rate_condition}, hay una relación directa y útil entre la respuesta al impulso \(h_c(t)\) del sistema en tiempo continuo deseada y el sistema en tiempo discreto \(h[n]\). Esta relación es consecuencia de la discusión realizada en la sección \ref{sec:sampling_frequency_domain_representation}. Como se vió en dicha sección, si una señal en tiempo discreto se obtiene mediante el muestreo de una señal en tiempo continuo como indica la ecuación \ref{eq:sampling_periodic_sampling_definition}, es decir, \(x[n]=x_c(nT)\), los espectros se relacionan mediante la ecuación \ref{eq:sampling_spectrum_relation_xn_impulse_train_Xjw}, es decir,
+\[
+ X(e^{j\omega})=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{T}-\frac{2\pi k}{T}\right)\right].
+\]
+Esto implica que si
+\[
+ h[n]=h_c(nT),
+\]
+se cumple que  
+\[
+ H(e^{j\omega})=\frac{1}{T}\sum_{k=-\infty}^{\infty}H_c\left[j\left(\frac{\omega}{T}-\frac{2\pi k}{T}\right)\right],
+\]
+y si se satisface la restricción de la ecuación \ref{eq:sampling_impulse_invariance_sampling_rate_condition}, se cumple que 
+\[
+ H(e^{j\omega})=\frac{1}{T}H_c\left(j\frac{\omega}{T}\right),
+ \qquad|\omega|<\pi,
+\]
+que es la ecuación \ref{eq:sampling_impulse_invariance_freq_responses_relation} excepto por el factor de escala \(1/T\). Esto implica que si los espectros se relacionan mediante la ecuación \ref{eq:sampling_impulse_invariance_freq_responses_relation}, las respuestas al impulso se relacionan mediante la ecuación 
+\begin{equation}\label{eq:sampling_impulse_invariance_impulse_responses_relation}
+ h[n]=Th_c(nT),
+\end{equation}
+es decir, la repuesta al impulso del sistema en tiempo discreto es una versión muestreada y escalada de \(h_c(t)\). Cuando \(h[n]\) y \(h_c(t)\) se relacionan mediante la ecuación \ref{eq:sampling_impulse_invariance_impulse_responses_relation}, se dice que el sistema en tiempo discreto es una versión \emph{invariante al impulso} del sistema en tiempo continuo.
+
+\section{Procesamiento en tiempo continuo de señales en tiempo discreto}\label{sec:sampling_continuous_procesing_discrete_signals}
+
+En esta sección se considera el procesamiento en tiempo continuo se señales en tiempo discreto, que es la situación complementaria a la considerada en la sección \ref{sec:sampling_discrete_procesing_continuous_signals} y se ilustra en la figura \ref{fig:sampling_continuous_processing_discrete_signal_block_diagram}. Si bien esta configuración no es usada en general para el procesamiento de señales en tiempo discreto, es útil para la interpretación de sistemas en tiempo discreto que no tienen una interpretación simple en el tiempo discreto.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.72\textwidth]{figuras/sampling_continuous_processing_discrete_signal_block_diagram.pdf}
+ \caption{\label{fig:sampling_continuous_processing_discrete_signal_block_diagram} Procesamiento en tiempo continuo de señales en tiempo discreto.}
+ \end{center}
+\end{figure} 
+
+De la definición del conversor D/C ideal, \(X_c(j\Omega)\) y por lo tanto \(Y_c(j\Omega)\), son nulas en \(|\Omega|\geq\pi/T\). Por lo tanto, el conversor C/D muestrea a \(y_c(t)\) sin aliasing, y \(x_c(t)\) y \(y_c(t)\) se pueden expresar como (ver la ecuación \ref{eq:sampling_reconstructed_signal_xr_sinc})
+\[
+ x_c(t)=\sum_{n=-\infty}^\infty x[n]\frac{\sen[\pi(t-nT)/T]}{\pi(t-nT)/T}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ y_c(t)=\sum_{n=-\infty}^\infty y[n]\frac{\sen[\pi(t-nT)/T]}{\pi(t-nT)/T},
+\]
+y se cumple que \(x[n]=x_c(nT)\) y \(y[n]=y_c(nT)\). Las relaciones en el dominio de la frecuencia de las señales en la figura \ref{fig:sampling_continuous_processing_discrete_signal_block_diagram} son (ver las ecuaciones \ref{eq:sampling_spectrum_relation_xn_impulse_train_XjOmegaT} y \ref{eq:sampling_spectrum_relation_xn_impulse_train_Xjw})
+\begin{align}
+ X_c(j\Omega)&=TX(e^{j\Omega T}),\qquad|\Omega|<\frac{\pi}{T}\label{eq:sampling_xct_xn_spectrum_relation}\\
+ Y_c(j\Omega)&=H_c(j\Omega)X_c(j\Omega)\label{eq:sampling_yct_xct_spectrum_relation}\\
+ Y(e^{j\omega})&=\frac{1}{T}Y_c\left(j\frac{\omega}{T}\right),\qquad|\omega|<\pi.\label{eq:sampling_yn_xct_spectrum_relation}
+\end{align}
+Sustituyendo las ecuaciones \ref{eq:sampling_xct_xn_spectrum_relation} y \ref{eq:sampling_yct_xct_spectrum_relation} en la ecuación \ref{eq:sampling_yn_xct_spectrum_relation} se obtiene que
+\[
+ Y(e^{j\omega})=H_c\left(j\frac{\omega}{T}\right)X(e^{j\omega})
+\]
+y por lo tanto, el sistema completo se comporta como un sistema en tiempo discreto con respuesta en frecuencia
+\begin{equation}\label{eq:sampling_continuous_processing_discrete_signal_H_Hc_relation}
+ H(e^{j\omega})=H_c\left(j\frac{\omega}{T}\right),
+ \qquad|\omega|<\pi, 
+\end{equation}
+o equivalentemente, la respuesta en frecuencia global del sistema de la figura \ref{fig:sampling_continuous_processing_discrete_signal_block_diagram} será igual a una respuesta en frecuencia \(H(e^{j\omega})\) dada si la respuesta en frecuencia del sistema en tiempo continuo es
+\begin{equation}\label{eq:sampling_continuous_processing_discrete_signal_Hc_H_relation}
+ H_c(j\Omega)=H(e^{j\Omega T}),
+ \qquad|\Omega|<\frac{\pi}{T}. 
+\end{equation}
+Como \(X_c(j\Omega)=0\) en \(|\Omega|\geq\pi/T\), \(H_c(j\Omega)\) puede elegirse arbitrariamente sobre esa frecuencia.
+
+\paragraph{Ejemplo: retardo no entero} Considérese el sistema en tiempo discreto con respuesta en frecuencia
+\begin{equation}\label{eq:sampling_non_integer_delay_freq_response}
+ H(e^{j\omega})=e^{-j\omega\Delta},
+ \qquad|\omega|<\pi. 
+\end{equation}
+Cuando \(\Delta\) es un entero, el sistema tiene la interpretación inmediata de un retardo de \(\Delta\) muestras, es decir,
+\[
+ y[n]=x[n-\Delta].
+\]
+Si \(\Delta\) no es entero, esta ecuación no tiene un significado formal, ya que no se puede desplazar a la secuencia \(x[n]\) una cantidad no entera de muestras. Sin embargo, con el sistema de la figura \ref{fig:sampling_continuous_processing_discrete_signal_block_diagram} puede brindarse un interpretación útil al sistema especificado por la ecuación \ref{eq:sampling_non_integer_delay_freq_response}. Si se elije el sistema \(H_c(j\Omega)\) de la figura \ref{fig:sampling_continuous_processing_discrete_signal_block_diagram} como
+\begin{equation}\label{eq:sampling_non_integer_delay_continuous_freq_response}
+ H_c(j\Omega)=H(e^{j\Omega T})=e^{-j\Omega T\Delta}, 
+\end{equation}
+la ecuación \ref{eq:sampling_continuous_processing_discrete_signal_Hc_H_relation} indica que la respuesta en frecuencia del sistema global es la dada por la ecuación \ref{eq:sampling_non_integer_delay_freq_response}, sea \(\Delta\) un entero o no. Para interpretar el sistema \ref{eq:sampling_non_integer_delay_freq_response}, se observa que el sistema \ref{eq:sampling_non_integer_delay_continuous_freq_response} es un retardo de \(T\Delta\) segundos. Por lo tanto,
+\[
+ y_c(t)=x_c(t-T\Delta).
+\]
+Adicionalmente, \(x_c(t)\) es la interpolación de banda limitada de \(x[n]\) y \(y[n]\) se obtiene mediante el muestreo de \(y_c(t)\). Por ejemplo, si \(\Delta=1/2\), \(y_c(t)=x_c(t-T/2)\), es decir \(y_c(t)\) es la interpolación de banda limitada de \(x[n]\) desplazada \(T/2\) segundos (media período de muestro). Como \(y[n]=y_c(nT)\), \(y[n]\) tiene los valores de la interpolación de banda limitada en el medio de los valores de la secuencia de entrada. Esto se ilustra en la figura \ref{fig:sampling_example_04_07_non_integer_delay}. Puede obtenerse una representación como producto convolución del sistema \ref{eq:sampling_non_integer_delay_freq_response}. Para hacerlo, se parte considerando que \(x_c(t)\) es la interpolación de banda limitada de \(x[n]\), y por lo tanto,
+\[
+ x_c(t)=\sum_{k=-\infty}^\infty x[k]\frac{\sen[\pi(t-kT)/T]}{\pi(t-kT)/T}.
+\]
+Luego,
+\[
+ y_c(t)=x_c(t-T\Delta)=\sum_{k=-\infty}^\infty x[k]\frac{\sen[\pi(t-T\Delta-kT)/T]}{\pi(t-T\Delta-kT)/T},
+\]
+y finalmente,
+\[
+ y[n]=y_c(nT)=\sum_{k=-\infty}^\infty x[k]\frac{\sen(\pi(n-k-\Delta)}{\pi(n-k-\Delta)},
+\]
+que es por definición la convolución entre \(x[n]\) y 
+\[
+ h[n]=\frac{\sen(\pi(n-\Delta)}{\pi(n-\Delta)},
+ \qquad-\infty<n<\infty.
+\]
+Si \(\Delta\) no es un entero, \(h[n]\) tiene soporte infinito. Sin embargo, cuando \(\Delta=n_0\) es un entero, puede verificarse que \(h[n]=\delta[n-n_0]\), que es la respuesta al impulso del retado ideal.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.87\textwidth]{figuras/sampling_example_04_07_non_integer_delay.pdf}
+ \caption{\label{fig:sampling_example_04_07_non_integer_delay} Procesamiento en tiempo continuo de una señal discreta para producir un retardo no entero. En la figura, \(\Delta=1/2\), produciendo un retardo de \(1/2\) muestra. Los valores de la secuencia \(y[n]\) corresponden a la interpolación de banda limitada \(x_c(t)\) de \(x[n]\) en la mitad de los intervalos de muestreo.}
+ \end{center}
+\end{figure}
+
+\section{Cambio de la frecuencia de muestreo empleando procesamiento en tiempo discreto}
+
+En ocasiones es necesario cambiar la frecuencia de muestreo de un señal en tiempo discreto, es decir, obtener una nueva representación de la señal en tiempo continuo subyacente de la forma
+\[
+ x'[n]=x_c(nT'),
+\]
+con \(T'\neq T\), donde \(T\) es el período de muestreo original de la secuencia \(x[n]\) original. Esto operación se denomina \emph{remuestreo}. Para obtener \(x'[n]\) a partir de \(x[n]\), podría reconstruirse \(x_c(t)\) a partir de \(x[n]\) mediante la ecuación \ref{eq:sampling_reconstructed_signal_xr_sinc} y luego remuestrear \(x_c(t)\) con período \(T'\), como se muestra en la figura \ref{fig:sampling_change_sampling_rate_with_reconstruction}. Sin embargo, este no es usualmente el enfoque que se aplica en la práctica debido a las no idealidades de los conversores D/A y A/D que se emplean en la práctica e introducen errores en el proceso. Es de interés entonces considerar métodos para cambiar la frecuencia de muestreo que involucren solo operaciones en tiempo discreto.
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.47\textwidth}
+  \includegraphics[width=\textwidth]{figuras/sampling_change_sampling_rate_with_reconstruction.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.43\textwidth}
+ \caption{
+   Cambio de la frecuencia de muestreo reconstruyendo la señal en tiempo continuo \(x_c(t)\).
+  }\label{fig:sampling_change_sampling_rate_with_reconstruction}
+ \end{minipage}
+\end{figure}
+
+
+\subsection{Reducción de la frecuencia de muestreo por un factor entero}
+
+La frecuencia de muestreo puede ser reducida por un factor entero ``muestreando'' la secuencia original, es decir,
+\begin{equation}\label{eq:sampling_subsample_definition}
+ x_d[n]=x[nM]=x_c(nMT). 
+\end{equation}
+Esto se muestra en la figura \ref{fig:sampling_reduce_sampling_rate_time_domain}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.97\textwidth]{figuras/sampling_reduce_sampling_rate_time_domain.pdf}
+ \caption{\label{fig:sampling_reduce_sampling_rate_time_domain} Submuestreo en el dominio del tiempo. Se ilustra el caso en que \(x_d[n]=x[nM]\) con \(M=3\).}
+ \end{center}
+\end{figure}
+El sistema que realiza la operación de la reducción de la tasa de muestreo se llama \emph{compresor de la frecuencia de muestreo}  o simplemente \emph{compresor}, y se ilustra en la figura \ref{fig:sampling_compressor}.De la definición de la ecuación \ref{eq:sampling_subsample_definition}, \(x_d[n]\) es idéntica a la secuencia que se obtendría muestreando \(x_c(t)\) con período de muestreo \(T_d=MT\). Por lo tanto, si la señal continua \(x_c(t)\) es de banda limitada con
+\(X_c(j\Omega)=0\) para \(|\Omega|\geq\Omega_N\), por el teorema de muestreo, \(x_d[n]\) es una representación sin aliasing de \(x_c(t)\) si \(\downarrow M\)
+\[
+ \frac{\pi}{T_d}=\frac{\pi}{MT}\geq\Omega_N,
+\]
+o equivalentemente, la frecuencia de muestreo original cumple que
+\[
+ \frac{\Omega_s}{2}=\frac{\pi}{T}\geq M\Omega_N.
+\]
+Es decir, la frecuencia de muestreo puede reducirse un factor \(M\) sin producir aliasing si la frecuencia de muestreo original es al menos \(M\) veces la tasa de Nyquist, o el ancho de banda de la secuencia original se reduce un factor \(M\) mediante el filtrado en tiempo discreto. En general, a la operación de reducir la frecuencia de muestreo, incluyendo algún prefiltrado, se llama \emph{submuestreo}. 
+\begin{figure}[!htb]
+ \begin{minipage}[c]{0.41\textwidth}
+  \includegraphics[width=\textwidth]{figuras/sampling_compressor.pdf}
+ \end{minipage}\hfill
+ \begin{minipage}[c]{0.49\textwidth}
+  \caption{
+    Representación del compresor.
+  }\label{fig:sampling_compressor}
+ \end{minipage}
+\end{figure}
+
+Al igual que en el caso de muestreo de señales continuas, es útil encontrar la relación entre el espectro de la entrada y el espectro de la salida del compresor. Sin embargo, en este caso, la relación es entre transformadas de Fourier de tiempo discreto (DTFTs). La derivación del resultado se hará en base a la derivación del muestreo de señales en tiempo continuo ya realizado en la sección \ref{sec:sampling_frequency_domain_representation}. Se comienza recordando que la DTFT de \(x[n]=x_c(nT)\) es (ver la ecuación \ref{eq:sampling_spectrum_relation_xn_impulse_train_Xjw})
+\begin{equation}\label{eq:sampling_reduction_dtft_xn_vs_xc}
+ X(e^{j\omega})=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{T}-\frac{2\pi k}{T}\right)\right]. 
+\end{equation}
+Análogamente, el espectro de \(x_d[n]=x[nM]=x_c(nT_d)\) con \(T_d=MT\) es
+\begin{equation}\label{eq:sampling_reduction_dtft_xn_vs_xc_Td}
+ X_d(e^{j\omega})=\frac{1}{T_d}\sum_{r=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{T_d}-\frac{2\pi r}{T_d}\right)\right] 
+\end{equation}
+Esta ecuación indica que \(X_d(e^{j\omega})\) se compone de copias de \(X_c(j\Omega)\) escaladas en frecuencia como \(\omega=\Omega T_d\) y desplazadas múltiplos enteros de \(2\pi/T_d\). Sustituyendo \(T_d=MT\) se obtiene que 
+\begin{equation}\label{eq:sampling_reduction_dtft_xnM_vs_xc}
+ X_d(e^{j\omega})=\frac{1}{MT}\sum_{r=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{MT}-\frac{2\pi r}{MT}\right)\right].
+\end{equation}
+Para ver la relación entre las ecuaciones \ref{eq:sampling_reduction_dtft_xn_vs_xc} y \ref{eq:sampling_reduction_dtft_xnM_vs_xc} se observa que que el índice \(r\) de la sumatoria puede expresarse como
+\[
+ r=i+kM,
+ \qquad\textrm{con}\qquad 
+ -\infty<k<\infty
+ \qquad\textrm{y}\qquad
+ 0\leq i\leq M-1.
+\]
+De esta forma, \(r\) continúa siendo un entero que va de \(-\infty\) a \(\infty\), y haciendo este cambio de variable en la ecuación \ref{eq:sampling_reduction_dtft_xnM_vs_xc} resulta en
+\[
+ X_d(e^{j\omega})=\frac{1}{M}\sum_{i=0}^{M-1}\left\{\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\frac{\omega}{MT}-\frac{2\pi i}{MT}-\frac{2\pi k}{T}\right)\right]\right\}.
+\]
+El término entre corchetes es la DTFT \(X(e^{j\omega})\) de la señal original, dada por la ecuación \ref{eq:sampling_reduction_dtft_xn_vs_xc} evaluada en \((\omega-2\pi i)/M\), es decir,
+\[
+X(e^{j(\omega-2\pi i)/M})=\frac{1}{T}\sum_{k=-\infty}^{\infty}X_c\left[j\left(\frac{\omega-2\pi i}{MT}-\frac{2\pi k}{T}\right)\right].
+\]
+Sustituyendo este resultado en la ecuación anterior, se obtiene que 
+\begin{equation}\label{eq:sampling_reduction_dtft_xnM_vs_xn}
+ X_d(e^{j\omega})=\frac{1}{M}\sum_{i=0}^{M-1}X(e^{j(\omega-2\pi i)/M}).
+\end{equation}
+Esta ecuación expresa la transformada de Fourier \(X_d(e^{j\omega})\) de la secuencia submuestreada \(x_d[n]\) en función de la transformada de Fourier  \(X(e^{j\omega})\) de la secuencia original \(x[n]\).
+Indica que \( X_d(e^{j\omega})\) consiste en \(M\) copias de \(X(e^{j\omega})\) escaladas en frecuencia un factor \(M\) y desplazadas múltiplos enteros de \(2\pi\). Alternativamente, la ecuación \ref{eq:sampling_reduction_dtft_xn_vs_xc_Td} indica que \(X_d(e^{j\omega})\) es la superposición de infinitas copias de la transformada de Fourier \(X_c(j\Omega)\) de la señal en tiempo continuo escaladas en frecuencia como \(\omega=\Omega T_d\) y desplazadas en frecuencia múltiplos enteros de \(2\pi\). Ambas interpretaciones dejan en claro que \(X_d(e^{j\omega})\) es periódica de período \(2\pi\), como los son todas las DTFTs, y para evitar aliasing se requiere que \(X(e^{j\omega})\) sea de banda limitada como
+\[
+ X(e^{j\omega})=0,
+ \qquad 
+ \omega_N<\omega<\pi,
+ \qquad\textrm{con}\qquad
+ \omega_N\leq\frac{\pi}{M}.
+\]
+
+El proceso de submuestreo es ilustrado en la figura \ref{fig:sampling_subsampling_freq_domain}. Se considera una señal discreta con espectro \(X(e^{j\omega})\) que proviene del muestreo de una señal continua \(X_c(j\Omega)\) de ancho de banda \(\Omega_N\). La frecuencia de muestreo es \(\Omega_s=4\Omega_N\), y por lo tanto, se cumplen las condiciones del teorema de muestro y no se produce aliasing, como se aprecia en las gráficas de \(X_s(j\Omega)\) y \(X(e^{j\omega})\) en la figura. La señal discreta es de banda limitada con ancho de banda
+\[
+ \omega_N=\Omega_NT=\frac{\Omega_s}{4}T=\frac{\pi}{2}.
+\]
+La señal discreta se submuestrea un factor \(M=2\), es decir, \(x_d[n]\) se construye tomando una de cada dos muestras de \(x[n]\), o concretamente, \(x_d[n]=x[2n]\). El espectro de la señal submuestreada \(X_d(e^{j\omega})\) consiste en la superposición de dos copias del espectro de la señal discreta \(X(e^{j\omega})\) escaladas en frecuencia un factor \(M\) y una de ellas desplazada \(2\pi\) en frecuencia, como indica la ecuación \ref{eq:sampling_reduction_dtft_xnM_vs_xn}. Estas copias son \(X(e^{j\omega/2})\) y \(X(e^{j(\omega-2\pi)/2})\) en la figura y la superposición con el factor de escala de amplitud correspondiente es la DTFT de señal submuestreada \(X_d(e^{j\omega})\). En la figura, puede verse que para evitar aliasing se tiene que cumplir que,
+\[
+\omega_N M\leq2\pi-\omega_N M
+\qquad\textrm{o}\qquad
+\omega_N\leq \frac{\pi}{M}.
+\]
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_subsampling_freq_domain.pdf}
+ \caption{\label{fig:sampling_subsampling_freq_domain} Submuestreo en el dominio de la frecuencia. El factor de submuestreo es \(M=2\). Se parte de una señal en tiempo continuo de ancho de banda \(\Omega_N\) que es muestreada con una frecuencia de muestreo \(\Omega_s=2\pi/T=4\Omega_N\). Esto produce una señal en tiempo discreto con ancho de banda \(\omega_N=\pi/2\). Esta señal discreta se submuestrea un factor \(M=2\) produciendo la señal con espectro \(X_d(e^{j\omega})\).}
+ \end{center}
+\end{figure}
+
+El ejemplo de la figura \ref{fig:sampling_subsampling_freq_domain} ilustra el caso extremo en que frecuencia de muestreo original es exactamente el doble del mínimo para evitar aliasing al submuestrear un factor \(M=2\), o equivalentemente, \(\omega_N=\pi/2\). Por lo tanto, al submuestrear con un factor mayor se produce aliasing. Considérese ahora el caso en que señal discreta se submuestrea un factor \(M=3\). 
+Como \(\omega_N=\pi/2\), ahora se cumple que,
+\[
+ \omega_N>\frac{\pi}{M}=\frac{\pi}{3}
+\]
+y hay aliasing. Esto se ilustra en la figura \ref{fig:sampling_subsampling_freq_domain_aliasing}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_subsampling_freq_domain_aliasing.pdf}
+ \caption{\label{fig:sampling_subsampling_freq_domain_aliasing} Submuestreo en el dominio de la frecuencia. Se considera la misma señal que en la figura \ref{fig:sampling_subsampling_freq_domain} pero ahora el factor de submuestreo es \(M=3\), por lo que el proceso de submuestreo produce aliasing.}
+ \end{center}
+\end{figure}
+Si la condición \(\omega_N\leq \pi/M\) no se cumple, se produce aliasing. Aún así, es posible evitarlo a costa de reducir el ancho de banda de la señal \(x[n]\). Concretamente, se filtra la señal \(x[n]\) con un filtro pasabajos ideal discreto de frecuencia de corte \(\pi/M\). De esta forma, la señal filtrada \(\tilde{x}[n]\), tiene ancho de banda \(\omega_N=\pi/M\) y puede submuestrearse sin aliasing. Notar que debido al filtrado, la secuencia submuestreada es \(\tilde{x}_d[n]=\tilde{x}[nM]\), y ya no representa a la señal continua \(x_c(t)\) en los instantes de muestreo, es decir, no se cumple que \(\tilde{x}_d[n]=x_c(nMT)\). En su lugar, \(\tilde{x}[n]=\tilde{x}_c(nT_d)\), donde \(T_d=MT\), y \(\tilde{x}_c(t)\) se obtiene mediante el filtrado pasabajos de \(x_c(t)\) con frecuencia de corte \(\Omega_c=\pi/T_d=\pi/(MT)\). El porcedimiento de decimación se ilustra en la figura \ref{fig:sampling_subsampling_freq_domain_decimation} para el caso del ejemplo de la figura \ref{fig:sampling_subsampling_freq_domain_aliasing}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_subsampling_freq_domain_decimation.pdf}
+ \caption{\label{fig:sampling_subsampling_freq_domain_decimation} Decimación en el dominio de la frecuencia. Se considera el caso ilustrado figura \ref{fig:sampling_subsampling_freq_domain_aliasing}, donde el ancho de banda de la señal discreta original es \(\omega_N=\pi/2\) y el factor de submuestreo es \(M=3\). El filtrado de la señal discreta con el filtro pasabajos \(H_d(e^{j\omega})\) de frecuencia de corte \(\pi/M\) evita el aliasing al submuestrear.}
+ \end{center}
+\end{figure}
+
+El sistema general para submuestrear una señal por un factor \(M\) consiste en un pasabajos de frecuencia de corte \(\omega_c=\pi/M\) seguido de un compresor. El sistema se denomina \emph{decimador} y el diagrama de bloques se muestra en la figura \ref{fig:sampling_decimator}. El proceso de denomina \emph{decimación}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.74\textwidth]{figuras/sampling_decimator.pdf}
+ \caption{\label{fig:sampling_decimator} Decimador. Sistema general para la reducción de la tasa de muestreo un factor \(M\).}
+ \end{center}
+\end{figure}
+
+\subsection{Incremento de la frecuencia de muestreo por un factor entero}
+
+Así como la reducción de la frecuencia de muestreo es una operación análoga a la conversión C/D, el incremento de la frecuencia de muestreo es análogo a la conversión D/C, como se verá a continuación. Se considera ahora el caso en que se quiere incrementar un factor \(L\) a la frecuencia de muestro de una señal \(x[n]\). Si la señal en tiempo continuo subyacente es \(x_c(t)\), el objetivo es obtener muestras
+\begin{equation}\label{eq:sampling_upsampling_definition}
+ x_i[n]=x_c(nT_i), 
+\end{equation}
+donde \(T_i=T/L\), a partir de la secuencia de muestras
+\[
+ x[n]=x_c(nT).
+\]
+A la operación de incrementar la frecuencia de muestreo se le llama \emph{sobremuestreo}.
+
+De la definición de submuestreo, se cumple que
+\[
+ x_i[n]=x[n/L]=x_c(nT/L),\qquad n=0,\,\pm L,\,\pm 2L,\,\dots,
+\]
+es decir,
+\[
+x_i[0]=x[0],\quad x_i[L]=x[1],\quad x_i[2L]=x[2],\quad x_i[3L]=x[3],\,\dots.
+\]
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.79\textwidth]{figuras/sampling_expansor.pdf}
+ \caption{\label{fig:sampling_expansor} Sistema general para el incremento de la tasa de muestreo un factor \(L\).}
+ \end{center}
+\end{figure}
+La figura \ref{fig:sampling_expansor} muestra el sistema general para obtener a \(x_i[n]\) a partir de \(x[n]\) empleando únicamente procesamiento en tiempo discreto. El primer sistema se llama \emph{expansor de la tasa de muestreo}, o simplemente \emph{expansor}, y su salida es
+\[
+ x_e[n]=\left\{ 
+  \begin{array}{l l}
+   x[n/L], & n=0,\,\pm L,\,\pm 2L,\,\dots\\
+   0, &\textrm{en otro caso}
+   \end{array}\right.
+\]
+o equivalentemente,
+\begin{equation}\label{eq:sampling_upsampling_expansor_output_xe}
+ x_e[n]=\sum_{k=-\infty}^{\infty}x[k]\delta[n-kL]. 
+\end{equation}
+El segundo sistema es un pasabajos en tiempo discreto con frecuencia de corte \(\pi/L\) y ganancia \(L\). El sistema global de la figura \ref{fig:sampling_expansor} juega un rol similar al conversor D/C en la figura \ref{fig:sampling_discrete_continous_converter_block_diagram}: primero se crea un tren de impulsos periódico discreto \(x_e[n]\), y luego se emplea un filtro pasabajos para reconstruir la secuencia. En la figura \ref{fig:sampling_increase_sampling_rate_time_domain} se muestra el proceso de sobremuestreo en el dominio del tiempo.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.97\textwidth]{figuras/sampling_increase_sampling_rate_time_domain.pdf}
+ \caption{\label{fig:sampling_increase_sampling_rate_time_domain} Proceso de sobremuestreo en el dominio del tiempo. Se muestran las señales en cada etapa del sistema de la figura \ref{fig:sampling_expansor} con \(L=3\).}
+ \end{center}
+\end{figure}
+
+La operación del sistema de la figura \ref{fig:sampling_expansor} es comprendida mas fácilmente en el dominio de la frecuencia. La transformada de Fourier de la salida de \(x_e[n]\) del expansor es
+\begin{align*}
+X_e(e^{j\omega})&=\sum_{n=-\infty}^{\infty}\left(\sum_{k=-\infty}^{\infty}x[k]\delta[n-kL]\right)e^{-j\omega n}\\
+ &=\sum_{k=-\infty}^{\infty}x[k]\left(\sum_{n=-\infty}^{\infty}\delta[n-kL]e^{-j\omega n}\right)\\
+ &=\sum_{k=-\infty}^{\infty}x[k]e^{-j\omega Lk}\\
+ &=X(e^{j\omega L}).
+\end{align*}
+Este resultado indica que la transformada de Fourier de la salida del expansor es una versión escalada en frecuencia de la transformada de Fourier de la entrada. Concretamente, \(\omega\) es reemplazado por \(\omega L\), produciendo una compresión por un factor de \(L\) del eje de frecuencia. 
+
+La figura \ref{fig:sampling_upsampling_freq_domain} ilustra el proceso de sobremuestreo en el dominio de la frecuencia. Se considera una señal discreta con espectro \(X(e^{j\omega})\) que proviene del muestreo de una señal continua \(X_c(j\Omega)\) de ancho de banda \(\Omega_N\). La frecuencia de muestreo es \(\Omega_s=2\Omega_N\), y por lo tanto, se cumplen las condiciones del teorema de muestro y no se produce aliasing. De esta forma, la señal discreta tiene ancho de banda \(\omega_N=\pi\). La señal discreta se sobremuestrea un factor \(L=2\). El espectro de \(X_e(e^{j\omega})\) es una versión escalada en frecuencia un factor \(L\) del espectro de la señal original \(X(e^{j\omega})\). Finalmente, el espectro de la señal sobremuestreada \(X_i(e^{j\omega})\) se obtiene a partir del espectro de \(X_e(e^{j\omega})\) mediante el escalado en amplitud de \(1/T\) a \(1/T_i\) y eliminando todas las copias de \(X_e(e^{j\omega})\) excepto las que están en múltiplos enteros de \(2\pi\), para lo cual se emplea el pasabajos \(H(e^{j\omega})\) de ganancia \(L\) y frecuencia de corte \(\pi/L\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/sampling_upsampling_freq_domain.pdf}
+ \caption{\label{fig:sampling_upsampling_freq_domain} Proceso de sobremuestreo en el dominio de la frecuencia con \(L=2\).}
+ \end{center}
+\end{figure}
+
+Este ejemplo muestra que el diagrama de la figura \ref{fig:sampling_expansor} efectivamente brinda al salida dada por la ecuación \ref{eq:sampling_upsampling_definition} si el muestreo \(x[n]=x_c(nT)\) se realizó sin aliasing. En consecuencia, este sistema se denomina \emph{interpolador}, ya que completa las muestras faltantes (ver la figura \ref{fig:sampling_increase_sampling_rate_time_domain}), y la operación de sobremuestreo es considerada sinónimo de interpolación.
+
+Como en el caso del conversor D/C, se obtendrá la fórmula de interpolación para \(x_i[n]\) en términos de \(x[n]\). Se parte notando que la respuesta al impulso del filtro pasabajos de la figura \ref{fig:sampling_expansor} es
+\[
+ h_i[n]=\frac{\sen(\pi n/L)}{\pi n/L}.
+\]
+Empleando la ecuación \ref{eq:sampling_upsampling_expansor_output_xe}, la salida del interpolador es
+\begin{align*}
+ x_i[n]&=\sum_{l=-\infty}^{\infty}x_e[l]h_i[n-l]\\
+  &=\sum_{l=-\infty}^{\infty}\sum_{k=-\infty}^{\infty}x[k]\delta[l-kL]\frac{\sen[\pi(n-l)/L)}{\pi(n-l)/L}\\
+  &=\sum_{k=-\infty}^{\infty}x[k]\sum_{l=-\infty}^{\infty}\delta[l-kL]\frac{\sen[\pi(n-l)/L)}{\pi(n-l)/L},
+\end{align*}
+resultando en
+\[
+ x_i[n]=\sum_{k=-\infty}^{\infty}x[k]\frac{\sen[\pi(n-kL)/L)}{\pi(n-kL)/L}.
+\]
+La respuesta al impulso \(h_i[n]\) cumple que
+\begin{align*}
+ h_i[0]&=1\\
+ h_i[n]&=0,\qquad n=\pm L,\,\pm2L,\,\dots. 
+\end{align*}
+Por lo tanto, para el filtro interpolador pasabajos ideal, se cumple que 
+\[
+ x_i[n]=x[n/L]=x_c(nT/L)=x_c(nT_i),\qquad n=\pm L,\,\pm2L,\,\dots,
+\]
+como se requiere. El hecho de que \(x_i[n]=x_c(nT_i)\) para todo \(n\) proviene del argumento en el dominio de la frecuencia (ver la figura \ref{fig:sampling_upsampling_freq_domain}).
+
+\subsection{Filtros de interpolación simples y prácticos}
+
+Si bien el filtrado pasabajos ideal para interpolación no es implementable en la práctica, pueden obtenerse buenas aproximaciones mediante técnicas de diseño que se discutirán en el capítulo \ref{ch:filter_design_techniques}. Sin embargo, en ocasiones son adecuados procedimientos de interpolación simples, como los que se presentan en esta sección.
+
+En la interpolación lineal las muestras interpolantes se encuentran en una línea recta que conecta los valores de las muestras originales. La respuesta al impulso de un filtro interpolador lineal es
+\begin{equation}\label{eq:sampling_interpolators_linear_impulse_response}
+ h_\textrm{lin}[n]=
+ \left\{  
+ \begin{array}{ll}
+  1-|n|/L, & |n|\leq L\\
+  0, & \textrm{en otro caso},
+ \end{array}
+ \right.
+\end{equation}
+que como se muestra en la figura \ref{fig:sampling_interpolators_responses} para \(L=5\), tiene forma triangular.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/sampling_interpolators_responses.pdf}
+ \caption{\label{fig:sampling_interpolators_responses} Respuesta al impulso y respuesta en frecuencia de los filtros interpoladores lineal y cúbico, dados por las ecuaciones \ref{eq:sampling_interpolators_linear_impulse_response} y \ref{eq:sampling_interpolators_cubic_impulse_response} respectivamente.}
+ \end{center}
+\end{figure}
+Con este filtro,la salida interpolada es
+\[
+ x_\textrm{lin}[n]=\sum_{k=n-L+1}^{n+L-1}x_e[k]h_\textrm{lin}[n-k],
+\]
+donde \(x_e[n]\) es la salida del expansor con factor \(L\) de la figura \ref{fig:sampling_expansor} (ver la ecuación\ref{eq:sampling_upsampling_expansor_output_xe}). En la figura \ref{fig:sampling_interpolators_interpolation} se muestra la salida \(x_e[n]\) del expansor y la correspondiente salida \(x_\textrm{lin}[n]\) para el caso \(L=5\). Observar que como el largo de la respuesta al impulso \(h_\textrm{lin}[n]\) es \(2L-1\), el proceso de filtrado involucra a lo sumo dos muestras de la señal original en cada iteración, y las muestras interpoladas se encuentran en una linea recta entre los valores de esas dos muestras. Además, los valores de las muestras originales se preservan debido a que \(h_\textrm{lin}[0]=1\) y \(h_\textrm{lin}[n]=0\) para \(|n|\geq L\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/sampling_interpolators_interpolation.pdf}
+ \caption{\label{fig:sampling_interpolators_interpolation} Proceso de interpolación lineal y cúbico. Se muestra la salida \(x_e[n]\) del expansor y las señales interpoladas con un interpolador lineal y un interpolador cúbico \(x_\textrm{lin}[n]\) y \(x_\textrm{cub}[n]\) respectivamente, para \(L=5\). También se incluye a la señal continua \(x_c(t)\) original.}
+ \end{center}
+\end{figure}
+
+La naturaleza de la distorsión producida por el interpolador lineal puede analizarse en el dominio de la frecuencia comparando la respuesta en frecuencia del interpolador lineal con el interpolador pasabajos ideal. Al final de esta sección se deducirá que la respuesta en frecuencia es
+\begin{equation}\label{eq:sampling_interpolators_linear_freq_response}
+ H_\textrm{lin}(e^{j\omega})=\frac{1}{L}\left[\frac{\sen(\omega L/2)}{\sen(\omega/2)}\right]^2.
+\end{equation}
+Esta función se muestra en la figura \ref{fig:sampling_interpolators_responses} para \(L=5\) junto con la respuesta del filtro pasabajos interpolador ideal. En la figura se observa que si la señal original es muestreada a una frecuencia cercana a la tasa de Nyquist, la interpolación lineal no es muy precisa ya que la salida del filtro tendrá considerable energía en la banda \(\pi/L<|\omega|\leq\pi\) debido a las imágenes escaladas en frecuencia de \(X_c(j\Omega)\) en múltiplos de \(2\pi/L\) que no son eliminadas por el filtro de interpolación lineal (ver la figura \ref{fig:sampling_upsampling_freq_domain}). Sin embargo, si la frecuencia de muestreo es mucho mayor a la tasa de Nyquist, el interpolador lineal será mas eficiente eliminando dichas imágenes, ya que \(H_\textrm{lin}(e^{j\omega})\) es pequeño en una banda angosta en torno a esas frecuencias (observar en la figura \ref{fig:sampling_interpolators_responses} que \(H_\textrm{lin}(e^{j\omega})\) es cero en múltiplos de \(2\pi/L\)), y a mayor frecuencia de muestreo, las copias de \(X_c(j\Omega)\) se encuentran mas localizadas en múltiplos de \(2\pi/L\). Esto es intuitivamente razonable también en el dominio del tiempo: si la frecuencia de muestreo excede ampliamente a la tasa de Nyquist, la señal no varía significativamente entre muestras y la interpolación lineal es una aproximación precisa.
+
+Mientras que el interpolador ideal de banda limitada tiene respuesta al impulso de largo infinito y por lo tanto involucra a todas las muestras de la señal en el cálculo de cada muestra interpolada, el interpolador lineal emplea únicamente dos muestras. Para aproximar mejor al interpolador ideal, es necesario emplear filtros con respuesta al impulso mas larga. Para este propósito, los filtros FIR tienen muchas ventajas. La respuesta al impulso \(\tilde{h}_i[n]\) de un filtro FIR para interpolación por un factor \(L\) es diseñado para tener las siguientes propiedades:
+\begin{equation}\label{eq:sampling_interpolators_properties}
+\begin{aligned}
+ \tilde{h}_i[n]&=0\qquad|n|\geq KL\\
+ \tilde{h}_i[n]&=\tilde{h}_i[-n]\qquad|n|\leq KL\\
+ \tilde{h}_i[0]&=1\\
+ \tilde{h}_i[n]&=0\qquad n=\pm L,\,\pm 2L,\,\dots,\,\pm KL.
+\end{aligned} 
+\end{equation}
+Observar que el interpolador lineal, cuya respuesta al impulso está dada por el ecuación \ref{eq:sampling_interpolators_linear_impulse_response}, satisface las condiciones \ref{eq:sampling_interpolators_properties} con \(K=1\).
+
+Para comprender las motivaciones de condiciones \ref{eq:sampling_interpolators_properties}, se parte observando que la primera ecuación establece que el largo del filtro FIR es \(2KL-1\) muestras. Esta condición asegura que se emplean \(2K\) muestras originales en el calculo de cada muestra la de la señal interpolada \(\tilde{x}_i[n]\). Esto se debe a que la señal de entrada \(x_e[n]\) tiene únicamente \(2K\) muestras no nulas en el soporte de \(\tilde{h}_i[n-k]\) para cualquier valor de \(n\). La segunda ecuación en \ref{eq:sampling_interpolators_properties} asegura que el filtro no introduce desplazamiento de fase en las muestras interpoladas. Esta condición implica que la respuesta en frecuencia de filtro interpolador es una función real de \(\omega\). El sistema podría hacerse causal introduciendo un retardo de al menos \(KL-1\) muestras. Por ejemplo, la respuesta al impulso \(\tilde{h}_i[n-KL]\) produce una señal interpolada desplazada \(KL\) muestras, que corresponde a un retardo de \(K\) muestras de la señal original. Finalmente, las últimas dos ecuaciones en \ref{eq:sampling_interpolators_properties} aseguran que las muestras originales son preservadas en la señal interpolada, es decir,
+\[
+ \tilde{x}_i[n]=x[n/L]
+ \qquad\textrm{en}\qquad
+ n=0,\,\pm L,\,\pm 2L,\,\dots.
+\]
+
+La interpolación es un problema ampliamente estudiado en análisis numérico. Parte del desarrollo en este campo se basa en fórmulas de interpolación que interpolan polinomios de grado dado de forma exacta. Por ejemplo, la interpolación lineal interpola de forma exacta a señales que varían sobre una línea recta, es decir, a polinomios de grado 1. Puede obtenerse filtro de interpolación de respuesta al impulso mas larga empleando fórmulas de interpolación de Lagrange de mayor orden o fórmulas de interpolación con splines. Por ejemplo, la ecuación
+\begin{equation}\label{eq:sampling_interpolators_cubic_impulse_response}
+ \tilde{h}_i[n]=
+ \left\{ 
+ \begin{array}{ll}
+  (a+2)|n/L|^3-(a+3)|n/L|^2+1 & 0\leq |n|\leq L\\[\medskipamount]
+  a|n/L|^3-5a|n/L|^2+8a|n/L|-4a & L\leq |n|\leq 2L\\[\medskipamount]
+  0 & \textrm{en otro caso},
+ \end{array}
+ \right.
+\end{equation}
+define una familia de filtros interpoladores cúbicos. La respuesta al impulso y la respuesta en frecuencia se muestran en la figura \ref{fig:sampling_interpolators_responses} para \(a=-0.5\) y \(L=5\). Observar que en este caso, \(K=2\), por lo que el largo de la respuesta al impulso es \(2KL-1=19\) muestras, y se involucran \(2K=4\) muestras de la señal original para el cálculo de cada muestra de la señal interpolada. Notar que la respuesta en frecuencia tiene considerablemente menos energía en la banda \(\pi/L<|\omega|\leq\pi\) que el interpolador lineal, lo que produce una mayor atenuación de las imágenes de \(X_c(j\Omega)\) en los múltiplos de \(2\pi/L\). En la figura \ref{fig:sampling_interpolators_interpolation} se muestra un ejemplo del funcionamiento de filtro interpolador cúbico en el dominio del tiempo.
+
+\paragraph{Respuesta en frecuencia del interpolador lineal} Se deduciá la ecuación \ref{eq:sampling_interpolators_linear_freq_response} de la respuesta en frecuencia del filtro interpolador lineal (ver el problema 4.56 de \cite{oppenheim2009discrete}). Para hacerlo, se parte considerando el interpolador mas simple, que es la \emph{retención de orden cero}. En la interpolación mediante retención de orden cero, cada valor de \(x[n]\) se repite \(L\) veces, es decir,
+\[
+ x_i[n]=
+ \left\{ 
+  \begin{array}{ll}
+   x_e[0], & n=0,\,1,\,\dots,\,L-1,\\
+   x_e[L], & n=L,\,L+1,\,\dots,\,2L-1,\\
+   x_e[2L], & n=2L,\,2L+1,\,\dots,\,3L-1,\\
+   \quad\vdots
+  \end{array}
+ \right.
+\]
+La respuesta al impulso de este sistema es
+\begin{equation}\label{eq:sampling_interpolators_zoh_impulse_response}
+ h_\textrm{zoh}[n]=
+ \left\{ 
+ \begin{array}{ll}
+  1, & 0\leq n\leq L-1,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right. 
+\end{equation}
+que consiste en un pulso rectangular de amplitud unidad y largo \(L\). Salvo un factor de escala, este sistema es igual al sistema de media móvil causal analizado en el ejemplo de la sección \ref{sec:seq_and_sys_frequency_domain_representation}. La respuesta en frecuencia del filtro de media móvil causal está dada por la ecuación \ref{eq:seq_and_sys_system_moving_average_causal_freq_response}. De esa ecuación, con \(M_2=L-1\) y eliminando el factor de escala, se obtiene que la respuesta en frecuencia del sistema de retención de orden cero es
+\begin{equation}\label{eq:sampling_interpolators_zoh_freq_response}
+ H_\textrm{zoh}(e^{j\omega})=\frac{\sen(\omega L/2)}{\sen(\omega/2)}e^{-j\omega (L-1)/2}.  
+\end{equation}
+Por otro lado, puede deducirse que la convolución de la respuesta al impulso \(h_\textrm{zoh}[n]\) de retenedor de orden cero con si misma es
+\[
+ h_\textrm{zoh}[n]*h_\textrm{zoh}[n]=
+ \left\{ 
+ \begin{array}{ll}
+  n+1, & 0\leq n\leq L-1,\\
+  2L-1-n, & L-1\leq n\leq 2L-2,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right. 
+\]
+que es un pulso triangular simétrico centrado en \(L-1\), de altura \(L\) y de largo \(2L-1\). Comparando este resultado con la respuesta al impulso del interpolador lineal de la ecuación \ref{eq:sampling_interpolators_linear_impulse_response}, se observa que 
+\[
+ h_\textrm{zoh}[n]*h_\textrm{zoh}[n]=Lh_\textrm{lin}[n-(L-1)],
+\]
+y por lo tanto, aplicando la DTFT, resulta en que 
+\[
+ H^2_\textrm{zoh}(e^{j\omega})=LH_\textrm{lin}(e^{j\omega})e^{-j\omega(L-1)}.
+\]
+Finalmente, sustituyendo la ecuación \ref{eq:sampling_interpolators_zoh_freq_response} en este resultado, se obtiene que 
+\[
+ H_\textrm{lin}(e^{j\omega})=\frac{1}{L}\left[\frac{\sen(\omega L/2)}{\sen(\omega/2)}\right]^2,
+\]
+que es lo que se quería mostrar.
+
+\subsection{Cambio de la frecuencia de muestreo por un factor no entero}
+
+Previamente se mostró que mediante un decimador se reduce la frecuencia de muestreo por un factor entero y mediante un interpolador se incrementa la frecuencia de muestreo por un factor entero. Combinando ambos procesos es posible cambiar la frecuencia de muestreo por un factor arbitrario (racional). Específicamente, considérese el sistema de la figura \ref{fig:sampling_rate_change_non_integer}, que consiste en un interpolador, que reduce el período de muestreo de \(T\) a \(T/L\), seguido por un decimador, que incrementa el período de muestreo un factor \(M\), produciendo un secuencia de salida \(\tilde{x}_d[n]\) que tiene un período de muestreo efectivo de \(TM/L\). Eligiendo \(L\) y \(M\) apropiadamente, se puede aproximar a cualquier periodo de muestreo deseado.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.95\textwidth]{figuras/sampling_rate_change_non_integer.pdf}
+ \caption{\label{fig:sampling_rate_change_non_integer} Sistema para cambiar la frecuencia de muestreo por un factor no entero. El período de muestreo de la señal de entrada \(x[n]\) es \(T\) y el período de muestreo de la señal de salida es \(TM/L\), donde \(L\) y \(M\) son números enteros.}
+ \end{center}
+\end{figure}
+
+Si \(M>L\), el resultado es un incremento en el periodo de muestreo (reducción de la frecuencia de muestreo), y si \(M<L\), se ocurre lo contrario. Como los sistemas están en cascada, los filtros pasabajos del interpolador y el decimador se pueden combinar en un único filtro pasabjos de ganancia \(L\) y frecuencia de corte el mínimo entre \(\pi/L\) y \(\pi/M\).
+
+
+
 
 \chapter{Análisis en el dominio transformado de sistemas lineales e invariantes en el tiempo}
 
@@ -2264,7 +3296,7 @@ resulta en que
  \[
   \frac{\sen\pi(n-\Delta)}{\pi(n-\Delta)}\;\overset{\mathcal{F}}{\longleftrightarrow}\;e^{-j\omega\Delta}.
  \]
- De todas formas, si \(\tau_\textrm{gr}(\omega_0)\) o \(\tau_\textrm{ph}(\omega_0)\) o ambos no son enteros, el efecto sobre la envolvente y la portadora es el mismo, con la interpretación de un retardo no entero explicada en la sección 4.5 de \cite{oppenheim2009discrete}, que consiste en convertir la señal de tiempo discreto a tiempo continuo (ver la sección 4.3 de \cite{oppenheim2009discrete}), aplicar un retardo arbitrario en tiempo continuo y muestrear la señal resultante para obtener una señal en tiempo discreto.
+ De todas formas, si \(\tau_\textrm{gr}(\omega_0)\) o \(\tau_\textrm{ph}(\omega_0)\) o ambos no son enteros, el efecto sobre la envolvente y la portadora es el mismo, con la interpretación de un retardo no entero explicada en el ejemplo de la sección \ref{sec:sampling_continuous_procesing_discrete_signals}, que consiste en convertir la señal de tiempo discreto a tiempo continuo (ver la sección \ref{sec:sampling_reconstruction_from_samples}), aplicar un retardo arbitrario en tiempo continuo y muestrear la señal resultante para obtener una señal en tiempo discreto.
  
 Como ilustración del efecto del retardo de fase y el retardo de grupo, considérese el sistema con repuesta en fase que se muestra en la figura \ref{fig:transform_analysis_group_delay_phase_and_group_delay}. 
 \begin{figure}[!htb]
@@ -4328,7 +5360,7 @@ En el caso en que \(h[n]\) es real, la implementación del sistema de muestreo e
   \tilde{H}[N-k]=\tilde{H}^*[k],\qquad k=1,\,\dots,\,\dfrac{N-1}{2}.
  \end{array}
 \]
-Por lo tanto, si \(N\) es par, la ecuación del sistema \ref{eq:structures_freq_sampling_system_function} puede escribirse como (ver el problema 6.51de\cite{oppenheim2009discrete})
+Por lo tanto, si \(N\) es par, la ecuación del sistema \ref{eq:structures_freq_sampling_system_function} puede escribirse como (ver el problema 6.51 de \cite{oppenheim2009discrete})
 \begin{align*}
  H(z)&=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}\left(\frac{\tilde{H}[k]}{1-e^{j2\pi k/N}z^{-1}}+\frac{\tilde{H}[N-k]}{1-e^{j2\pi(N-k)/N}z^{-1}}\right)\right\}\\
   &=\frac{1-z^{-N}}{N}\left\{\frac{\tilde{H}[0]}{1-z^{-1}}+\frac{\tilde{H}[N/2]}{1+z^{-1}}+\sum_{k=1}^{N/2-1}\left(\frac{\tilde{H}[k]}{1-e^{j2\pi k/N}z^{-1}}+\frac{\tilde{H}^*[k]}{1-e^{-j2\pi k/N}z^{-1}}\right)\right\}\\
@@ -5034,50 +6066,117 @@ Dado que la estructura lattice de la figura \ref{fig:structures_lattice_all_pole
 En las secciones previas se vió que los sistemas FIR y los sistemas IIR tienen una representación como estructura lattice. Cuando la función del sistema tiene tanto polos como ceros, es posible obtener una estructura lattice en base a una modificación de la estructura lattice todo polos de la figura \ref{fig:structures_lattice_all_poles_building_blocks_connection}. La deducción de esto no se hará, pero se resume en la sección \ref{capitulo11}.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
  
 
  
+\appendix 
  
+\chapter{Algunas transformadas de Fourier de tiempo continuo}\label{ap:continous_fourier_transforms}
+
+Lo incluido en esta sección está basado en el capítulo 4 de \cite{oppenheim1997signals}. La transformada continua de Fourier se define como
+\begin{equation}\label{eq:continuous_fourier_transform_definition}
+ X(j\omega) = \int_{-\infty}^{\infty}x(t)e^{-j\omega t}\,dt 
+\end{equation}
+y la transformada inversa es
+\begin{equation}\label{eq:continuous_fourier_transform_definition_inverse}
+ x(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}X(j\omega)e^{j\omega t}\,d\omega.
+\end{equation}
+
+\section{Transformada de Fourier de señales periódicas}
+
+Considérese la señal cuyo espectro consiste en una combinación lineal de impulsos armónicos,
+\begin{equation}\label{eq:continuous_fourier_transform_impulse_train_freq_domain}
+X(j\omega)=\sum_{k=-\infty}^{\infty}2\pi a_k\delta(\omega-k\omega_0).
+\end{equation}
+La correspondiente señal en el tiempo se obtiene mediante la antitransformada de Fourier como
+\begin{align*}
+x(t)&=\frac{1}{2\pi}\int_{-\infty}^{\infty}\left[\sum_{k=-\infty}^{\infty}2\pi a_k\delta(\omega-k\omega_0)\right]e^{j\omega t}d\omega\\
+&=\sum_{k=-\infty}^{\infty} a_k\left[\int_{-\infty}^{\infty}\delta(\omega-k\omega_0)e^{j\omega t}d\omega\right]\\
+&=\sum_{k=-\infty}^{\infty} a_ke^{jk\omega_0 t}
+\end{align*}
+El resultado es la serie de Fourier de una señal periódica de frecuencia \(\omega_0=2\pi/T\) (ver el capítulo 3 de \cite{oppenheim1997signals}). Este resultado es general e indica que la transformada de Fourier de una señal periódica es un tren de impulsos armónico donde el área del impulso de frecuencia \(k\omega_0\) es \(a_k\), el coeficiente \(k\)-ésimo  de la serie de Fourier. Los coeficientes \(a_k\) de la serie de Fourier de una señal periódica de periodo \(T\) están dados por
+\begin{equation}\label{eq:fourier_series_coefficients}
+ a_k=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t)e^{-jk\frac{2\pi}{T}t}\,dt. 
+\end{equation}
+
+\section{Transformada de Fourier de tren de impulsos periódico}
+
+Se mostrará que la transformada de Fourier de un tren de impulsos periódico es otro tren de impulsos periódico. Concretamente, se comprobará el siguiente par de transformadas de Fourier:
+\begin{equation}\label{eq:continous_fourier_transform_impulse_train}
+  x(t)=\sum_{n=-\infty}^{\infty}\delta(t-nT)
+  \quad\overset{\mathcal{F}}{\longleftrightarrow}\quad
+  X(j\omega)=\frac{2\pi}{T}\sum_{n=-\infty}^{\infty}\delta\left(\omega-\frac{2\pi n}{T}\right).
+\end{equation}
+La señal \(x(t)\) es periódica, por lo que tiene una representación en series de  Fourier cuyos coeficientes son
+\[
+a_k=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta(t)e^{-jk\frac{2\pi}{T}t}dt=\frac{1}{T}.
+\]
+Sustituyendo este resultado en la ecuación \ref{eq:continuous_fourier_transform_impulse_train_freq_domain} se obtiene que la transformada de Fourier es
+\begin{align*}
+ X(j\omega)&=\frac{2\pi}{T}\sum_{k=-\infty}^{\infty}\delta(\omega-k\omega_0)\\
+  &=\omega_0\sum_{k=-\infty}^{\infty}\delta(\omega-k\omega_0),
+  \qquad\textrm{con}\qquad\omega_0=\frac{2\pi}{T},
+\end{align*}
+que es lo que se quería mostrar.
+
+\section{Transformada de Fourier de señales sinusoidales}
+
+Se mostrará que 
+\begin{equation}\label{eq:continous_fourier_transform_cosine}
+ x(t)=\cos\omega_0t
+ \quad\overset{\mathcal{F}}{\longleftrightarrow}\quad
+ X(j\omega)=\pi\delta\left(\omega-\omega_0\right)+\pi\delta\left(\omega+\omega_0\right)
+\end{equation}
+Considerando que 
+\[
+ x(t)=\cos\omega_0t=\frac{1}{2}e^{j\omega_0t}+\frac{1}{2}e^{-j\omega_0t},
+\]
+la derecha de la igualdad ya está expresada como una serie de Fourier, cuyos coeficientes son \(a_{-1}=a_1=1/2\) y \(a_k=0\) en otro caso. Considerando este resultado en la ecuación \ref{eq:continuous_fourier_transform_impulse_train_freq_domain} se obtiene el resultado de la ecuación\ref{eq:continous_fourier_transform_cosine}. Procediendo de forma análoga, se obtiene que
+\begin{equation}\label{eq:continous_fourier_transform_sine}
+ x(t)=\sin\omega_0t
+ \quad\overset{\mathcal{F}}{\longleftrightarrow}\quad
+ X(j\omega)=\frac{\pi}{j}\delta\left(\omega-\omega_0\right)-\frac{\pi}{j}\delta\left(\omega+\omega_0\right).
+\end{equation}
+
+\section{Transformada de Fourier de un pulso rectangular}
  
- 
- 
- 
- 
+Se considera la señal \(x(t)\) cuya transformada de Fourier es
+\[
+ X(j\omega)=
+ \left\{ 
+ \begin{array}{ll}
+  1, & |\omega|< W\\
+  0, & |\omega|>W.
+ \end{array} 
+ \right.
+\]
+La señal \(x(t)\) se determina empleando la transformada inversa de Fourier,
+\begin{align*}
+ x(t)&=\frac{1}{2\pi}\int_{-\infty}^{\infty}X(j\omega)e^{j\omega t}d\omega\\
+  &=\frac{1}{2\pi}\int_{-W}^{W}e^{j\omega t}d\omega\\
+  &=\frac{1}{2\pi}\left(\frac{e^{j\omega t}}{jt}\bigg|_{-W}^{W}\right)\\
+  &=\frac{1}{\pi t}\left(\frac{e^{jW t}-e^{-jW t}}{2j}\right),
+\end{align*}
+resultando en que
+\begin{equation}\label{eq:continous_inverse_fourier_transform_rectangular_pulse}
+  x(t)=\frac{\sen Wt}{\pi t}.
+\end{equation}
+En la figura \ref{fig:sampling_lowpass_continuous_inverse_fourier_transform_1} se muestran las gráficas del par de transformadas.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.85\textwidth]{figuras/sampling_lowpass_continuous_inverse_fourier_transform_1.pdf}
+ \caption{\label{fig:sampling_lowpass_continuous_inverse_fourier_transform_1} Transformada inversa de Fourier en tiempo continuo de un pulso rectangular.}
+ \end{center}
+\end{figure}
+
+
+
+
+
+
+
+
 
 \bibliographystyle{ieeetr}
 \bibliography{oppenheim_discrete_time}

@@ -11,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="example_5_12_zero_pole_plot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example_5_12_zero_pole_plot.py">
+      <file leaf-file-name="sampling_example_04_03_continuous_low_pass_filter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_example_04_03_continuous_low_pass_filter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1305">
-              <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
+            <state relative-caret-position="5670">
+              <caret line="380" column="18" selection-start-line="380" selection-start-column="18" selection-end-line="380" selection-end-column="18" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -23,11 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example_5_13_minimum_energy_delay.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example_5_13_minimum_energy_delay.py">
+      <file leaf-file-name="sampling_example_04_07_non_integer_delay.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_example_04_07_non_integer_delay.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4740">
-              <caret line="318" column="50" selection-start-line="318" selection-start-column="50" selection-end-line="318" selection-end-column="50" />
+            <state relative-caret-position="840">
+              <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -35,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transform_analysis_example_05_14_linear_phase.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transform_analysis_example_05_14_linear_phase.py">
+      <file leaf-file-name="sampling_reduce_sampling_rate_time_domain.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_reduce_sampling_rate_time_domain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
+            <state relative-caret-position="555">
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -47,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example_02_16_moving_average_freq_response.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example_02_16_moving_average_freq_response.py">
+      <file leaf-file-name="sampling_subsampling_freq_domain.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_subsampling_freq_domain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="23" selection-end-line="23" />
+            <state relative-caret-position="3270">
+              <caret line="220" column="54" selection-start-line="220" selection-start-column="54" selection-end-line="220" selection-end-column="54" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -59,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transform_analysis_lineal_phase_fir_types.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transform_analysis_lineal_phase_fir_types.py">
+      <file leaf-file-name="sampling_subsampling_freq_domain_decimation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_subsampling_freq_domain_decimation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
+            <state relative-caret-position="4290">
+              <caret line="288" column="83" selection-start-line="288" selection-start-column="83" selection-end-line="288" selection-end-column="83" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -71,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example_05_19.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example_05_19.py">
+      <file leaf-file-name="sampling_increase_sampling_rate_time_domain.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_increase_sampling_rate_time_domain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2670">
-              <caret line="180" column="18" selection-start-line="180" selection-start-column="18" selection-end-line="180" selection-end-column="18" />
+            <state relative-caret-position="2445">
+              <caret line="166" selection-start-line="166" selection-end-line="166" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -83,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="structures_problem_06_39.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/structures_problem_06_39.py">
+      <file leaf-file-name="sampling_upsampling_freq_domain.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_upsampling_freq_domain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="5" selection-end-line="5" />
+            <state relative-caret-position="1515">
+              <caret line="103" column="18" selection-start-line="103" selection-end-line="103" selection-end-column="18" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -95,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="structures_flow_graph_lineal_phase_FIR_zeros.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py">
+      <file leaf-file-name="sampling_interpolators_simple.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sampling_interpolators_simple.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1215">
-              <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+            <state relative-caret-position="90">
+              <caret line="227" column="20" lean-forward="true" selection-start-line="227" selection-start-column="20" selection-end-line="227" selection-end-column="20" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -107,20 +107,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="structures_lattice_parameters_algorithm.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/structures_lattice_parameters_algorithm.py">
+      <file leaf-file-name="sampling_subsampling_freq_domain_aliasing.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_subsampling_freq_domain_aliasing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="69" column="39" lean-forward="true" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
+            <state relative-caret-position="4065">
+              <caret line="273" column="12" selection-start-line="273" selection-start-column="12" selection-end-line="273" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="frequency_sampling_zeros.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frequency_sampling_zeros.py">
+      <file leaf-file-name="sampling_cd_conversion_math_representation_prueba.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sampling_cd_conversion_math_representation_prueba.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1485">
-              <caret line="101" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="2115">
+              <caret line="145" column="14" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -145,8 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/seq_and_sys_frequency_response_v2.py" />
-        <option value="$PROJECT_DIR$/seq_and_sys_frequency_response.py" />
         <option value="$PROJECT_DIR$/seq_and_sys_frequency_response_output.py" />
         <option value="$PROJECT_DIR$/example_3_6_zero_pole_plot.py" />
         <option value="$PROJECT_DIR$/z_transform_roc_posibilities.py" />
@@ -175,6 +176,29 @@
         <option value="$PROJECT_DIR$/structures_problem_06_39.py" />
         <option value="$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py" />
         <option value="$PROJECT_DIR$/structures_lattice_parameters_algorithm.py" />
+        <option value="$PROJECT_DIR$/sampling_continous_signal_creation_v1.py" />
+        <option value="$PROJECT_DIR$/sampling_continous_signal_creation.py" />
+        <option value="$PROJECT_DIR$/sampling_cd_conversion_math_representation.py" />
+        <option value="$PROJECT_DIR$/sampling_impulse_modulator_frequency_representation.py" />
+        <option value="$PROJECT_DIR$/sampling_aliasing_sinusoid.py" />
+        <option value="$PROJECT_DIR$/sampling_aliasing_sinusoid_time_domain.py" />
+        <option value="$PROJECT_DIR$/sampling_example_04_01_cosine.py" />
+        <option value="$PROJECT_DIR$/sampling_example_04_02_cosine_aliasing.py" />
+        <option value="$PROJECT_DIR$/sampling_lowpass_continuous_inverse_fourier_transform.py" />
+        <option value="$PROJECT_DIR$/sampling_dc_conversion_math_representation.py" />
+        <option value="$PROJECT_DIR$/sampling_impulse_modulator_frequency_representation_reconstruction.py" />
+        <option value="$PROJECT_DIR$/sampling_example_04_03_continous_low_pass_filter.py" />
+        <option value="$PROJECT_DIR$/sampling_example_04_03_continuous_low_pass_filter.py" />
+        <option value="$PROJECT_DIR$/sampling_example_04_07_non_integer_delay.py" />
+        <option value="$PROJECT_DIR$/sampling_cd_conversion_math_representation_prueba.py" />
+        <option value="$PROJECT_DIR$/arrow_between_subplots_prueba.py" />
+        <option value="$PROJECT_DIR$/sampling_reduce_sampling_rate_time_domain.py" />
+        <option value="$PROJECT_DIR$/sampling_subsampling_freq_domain_aliasing.py" />
+        <option value="$PROJECT_DIR$/sampling_subsampling_freq_domain.py" />
+        <option value="$PROJECT_DIR$/sampling_subsampling_freq_domain_decimation.py" />
+        <option value="$PROJECT_DIR$/sampling_increase_sampling_rate_time_domain.py" />
+        <option value="$PROJECT_DIR$/sampling_upsampling_freq_domain.py" />
+        <option value="$PROJECT_DIR$/sampling_interpolators_simple.py" />
       </list>
     </option>
   </component>
@@ -220,8 +244,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.structures_lattice_parameters_algorithm">
-    <configuration name="example_5_13_minimum_energy_delay" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.sampling_interpolators_simple">
+    <configuration name="sampling_increase_sampling_rate_time_domain" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Oppenheim_Discrete_Pycharm" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -233,13 +257,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example_5_13_minimum_energy_delay.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sampling_increase_sampling_rate_time_domain.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="frequency_sampling_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sampling_interpolators_simple" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Oppenheim_Discrete_Pycharm" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -251,13 +275,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/frequency_sampling_zeros.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sampling_interpolators_simple.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="structures_flow_graph_lineal_phase_FIR_zeros" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sampling_subsampling_freq_domain" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Oppenheim_Discrete_Pycharm" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -269,13 +293,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sampling_subsampling_freq_domain.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="structures_lattice_parameters_algorithm" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sampling_subsampling_freq_domain_decimation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Oppenheim_Discrete_Pycharm" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -287,13 +311,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_lattice_parameters_algorithm.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sampling_subsampling_freq_domain_decimation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="structures_problem_06_39 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sampling_upsampling_freq_domain" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Oppenheim_Discrete_Pycharm" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -305,7 +329,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/structures_problem_06_39.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sampling_upsampling_freq_domain.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -350,19 +374,19 @@
     <list>
       <item itemvalue="Python.structures_problem_06_39" />
       <item itemvalue="Python.test_filter_coefs_from_zpk" />
-      <item itemvalue="Python.frequency_sampling_test" />
-      <item itemvalue="Python.example_5_13_minimum_energy_delay" />
-      <item itemvalue="Python.structures_problem_06_39 (1)" />
-      <item itemvalue="Python.structures_flow_graph_lineal_phase_FIR_zeros" />
-      <item itemvalue="Python.structures_lattice_parameters_algorithm" />
+      <item itemvalue="Python.sampling_subsampling_freq_domain" />
+      <item itemvalue="Python.sampling_subsampling_freq_domain_decimation" />
+      <item itemvalue="Python.sampling_increase_sampling_rate_time_domain" />
+      <item itemvalue="Python.sampling_upsampling_freq_domain" />
+      <item itemvalue="Python.sampling_interpolators_simple" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.structures_lattice_parameters_algorithm" />
-        <item itemvalue="Python.structures_flow_graph_lineal_phase_FIR_zeros" />
-        <item itemvalue="Python.structures_problem_06_39 (1)" />
-        <item itemvalue="Python.frequency_sampling_test" />
-        <item itemvalue="Python.example_5_13_minimum_energy_delay" />
+        <item itemvalue="Python.sampling_interpolators_simple" />
+        <item itemvalue="Python.sampling_upsampling_freq_domain" />
+        <item itemvalue="Python.sampling_increase_sampling_rate_time_domain" />
+        <item itemvalue="Python.sampling_subsampling_freq_domain_decimation" />
+        <item itemvalue="Python.sampling_subsampling_freq_domain" />
       </list>
     </recent_temporary>
   </component>
@@ -422,14 +446,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1155" height="732" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18570183" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49886104" visible="true" weight="0.18570183" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32850242" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50043595" side_tool="true" weight="0.32850242" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49956408" weight="0.29307568" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49956408" weight="0.2979066" />
+      <window_info id="Structure" order="1" sideWeight="0.5011389" side_tool="true" weight="0.18570183" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -451,148 +476,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="6" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_step_dtft_computation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="105" column="8" lean-forward="true" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1500">
-          <caret line="100" column="44" selection-start-line="100" selection-start-column="42" selection-end-line="100" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="21" lean-forward="true" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" column="21" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="64" selection-start-line="64" selection-end-line="64" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4650">
-          <caret line="310" column="55" selection-start-line="310" selection-start-column="55" selection-end-line="310" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="64" selection-start-line="64" selection-end-line="64" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2685">
-          <caret line="179" column="23" lean-forward="true" selection-start-line="179" selection-start-column="23" selection-end-line="179" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="92" column="16" lean-forward="true" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="23" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1815">
-          <caret line="121" column="5" lean-forward="true" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="23" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1455">
-          <caret line="97" column="69" lean-forward="true" selection-start-line="97" selection-start-column="69" selection-end-line="97" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="69" column="45" selection-start-line="69" selection-start-column="45" selection-end-line="69" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_v2.py" />
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="69" column="45" lean-forward="true" selection-start-line="69" selection-start-column="45" selection-end-line="69" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="31" lean-forward="true" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seq_and_sys_frequency_response_v2.py" />
     <entry file="file://$PROJECT_DIR$/example_3_6_zero_pole_plot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1815">
@@ -723,9 +606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4740">
           <caret line="318" column="50" selection-start-line="318" selection-start-column="50" selection-end-line="318" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -734,9 +614,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1095">
           <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -744,9 +621,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1305">
           <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_continous_signal_creation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_lattice_parameters_algorithm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -754,29 +649,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/structures_flow_graph_lineal_phase_FIR_zeros.py">
+    <entry file="file://$PROJECT_DIR$/sampling_continous_signal_creation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="22" column="10" selection-start-line="20" selection-end-line="22" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/structures_problem_06_39.py">
+    <entry file="file://$PROJECT_DIR$/sampling_cd_conversion_math_representation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2580">
+          <caret line="176" column="82" selection-start-line="176" selection-end-line="176" selection-end-column="82" />
         </state>
       </provider>
     </entry>
@@ -784,9 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1485">
           <caret line="101" selection-start-line="101" selection-end-line="101" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -794,26 +677,177 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2670">
           <caret line="180" column="18" selection-start-line="180" selection-start-column="18" selection-end-line="180" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example_02_16_moving_average_freq_response.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="69" selection-start-line="67" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/structures_problem_06_39.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_aliasing_sinusoid_time_domain.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="23" selection-end-line="23" />
+          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_aliasing_sinusoid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="120" column="6" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_example_04_01_cosine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2625">
+          <caret line="176" column="9" selection-start-line="176" selection-start-column="9" selection-end-line="176" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_example_04_02_cosine_aliasing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2625">
+          <caret line="176" selection-start-line="176" selection-end-line="176" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_dc_conversion_math_representation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2325">
+          <caret line="159" selection-start-line="159" selection-end-line="159" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_lowpass_continuous_inverse_fourier_transform.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2820">
+          <caret line="189" column="16" selection-start-line="189" selection-start-column="16" selection-end-line="189" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_impulse_modulator_frequency_representation_reconstruction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_impulse_modulator_frequency_representation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4125">
+          <caret line="277" column="72" selection-start-line="265" selection-end-line="277" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_example_04_03_continuous_low_pass_filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5670">
+          <caret line="380" column="18" selection-start-line="380" selection-start-column="18" selection-end-line="380" selection-end-column="18" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/structures_lattice_parameters_algorithm.py">
+    <entry file="file://$PROJECT_DIR$/sampling_example_04_07_non_integer_delay.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="69" column="39" lean-forward="true" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
+        <state relative-caret-position="840">
+          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_cd_conversion_math_representation_prueba.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2115">
+          <caret line="145" column="14" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/arrow_between_subplots_prueba.py" />
+    <entry file="file://$PROJECT_DIR$/sampling_reduce_sampling_rate_time_domain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_subsampling_freq_domain_aliasing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4065">
+          <caret line="273" column="12" selection-start-line="273" selection-start-column="12" selection-end-line="273" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_subsampling_freq_domain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3270">
+          <caret line="220" column="54" selection-start-line="220" selection-start-column="54" selection-end-line="220" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_subsampling_freq_domain_decimation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4290">
+          <caret line="288" column="83" selection-start-line="288" selection-start-column="83" selection-end-line="288" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_increase_sampling_rate_time_domain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2445">
+          <caret line="166" selection-start-line="166" selection-end-line="166" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_upsampling_freq_domain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="103" column="18" selection-start-line="103" selection-end-line="103" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sampling_interpolators_simple.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="227" column="20" lean-forward="true" selection-start-line="227" selection-start-column="20" selection-end-line="227" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
