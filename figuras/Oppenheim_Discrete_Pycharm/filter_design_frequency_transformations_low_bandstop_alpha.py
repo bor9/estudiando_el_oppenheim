@@ -1,0 +1,201 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import signal
+import numpy.polynomial.polynomial as poly
+
+__author__ = 'ernesto'
+
+# use latex
+plt.rcParams['text.usetex'] = True
+plt.rcParams['text.latex.preview'] = True
+plt.rcParams['text.latex.preamble'] = [r'\usepackage{amsmath}']
+
+
+def filter_transformation(b, a, gnum, gden):
+    """
+    Transformación en frecuencia de un filtro pasabajos.
+    Cálculo de los coefcientes del numerador y denominador del filtro
+    transformado a partir de los coeficientes del numerador y denominador
+    del filtro pasabajos prototipo y la transformación.
+
+    Parámetros
+    ----------
+    b, a : vectores de dimensión (N + 1, )
+        Coeficientes del numerador y denominador del filtro prototipo
+    gnum, gden : vectores de una dimensión de tamaño arbitrario
+        Coeficientes del numerador y denominador de la transformación
+
+    Retorna
+    -------
+    bt, at : vectores de una dimensión
+        Coeficientes del numerador y denominador del filtro transformado
+    """
+    # Orden del filtro a transformar
+    N = len(b) - 1
+    # Lista de polinomios que multiplican a los coeficientes b[k], a[k].
+    # Son de la forma (gden ** (N - k)) * (gnum ** k)
+    pfactors = [1] * (N + 1)
+    k = N
+    for i in np.arange(N + 1):
+        for j in np.arange(k):
+            pfactors[i] = poly.polymul(pfactors[i], gden)
+        for j in np.arange(N - k):
+            pfactors[i] = poly.polymul(pfactors[i], gnum)
+        k -= 1
+    # Cálculo de los coeficientes del filtro transformado
+    bt = 0
+    at = 0
+    for i in np.arange(N + 1):
+        bt = poly.polyadd(bt, b[i] * pfactors[i])
+        at = poly.polyadd(at, a[i] * pfactors[i])
+    return bt, at
+
+
+# pasabajos a pasabajos
+# frecuencia original
+theta_p = np.pi / 2
+# parámetros del pasabanda
+# ancho de banda constante dw
+# dw = np.pi / 4
+dw = 3 * np.pi / 16
+# frecuencia w1
+dw1 = np. pi / 8
+w1 = np.arange(dw1, np.pi - dw - dw1, dw1)
+w2 = w1 + dw
+
+# k es fijo por ser el ancho de banda fijo
+k = np.tan(dw / 2) * np.tan(theta_p / 2)
+alphas = np.cos((w2 + w1) / 2) / np.cos((w2 - w1) / 2)
+
+
+# Relación entre las frecuencias
+Nfrecs = 256
+w = np.linspace(0, np.pi, Nfrecs)
+
+thetas = -np.arctan2(-2 * k * (np.cos(w[:, np.newaxis]) - alphas) * np.sin(w[:, np.newaxis]),
+                     (np.cos(w[:, np.newaxis]) - alphas) ** 2 - (k * np.sin(w[:, np.newaxis])) ** 2)
+# se cambia el intervalo (-pi, pi) a (0, 2pi)
+thetas[thetas < 0] += 2 * np.pi
+
+# Expresión de theta equivalente.
+#thetas =-2 * np.arctan2(-k * np.sin(w[:, np.newaxis]), np.cos(w[:, np.newaxis]) - alphas)
+
+gamma1 = 2 * alphas / (k + 1)
+gamma2 = (1 - k) / (1 + k)
+
+# Transformación de un filtro pasabajos
+delta_p = 0.1
+delta_s = 0.05
+tp = theta_p
+ts = 0.6 * np.pi
+
+gpass = -20 * np.log10(1 - delta_p)
+gstop = -20 * np.log10(delta_s)
+
+# Filtro Butterworth
+N, Wn = signal.buttord(tp, ts, gpass, gstop, analog=False, fs=2*np.pi)
+b, a = signal.butter(N, Wn, btype='low', analog=False, output='ba', fs=2*np.pi)
+theta_whole, H = signal.freqz(b, a, worN=2 * Nfrecs, whole=True, plot=None, fs=2*np.pi)
+
+# Filtros transformados
+Hts = np.empty((Nfrecs, len(alphas)))
+for i, alpha in enumerate(alphas):
+    tnum = [gamma2, -gamma1[i], 1]
+    tden = [1, -gamma1[i], gamma2]
+    bt, at = filter_transformation(b, a, tnum, tden)
+    theta, Ht = signal.freqz(bt, at, worN=Nfrecs, whole=False, plot=None, fs=2 * np.pi, include_nyquist=False)
+    Hts[:, i] = np.abs(Ht)
+
+# Gráfica
+
+thmin = 0
+thmax = 2 * np.pi
+wmin = 0
+wmax = np.pi
+gmin = 0
+gmax = 1.1
+
+fs = 11  # fontsize
+grey = 0.7 * np.ones((3, ))
+markersize = 5
+
+thticks = np.linspace(thmin, thmax, 5)
+thticks_labels = ['$0$', '$\dfrac{\pi}{2}$', '$\pi$', '$\dfrac{3\pi}{2}$', '$2\pi$']
+wticks = np.linspace(wmin, wmax, 9)
+wticks_labels = ['$0$', '$\dfrac{\pi}{8}$', '$\dfrac{\pi}{4}$', '$\dfrac{3\pi}{8}$', '$\dfrac{\pi}{2}$',
+                 '$\dfrac{5\pi}{8}$', '$\dfrac{3\pi}{4}$', '$\dfrac{7\pi}{8}$', '$\pi$']
+gticks = np.linspace(0, 1, int(1/0.2) + 1, endpoint=True)
+
+leg = []
+for i in np.arange(len(w1)):
+    if np.abs(alphas[i] - round(alphas[i])) > 1e-10:
+        s = r'$\alpha\approx{:.3f}$'.format(alphas[i])
+    else:
+        s = r'$\alpha={:d}$'.format(int(np.round(alphas[i])))
+    s += r'$\;\Big(\omega_1=$'
+    s += wticks_labels[i + 1]
+    s += r'$\;\Big)$'
+    leg.append(s)
+
+theta_p2 = 2 * np.pi - theta_p
+
+fig = plt.figure(0, figsize=(8, 8), frameon=False)
+
+ax1 = plt.subplot2grid((20, 20), (0, 0), rowspan=11, colspan=7)
+plt.xlim(gmin, gmax)
+plt.ylim(thmin, thmax)
+plt.gca().invert_xaxis()
+plt.plot(np.abs(H), theta_whole, 'k')
+plt.plot([1 - delta_p, 1 - delta_p], [thmin, theta_p2], '--', lw=1, color=grey, zorder=-1)
+plt.plot([0, 1 - delta_p], [theta_p, theta_p], '--', lw=1, color=grey, zorder=-1)
+plt.plot([0, 1 - delta_p], [theta_p2, theta_p2], '--', lw=1, color=grey, zorder=-1)
+plt.plot([1 - delta_p, 1 - delta_p], [theta_p, theta_p2], marker='o', markersize=markersize, color='k', linestyle='')
+plt.xticks(gticks, usetex=True)
+plt.yticks(thticks, thticks_labels, usetex=True)
+plt.xlabel(r'$|H_\textrm{lp}(e^{j\theta})|$', fontsize=fs)
+plt.text(-0.175, np.pi, r'$\theta$', fontsize=fs, ha='center', va='center')
+ax1.yaxis.tick_right()
+
+ax2 = plt.subplot2grid((20, 20), (0, 9), rowspan=11, colspan=10)
+plt.ylim(thmin, thmax)
+plt.xlim(wmin, wmax)
+plt.plot(w, thetas)
+plt.gca().set_prop_cycle(None)
+plt.plot([w1, w1], [thmin, theta_p], '--', lw=1, zorder=-1)
+plt.gca().set_prop_cycle(None)
+plt.plot([w1], [theta_p], marker='o', markersize=markersize)
+plt.gca().set_prop_cycle(None)
+plt.plot([w2, w2], [thmin, theta_p2], '--', lw=1, zorder=-2)
+plt.gca().set_prop_cycle(None)
+plt.plot([w2], [theta_p2], marker='o', markersize=markersize)
+plt.plot([0, w2[-1]], [theta_p2, theta_p2], '--', lw=1, color=grey, zorder=-3)
+plt.plot([0, w1[-1]], [theta_p, theta_p], '--', lw=1, color=grey, zorder=-3)
+plt.xticks(wticks, wticks_labels, usetex=True)
+plt.yticks(thticks, thticks_labels, usetex=True)
+plt.xlabel(r'$\omega$', fontsize=fs)
+
+ax3 = plt.subplot2grid((20, 20), (13, 9), rowspan=6, colspan=10)
+plt.xlim(wmin, wmax)
+plt.ylim(gmin, gmax)
+plt.plot(theta, Hts)
+plt.gca().set_prop_cycle(None)
+plt.plot([w1, w1], [0, 1 - delta_p], '--', lw=1)
+plt.gca().set_prop_cycle(None)
+plt.plot([w1], [1 - delta_p], marker='o', markersize=markersize)
+plt.gca().set_prop_cycle(None)
+plt.plot([w2, w2], [0, 1 - delta_p], '--', lw=1)
+plt.gca().set_prop_cycle(None)
+plt.plot([w2], [1 - delta_p], marker='o', markersize=markersize)
+plt.plot([0, w2[-1]], [1 - delta_p, 1 - delta_p], '--', lw=1, color=grey, zorder=-1)
+plt.xticks(wticks, wticks_labels, usetex=True)
+plt.yticks(gticks, usetex=True)
+plt.xlabel(r'$\omega$', fontsize=fs)
+plt.ylabel(r'$|H(e^{j\omega})|$', fontsize=fs)
+plt.legend(leg, loc='center right', bbox_to_anchor=(-0.25, 0.5), frameon=False, framealpha=1)
+
+label = r'$k\approx{:.3f}\;\Big(\theta_p=\dfrac{{\pi}}{{2}},\;\Delta\omega=\dfrac{{3\pi}}{{16}}\Big)$'.format(k)
+plt.text(-1.8, 0, label, fontsize=10, ha='center', va='top')
+
+plt.savefig('filter_design_frequency_transformations_low_bandstop_alpha.pdf', bbox_inches='tight')
+
+plt.show()
