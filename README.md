@@ -6,6 +6,8 @@ El presente documento consiste en apuntes sobre el libro "Discrete-Time Signal P
 
 El repositorio contiene el código fuente en Latex del documento, el código Python de las figuras y los archivos SVG de dibujos y diagramas, realizados en Inkscape.
 
+Se incluye la simulación en python de muchos de los ejemplos incluídos en en libro.
+
 ## Compilación
 
 ```
