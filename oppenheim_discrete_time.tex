@@ -5,6 +5,7 @@
 \titlepage
 \usepackage[utf8]{inputenc} % para codificacion unicode (utf8)
 \usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{hyperref} % para links a paginas web
 \usepackage{subfig}
 \usepackage{graphics}
@@ -114,6 +115,7 @@
 \DeclareMathOperator{\grd}{grd}
 \DeclareMathOperator{\arccosh}{arccosh}
 \DeclareMathOperator{\arcsenh}{arcsenh}
+\DeclareMathOperator{\modulo}{m\acute odulo}
 \def\Res{\qopname\relax m{Res}}
 
 
@@ -853,7 +855,7 @@ la salida es
 \end{equation}
 En consecuencia, \(e^{j\omega n}\) es una función propia del sistema, y valor propio asociado es \(H(e^{j\omega})\). El valor propio \(H(e^{j\omega})\) se llama \emph{respuesta en frecuencia} del sistema y describe el cambio de la magnitud y la fase de la exponencial compleja de entrada en función de la frecuencia.
 
-En la sección \ref{sec:fourier_transform_representation} se verá que un amplio conjunto de señales se puede representar como la combinación lineal de exponenciales complejas como
+En la sección \ref{sec:seq_and_sys_fourier_transform_representation} se verá que un amplio conjunto de señales se puede representar como la combinación lineal de exponenciales complejas como
 \begin{equation}\label{eq:seq_and_sys_complex_exponential_linear_combination}
  x[n]=\sum_k\alpha_k e^{j\omega_kn}. 
 \end{equation}
@@ -997,9 +999,9 @@ La magnitud y la fase de \(H(e^{j\omega})\) para este caso con \(M_2=4\) se mues
  \end{center}
 \end{figure}
 
-\section{Representación de secuencias mediante transformadas de Fourier}\label{sec:fourier_transform_representation}
+\section{Representación de secuencias mediante transformadas de Fourier}\label{sec:seq_and_sys_fourier_transform_representation}
 
-Una ventaja de la representación en frecuencias de los sistemas LTI es que a menudo la interpretación del comportamiento del sistema se observa inmediatamente en el dominio de las frecuencias, como es el caso de los filtros selectores de frecuencias. En esta sección se estudia como encontrar representaciones de señales de la forma de la ecuación \ref{eq:seq_and_sys_complex_exponential_linear_combination}.
+Una ventaja de la representación en frecuencia de los sistemas LTI es que a menudo la interpretación del comportamiento del sistema se observa inmediatamente en el dominio de la frecuencia, como es el caso de los filtros selectores de frecuencias. En esta sección se estudia como encontrar representaciones de señales de la forma de la ecuación \ref{eq:seq_and_sys_complex_exponential_linear_combination}.
 
 Muchas secuencias pueden representarse mediante una integral de Fourier como
 \begin{equation}\label{eq:seq_and_sys_dtft_inverse_definition}
@@ -1093,12 +1095,11 @@ Una \emph{secuencia simétrica conjugada} \(x_e[n]\) es una secuencia que cumple
  x[n]=x_e[n]+x_o[n],
 \]
 donde
-\[
- x_e[n]=\frac{1}{2}(x[n]+x^*[-n])=x_e^*[-n]
- \qquad\qquad\textrm{y}\qquad\qquad
- x_o[n]=\frac{1}{2}(x[n]-x^*[-n])=-x_o^*[-n].
-\]
-Una secuencia real que cumple que \(x_e[n]=x_e[-n]\) se llama \emph{secuencia par} y una secuencia real que cumple que \(x_o[n]=-x_o[-n]\) se llama \emph{secuencia impar}. De forma analoga, la transformada de Fourier puede descomponerse en la suma de una función simétrica conjugada y una función antisimétrica como
+\begin{align}
+ x_e[n]&=\frac{1}{2}(x[n]+x^*[-n])=x_e^*[-n]\label{eq:seq_and_sys_dtft_symmetry_symmetric_decomposition}\\
+ x_o[n]&=\frac{1}{2}(x[n]-x^*[-n])=-x_o^*[-n].\label{eq:seq_and_sys_dtft_symmetry_antisymmetric_decomposition}
+\end{align}
+Una secuencia real que cumple que \(x_e[n]=x_e[-n]\) se llama \emph{secuencia par} y una secuencia real que cumple que \(x_o[n]=-x_o[-n]\) se llama \emph{secuencia impar}. De forma analoga, la transformada de Fourier puede descomponerse en la suma de una función simétrica conjugada y una función antisimétrica conjugada como
 \[
  X(e^{j\omega})=X_e(e^{j\omega})+X_o(e^{j\omega}),
 \]
@@ -1462,7 +1463,7 @@ o
 \end{equation}
 que es la transformada de Fourier de la secuencia \(x[n]r^{-n}\). Con \(r=1\), la ecuación \ref{eq:z_transform_definition_polar} se reduce a la transformada de Fourier de \(x[n]\). En el plano complejo \(z\), el contorno \(z=e^{j\omega}\) o \(|z|=1\) es una circunferencia de radio unidad y es referida como \emph{circunferencia unidad}. La transformada \(z\) evaluada en la circunferencia unidad corresponde a la transformada de Fourier.
 
-Como se discutió en la capítulo \ref{ch:signals_and_systems}, la representación en series de potencias de la transformada de Fourier no converge para todas las secuencias. De forma similar, la transformada \(z\) no converge para todas las secuencias o para todos los valores de \(z\). Para una secuencia dada, el conjunto de valores de \(z\) para los cuales la serie de potencias de la transformada \(z\) converge se llama \emph{región de convergencia} (\emph{ROC}, region of convergence) de la transformada \(z\). Como se estableció en la sección \ref{sec:fourier_transform_representation}, si la secuencia es absolutamente sumable, la transformada de Fourier converge a una función continua de \(\omega\). Este criterio aplicado en la ecuación \ref{eq:z_transform_definition_polar} conduce a la condición
+Como se discutió en la capítulo \ref{ch:signals_and_systems}, la representación en series de potencias de la transformada de Fourier no converge para todas las secuencias. De forma similar, la transformada \(z\) no converge para todas las secuencias o para todos los valores de \(z\). Para una secuencia dada, el conjunto de valores de \(z\) para los cuales la serie de potencias de la transformada \(z\) converge se llama \emph{región de convergencia} (\emph{ROC}, region of convergence) de la transformada \(z\). Como se estableció en la sección \ref{sec:seq_and_sys_fourier_transform_representation}, si la secuencia es absolutamente sumable, la transformada de Fourier converge a una función continua de \(\omega\). Este criterio aplicado en la ecuación \ref{eq:z_transform_definition_polar} conduce a la condición
 \[
  |X(re^{j\omega})|\leq\sum_{n=-\infty}^\infty|x[n]r^{-n}|<\infty 
 \]
@@ -1474,7 +1475,7 @@ La convergencia de la serie de potencias \ref{eq:z_transform_definition} depende
 \]
 es decir, la ROC consiste en todos los valores de \(z\) en donde esta ecuación se cumple. Por lo tanto, si cierto valor \(z_1\) pertenece a la ROC, todos los valores de \(z\) definidos en el círculo \(|z|=|z_1|\) pertenecen a la ROC. Una consecuencia de esto es que la ROC consiste en un anillo en el plano \(z\) centrado en el origen. Su frontera exterior será un círculo o puede extenderse por el exterior hasta el infinito, y su frontera interior será un círculo o puede extenderse hacia el interior hasta contener el origen. Si la ROC incluye la circunferencia unidad, es decir, si la transformada \(z\) converge para \(|z|=1\), la transformada de Fourier de la secuencia converge. Por el contrario, si la ROC no incluye la cirunferencia unidad, la transformada de Fourier de la secuencia no converge absolutamente.
 
-Una serie de potencias de la forma de la ecuación \ref{eq:z_transform_definition} es una serie de Laurent. Por lo tanto, existen una cantidad de teoremas elegantes y poderosos de la teoría de funciones de variable compleja que pueden emplearse en el estudio de la transformada \(z\) (ver \cite{brown2013complex}, por ejemplo). Por ejemplo, una serie de Laurent, y por lo tanto una transformada \(z\), representa una función analítica en cada punto de la ROC. En consecuencia, la transformada \(z\) y todas sus derivadas deben ser funciones continuas en \(z\) dentro de la ROC. Esto implica que si la ROC incluye la circunferencia unidad, la transformada de Fourier y todas sus derivadas respecto a \(\omega\) deben ser funciones continuas de \(\omega\). Además, de la discusión de la sección \ref{sec:fourier_transform_representation}, la secuencia debe ser absolutamente sumable o estable.
+Una serie de potencias de la forma de la ecuación \ref{eq:z_transform_definition} es una serie de Laurent. Por lo tanto, existen una cantidad de teoremas elegantes y poderosos de la teoría de funciones de variable compleja que pueden emplearse en el estudio de la transformada \(z\) (ver \cite{brown2013complex}, por ejemplo). Por ejemplo, una serie de Laurent, y por lo tanto una transformada \(z\), representa una función analítica en cada punto de la ROC. En consecuencia, la transformada \(z\) y todas sus derivadas deben ser funciones continuas en \(z\) dentro de la ROC. Esto implica que si la ROC incluye la circunferencia unidad, la transformada de Fourier y todas sus derivadas respecto a \(\omega\) deben ser funciones continuas de \(\omega\). Además, de la discusión de la sección \ref{sec:seq_and_sys_fourier_transform_representation}, la secuencia debe ser absolutamente sumable o estable.
 
 La transformada \(z\) es especialmente útil cuando la suma infinita puede expresarse de forma cerrada. Entre las transformadas \(z\) más importantes y útiles están las que \(X(z)\) es una función racional dentro de la ROC, es decir,
 \[
@@ -5323,13 +5324,13 @@ y los valores especificados de \(H(e^{j\omega})\) en las frecuencias \(\omega_k\
  \qquad\qquad 
  k=0,\,1,\,\dots,\,N-1. 
 \end{equation}
-El conjunto de valores \(\tilde{H}[k]\) se llaman muestras en frecuencia de \(H(e^{j\omega})\). En el caso en que \(\alpha=0\), \(\tilde{H}[k]\) es la \emph{transformada discreta de Fourier} (\emph{DFT}, Discrete Fourier Transform) de \(N\) puntos de \(h[n]\), como se verá mas adelante en el capítulo \ref{chapter_8}. También en dicho capítulo se verá que la ecuación \ref{eq:structures_freq_sampling_dft} puede invertirse para obtener la respuesta al impulso \(h[n]\) en función de las muestras en frecuencia \(\tilde{H}[k]\) como
+El conjunto de valores \(\tilde{H}[k]\) se llaman muestras en frecuencia de \(H(e^{j\omega})\). En el caso en que \(\alpha=0\), \(\tilde{H}[k]\) es la \emph{transformada discreta de Fourier} (\emph{DFT}, Discrete Fourier Transform) de \(N\) puntos de \(h[n]\), como se verá mas adelante en el capítulo \ref{ch:dft}. También en dicho capítulo se verá que la ecuación \ref{eq:structures_freq_sampling_dft} puede invertirse para obtener la respuesta al impulso \(h[n]\) en función de las muestras en frecuencia \(\tilde{H}[k]\) como
 \begin{equation}\label{eq:structures_freq_sampling_idft}
  h[n]=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{H}[k]e^{j2\pi(k+\alpha)n/N},
  \qquad\qquad 
  n=0,\,1,\,\dots,\,N-1.  
 \end{equation}
-Este resultado puede comprobarse sustituyendo esta ecuación en la ecuación \ref{eq:structures_freq_sampling_dft} y observando que se obtiene una identidad. Cuando \(\alpha=0\), la ecuación \ref{eq:structures_freq_sampling_idft} es la \emph{transformada discreta de Fourier inversa} (\emph{IDFT}, Inverse Discrete Fourier Transform) de \(\tilde{H}[k]\) (ver el capítulo \ref{chapter_8}). Continuando, la función del sistema es
+Este resultado puede comprobarse sustituyendo esta ecuación en la ecuación \ref{eq:structures_freq_sampling_dft} y observando que se obtiene una identidad. Cuando \(\alpha=0\), la ecuación \ref{eq:structures_freq_sampling_idft} es la \emph{transformada discreta de Fourier inversa} (\emph{IDFT}, Inverse Discrete Fourier Transform) de \(\tilde{H}[k]\) (ver el capítulo \ref{ch:dft}). Continuando, la función del sistema es
 \begin{align*}
  H(z)&=\sum_{n=0}^{N-1}h[n]z^{-n}\\
   &\overset{(a)}{=}\sum_{n=0}^{N-1}\left\{\frac{1}{N}\sum_{k=0}^{N-1}\tilde{H}[k]e^{j2\pi(k+\alpha)n/N}\right\}z^{-n}\\
@@ -8432,7 +8433,7 @@ Mediante la ecuación \ref{eq:filter_design_fir_pm_algorithm_Ae} puede evaluarse
 \end{figure}
 En la figura \ref{fig:filter_design_fir_optimal_pm_implementation_plots_Ae_iter_2} se muestra un ejemplo del disño de un filtro pasabajos tipo I antes de que el algoritmo llegue al óptimo. El conjunto de frecuencias \(\omega_i\) empleados para encontrar \(\delta\) es tal que \(\delta\) es demasiado pequeño. Aplicando la filosofía del algoritmo de intercambio de Remez, el conjunto de frecuencias de los extremos es cambiado por el nuevo conjunto definido por los \(L+2\) extremos de la curva de error. Recordar que \(\omega_p\) y \(\omega_s\) deben elegirse como frecuencias de extremos, y hay a lo sumo \(L-1\) mínimos y máximos locales en los intervalos abiertos \(0<\omega<\omega_p\) y \(\omega_s<\omega<\pi\). Las otras frecuencias de extremos pueden ser \(\omega=0\) o \(\omega=\pi\). Si hay un máximo de la función de error en ambas frecuencias \(\omega=0\) y \(\omega=\pi\), se agrega la frecuencia con mayor error, o ambas si el número de alternancias es menor a \(L+2\). El ciclo de calcular el valor de \(\delta\), interpolar un polinomio por los valores de pico del error y encontrar los verdaderos máximos y mínimos locales del error se repite hasta que \(\delta\) no cambia significativamente respecto al valor en la iteración previa. Este valor de \(\delta\) es el valor deseado del mínimo error de ponderación máximo.
 
-A continuación se describen los pasos del algoritmo de Parks--McClellan. En el algoritmo, todos los valores de la respuesta al impulso \(h_e[n]\) son implícitamente modificados en cada iteración para obtener la aproximación óptima deseada, pero los valores de \(h_e[n]\) no son explícitamente calculados. Luego de que el algoritmo converge la respuesta al impulso se calcula a partir de las muestras de la representación polinómica \(A_e(e^{j\omega})\) mediante la transformada discreta de Fourier, como se discute en el capítulo \ref{ch8_dft}. Dado los valores \(M\), que es un número par para el diseño de un filtro de tipo I, y \(L=M/2\), y \(K=\delta_1/\delta_2\), \(\omega_p\) y \(\omega_s\), los pasos del algoritmo son los siguientes:\footnote{El archivo \texttt{filter\_design\_fir\_optimal\_pm\_implementation.py} adjunto a este documento es una implementación simple del algoritmo de Parks--McClellan para el diseño de filtros pasabajos de tipo I en el lenguaje Python. Consiste en una versión modificada de la implementación incluida en \url{https://www.theradixpoint.com/pm/pm6.html}.}
+A continuación se describen los pasos del algoritmo de Parks--McClellan. En el algoritmo, todos los valores de la respuesta al impulso \(h_e[n]\) son implícitamente modificados en cada iteración para obtener la aproximación óptima deseada, pero los valores de \(h_e[n]\) no son explícitamente calculados. Luego de que el algoritmo converge la respuesta al impulso se calcula a partir de las muestras de la representación polinómica \(A_e(e^{j\omega})\) mediante la transformada discreta de Fourier, como se discute en el capítulo \ref{ch:dft}. Dados los valores \(M\), que es un número par para el diseño de un filtro de tipo I, y \(L=M/2\), y \(K=\delta_1/\delta_2\), \(\omega_p\) y \(\omega_s\), los pasos del algoritmo son los siguientes:\footnote{El archivo \texttt{filter\_design\_fir\_optimal\_pm\_implementation.py} adjunto a este documento es una implementación simple del algoritmo de Parks--McClellan para el diseño de filtros pasabajos de tipo I en el lenguaje Python. Consiste en una versión modificada de la implementación incluida en \url{https://www.theradixpoint.com/pm/pm6.html}.}
 \begin{enumerate}
  \item Se eligen arbitrariamente \(L+2\) frecuencias \(\omega_i\) de los extremos. Una selección de \(L+2\) frecuencias equiespaciadas en la región \([0,\,\omega_p]\cup[\omega_s,\,\pi]\) es suficiente. Notar que de esta forma, las frecuencias \(\omega_p\) y \(\omega_s\) no necesariamente están incluidas en la selección inicial.
  \item Se calcula \(\delta\) mediante las ecuaciones \ref{eq:filter_design_fir_pm_algorithm_delta} y \ref{eq:filter_design_fir_pm_algorithm_bk} empleando el conjunto de frecuencias \(\omega_i\) con \(i=1,\,2,\,\dots,\,L+2\). En el caso de un filtro pasabajos, \(H_d(e^{j\omega})\) y \(W(\omega)\) en estas ecuaciones están dados por las ecuaciones \ref{eq:filter_design_fir_optimal_desired_freq_response_lp} y \ref{eq:filter_design_fir_optimal_weight_function_lp} respectivamente.
@@ -8661,36 +8662,1750 @@ Finalmente, se realiza un breve comentario sobre la eficiencia de los filtros di
 
 Para los filtros FIR, el número requerido de multiplicaciones por muestra de salida es igual al largo del filtro. Este número puede reducirse si se emplea una implementación polifase o se explota la simetría. En el caso de los filtros Butterworth y Chebyshev I, todos los ceros están en \(z=-1\), y los polos están en pares complejos conjugados. Si se implementa a los ceros como la cascada de \(N\) términos de primer orden de la forma \((1+z^{-1})\), no se requieren multiplicaciones. Los \(N\) polos requieren \(N\) multiplicaciones por muestra de salida. En el caso de los filtros Chebyshev II y elíptico, los ceros requieren multiplicaciones. Sin embargo, como están sobre la circunferencia unidad, la respuesta al impulso FIR asociada es simétrica, y puede explotarse la simetría o emplear una implementación polifase para reducir las operaciones.
 
+\chapter{La transformada discreta de Fourier}\label{ch:dft}
 
+\section{Introducción}
 
+En los capítulos \ref{ch:signals_and_systems} y \ref{ch:z_transform} se discutió la representación de señales y sistemas LTI mediante la transformada de Fourier en tiempo discreto y la transformada \(z\) respectivamente. Para secuencias de duración finita hay un representación de Fourier en tiempo discreto alternativa, referida como la transformada discreta de Fourier (\emph{DFT}, Discrete Fourier Transform). La DFT es una secuencia en lugar de una función de variable continua y corresponde a muestras equiespaciadas en frecuencia de la DTFT de la señal. Además de su importancia teórica como representación de Fourier de secuencias, la DFT juega un rol central en la implementación de una gran cantidad de algoritmos de procesamiento de señales. Esto es debido a la existencia de algoritmos eficientes para el cálculo de la DFT. Esos algoritmos se discuten en el capítulo \ref{ch9}, y la aplicación de la DFT en análisis espectral se discute en el capítulo \ref{ch10}.
 
+A pesar de que pueden se considerados varios puntos de vista para la deducción y la interpretación de la DFT de secuencias de duración finita, se eligió basar la representación en la relación entre secuencias periódicas y secuencias de duración finita. Se parte considerando la representación en series de Fourier de secuencias periódicas. Si bien esta representación es importante en si misma, usualmente tiene mayor interés la aplicación de los resultados de series de Fourier en la representación de secuencias de largo finito. Esto se logra construyendo una secuencias periódica en la cual cada período es idéntico a la secuencias finita. La representación en series de Fourier de la secuencia periódica corresponde entonces a la DFT de la secuencia de largo finito. De esta forma, el enfoque consiste en definir la representación en series de Fourier de secuencias periódicas y estudiar las propiedades de dicha representación. Luego se repite el mismo razonamiento para secuencias de largo finito. Este enfoque de la DFT enfatiza la periodicidad inherente de la representación DFT y asegura que dicha periodicidad no sea subestimada en las aplicaciones de la DFT. 
 
+\section{Representación de secuencias periódicas: la serie discreta de Fourier}\label{sec:dft_dfs}
 
+Se considera una secuencia \(\tilde{x}[n]\) periódica\footnote{De aquí en mas, se empleará el tilde ( \(\tilde{}\) ) para denotar a secuencias periódicas cuando sea importante distinguir entre secuencias periódicas y aperiódicas.} con período \(N\), de forma que \(\tilde{x}[n]=\tilde{x}[n+rN]\) para cualquier número entero \(n\) y \(r\). De forma análoga a las señales periódicas de tiempo continuo, dichas secuencias pueden ser representadas mediante una serie de Fourier que corresponde a la suma de secuencias exponenciales complejas en relación armónica, es decir, exponenciales complejas con frecuencias que son múltiplos de la frecuencia fundamental \(2\pi/N\) de la secuencia periódica \(\tilde{x}[n]\). Estas secuencias exponenciales complejas son de la forma 
+\begin{equation}\label{eq:dft_complex_exponential_seq_period_N}
+ e_k[n]=e^{j(2\pi/N)kn}=e_k[n+rN], 
+\end{equation}
+donde \(k\) es cualquier número entero. 
 
+La representación en series de Fourier de una señal periódica en tiempo continuo requiere en general infinitas exponenciales complejas en relación armónica, mientras que las series de Fourier de una señal en tiempo discreto de período \(N\) requiere solo \(N\) exponenciales complejas en relación armónica. Esto es porque secuencias exponenciales complejas en relación armónica como en la ecuación \ref{eq:dft_complex_exponential_seq_period_N} son idénticas para valores de \(k\) separados una cantidad \(N\). En consecuencia, el conjunto de \(N\) exponenciales complejas \(e_0[n],\,e_1[n],\,\dots,\,e_{N-1}[n]\) define a todas las exponenciales complejas distintas con frecuencias que son múltiplos de \(2\pi/N\). De esta forma, la representación en series de Fourier de una secuencia \(\tilde{x}[n]\) de período \(N\) contiene solo \(N\) de esas exponenciales complejas. Por conveniencia de notación se elige \(k\) en el rango de 0 a \(N-1\), por lo que la representación en series de Fourier tiene la forma\footnote{La constante multiplicativa \(1/N\) incluida en la ecuación \ref{eq:dft_fourier_series_synthesis} es por conveniencia, ya que podría ser absorbida en la definición de \(\tilde{X}[k]\).} 
+\begin{equation}\label{eq:dft_fourier_series_synthesis}
+ \tilde{x}[n]=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{X}[k]e^{j(2\pi/N)kn}
+\end{equation}
+Sin embargo, la elección de \(k\) sobre cualquier período completo de \(\tilde{X}[k]\) es igualmente válida.
 
+Para obtener la secuencia de los coeficientes \(\tilde{X}[k]\) de las series de Fourier a partir de la secuencia periódica \(\tilde{x}[n]\), se explota la ortogonalidad del conjunto de secuencias exponenciales complejas,
+\[
+ \frac{1}{N}\sum_{n=0}^{N-1}e^{j(2\pi/N)(k-r)n}=
+ \left\{ 
+  \begin{array}{lll}
+   1, &k-r=mN, &m\textrm{ entero}, \\
+   0, &\textrm{en otro caso}.
+  \end{array}
+ \right.
+\]
+Empleando esta identidad, puede probarse que 
+\begin{equation}\label{eq:dft_fourier_series_analysis}
+ \tilde{X}[k]=\sum_{n=0}^{N-1}\tilde{x}[n]e^{-j(2\pi/N)kn}.
+\end{equation}
+Notar que la secuencia \(\tilde{X}[k]\) es también periódica de período \(N\) si la ecuación \ref{eq:dft_fourier_series_analysis} se evaluá fuera del intervalo \(0\leq k\leq N-1\), es decir, se cumple que \(\tilde{X}[k+N]=\tilde{X}[k]\) para cualquier valor de \(k\) entero.
 
+Los coeficientes de las series de Fourier pueden interpretarse como ser una secuencia de largo finito, dados por la ecuación \ref{eq:dft_fourier_series_analysis} para \(k=0,\,1,\,\dots,\,N-1\) y cero en otro caso, o como una secuencia periódica definida para todo \(k\) por la ecuación \ref{eq:dft_fourier_series_analysis}. Ambas interpretaciones son aceptables, ya que en la ecuación \ref{eq:dft_fourier_series_synthesis} solo se emplean los valores de \(\tilde{X}[k]\) para \(0\leq k\leq N-1\). La interpretación de \(\tilde{X}[k]\) como secuencia periódica tiene la ventaja de que entonces existe una dualidad entre el dominio del tiempo y la frecuencia para la representación en series de Fourier de secuencias periódicas. Las ecuaciones \ref{eq:dft_fourier_series_analysis} y \ref{eq:dft_fourier_series_synthesis} son el par de análisis--síntesis y son referidas como la representación en series de Fourier discreta (\emph{DFS}, Discrete Fourier Series).
 
+Por conveniencia de notación, el par de análisis--síntesis de la DFS es expresado en términos de la magnitud compleja
+\[
+ W_N=e^{-j(2\pi/N)},
+\]
+es decir,
+\begin{align}
+ \textrm{Ecuación de análisis:}&\quad\tilde{X}[k]=\sum_{n=0}^{N-1}\tilde{x}[n]W_N^{kn},\label{eq:dft_fourier_series_analysis_WN}\\
+ \textrm{Ecuación de síntesis:}&\quad\tilde{x}[n]=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{X}[k]W_N^{-kn}\label{eq:dft_fourier_series_synthesis_WN}.
+\end{align}
+En ambas ecuaciones, \(\tilde{X}[k]\) y \(\tilde{x}[n]\) son secuencias periódicas. También se empleará la notación
+\[
+ \tilde{x}[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}[k]
+\]
+para representar la relación entre las ecuaciones \ref{eq:dft_fourier_series_analysis_WN} y \ref{eq:dft_fourier_series_synthesis_WN}.
 
+\paragraph{Ejemplo: DFS de un tren de impulsos periódico} Se considera el tren de impulsos periódico
+\[
+ \tilde{x}[n]=\sum_{r=-\infty}^\infty\delta[n-rN]=
+ \left\{ 
+  \begin{array}{ll}
+   1, & n=rN,\quad r\textrm{ cualquier entero,}\\
+   0, & \textrm{en otro caso.}
+  \end{array}
+ \right.
+\]
+Como \(\tilde{x}[n]=\delta[n]\) para \(0\leq n\leq N-1\), los coeficientes DFS, al aplicar la ecuación \ref{eq:dft_fourier_series_analysis_WN}, son
+\[
+ \tilde{X}[k]=\sum_{n=0}^{N-1}\delta[n]W_N^{kn}=W_N^{0}=1.
+\]
+Se obtuvo que \(\tilde{X}[k]=1\) para todo \(k\). Si se sustituye este resultado en la ecuación \ref{eq:dft_fourier_series_synthesis_WN} de síntesis se obtiene la representación
+\begin{equation}\label{eq:dft_fourier_series_impulse_train}
+ \tilde{x}[n]=\sum_{r=-\infty}^\infty\delta[n-rN]=\frac{1}{N}\sum_{k=0}^{N-1}W_N^{-kn}
+  =\frac{1}{N}\sum_{k=0}^{N-1}e^{j(2\pi/N)kn}. 
+\end{equation}
+Este ejemplo produce una representación útil del tren de impulsos periódico en términos de una suma de exponenciales complejas, tal que su suma es la unidad para múltiplos de \(N\) y cero para otros enteros.
 
+\section{Propiedades de la DFS}\label{sec:dft_dfs_properties}
 
+En esta sección se resumen las propiedades mas importantes de la DFS, que en general son análogas a las propiedades de la DTFT y la transformada \(z\), vistas en las secciones \ref{sec:fourier_transform_theorems} y \ref{sec:z_transform_properties} respectivamente. Sin embargo, la periodicidad de \(\tilde{x}[n]\) y \(\tilde{X}[k]\) puede conducir a diferencias importantes. De hecho, en la representación mediante la DFS existe una dualidad exacta entre el dominio de la frecuencia y el tiempo que no existe en la DTFT y la transformada \(z\).
 
+\subsection{Linealidad}
 
+Sean dos secuencias periódicas \(\tilde{x}_1[n]\) y \(\tilde{x}_2[n]\), ambas con período \(N\), tal que 
+\[
+ \tilde{x}_1[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}_1[k]
+ \qquad\qquad\textrm{y}\qquad\qquad
+ \tilde{x}_2[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}_2[k].
+\]
+Entonces, se cumple que 
+\[
+ a\tilde{x}_1[n]+b\tilde{x}_2[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;a\tilde{X}_1[k]+b\tilde{X}_2[k].
+\]
 
+\subsection{Desplazamiento temporal}\label{sec:dft_dfs_properties_time_frequency_shift}
 
+Si una secuencia periódica \(\tilde{x}[n]\) tiene coeficientes de Fourier \(\tilde{X}[k]\), entonces \(\tilde{x}[n-m]\) es una version desplazada de \(\tilde{x}[n]\), y se cumple que 
+\begin{equation}\label{eq:dft_dfs_properties_temporal_shift}
+ \tilde{x}[n-m]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;W_N^{km}\tilde{X}[k]. 
+\end{equation}
 
+Para la prueba, se parte de la DFS de la secuencia desplazada y se opera de la siguiente forma:
+\begin{align*}
+ \sum_{n=0}^{N-1}\tilde{x}[n-m]W_N^{kn}&\overset{(a)}{=}\sum_{r=-m}^{N-1-m}\tilde{x}[r]W_N^{k(r+m)}\\
+  &=W_N^{km}\sum_{r=-m}^{N-1-m}\tilde{x}[r]W_N^{kr}\\
+  &=W_N^{km}\left(\sum_{r=-m}^{-1}\tilde{x}[r]W_N^{kr}+\sum_{r=0}^{N-1-m}\tilde{x}[r]W_N^{kr}\right)\\
+  &\overset{(b)}{=}W_N^{km}\left(\sum_{r=-m}^{-1}\tilde{x}[r+N]W_N^{k(r+N)}+\sum_{r=0}^{N-1-m}\tilde{x}[r]W_N^{kr}\right)\\
+  &\overset{(c)}{=}W_N^{km}\left(\sum_{l=N-m}^{N-1}\tilde{x}[l]W_N^{kl}+\sum_{r=0}^{N-1-m}\tilde{x}[r]W_N^{kr}\right)\\
+  &=W_N^{km}\sum_{r=0}^{N-1}\tilde{x}[r]W_N^{kr},
+\end{align*}
+que es lo que se quería mostrar. En la prueba, en \((a)\) se realizó el cambio de variable \(r=n-m\), en \((b)\) se tuvo en cuenta que las secuencias \(\tilde{x}[r]\) y \(W_N^{kr}\) son periódicas de período \(N\), y por lo tanto se sustituyó \(\tilde{x}[r]\) por \(\tilde{x}[r+N]\) y \(W_N^{kr}\) por \(W_N^{k(r+N)}\) en la primera sumatoria, y en \((c)\) se realizó el cambio de variable \(l=r+N\) en la primera sumatoria.
 
+Observar que cualquier desplazamiento mayor o igual al período, es decir, \(m\geq N\), es indistinguible en el dominio del tiempo de un desplazamiento mas corto \(m_1\) tal que \(m=m_1+m_2N\), donde \(m_1\) y \(m_2\) son enteros y \(0\leq m_1\leq N-1\) (\(m_1\) es el resto de dividir \(m\) entre \(N\)). Como también se cumple que \(W_N^{km}=W_N^{km_1}\), la ambigüedad del desplazamiento temporal también se manifiesta en el dominio de la frecuencia.
 
+Debido a que los coeficientes de la serie de Fourier de una secuencia periódica también son una secuencia periódica, se cumple un resultado similar al desplazamiento de los coeficientes de Fourier. Concretamente,
+\begin{equation}\label{eq:dft_dfs_properties_frequency_shift}
+ W_N^{-nl}\tilde{x}[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}[k-l]. 
+\end{equation}
 
+\subsection{Dualidad}\label{sec:dft_dfs_properties_duality}
 
+La DTFT de una secuencia aperiódica es una función periódica de variable continua, es decir, la representación en el tiempo y en la frecuencia son señales de naturaleza distinta. Por otro lado, debido a la similitud de las ecuaciones de análisis y síntesis de la DFS, existe una dualidad entre la representación en el tiempo y en la frecuencia. Específicamente, de la ecuación \ref{eq:dft_fourier_series_synthesis_WN} de síntesis se obtiene que 
+\[
+ N\tilde{x}[-n]=\sum_{k=0}^{N-1}\tilde{X}[k]W_N^{kn}, 
+\]
+e intercambiando los roles de \(n\) y \(k\) resulta en que 
+\[
+ N\tilde{x}[-k]=\sum_{n=0}^{N-1}\tilde{X}[n]W_N^{nk}. 
+\]
+Comparando esta ecuación con la ecuación \ref{eq:dft_fourier_series_analysis_WN} de análisis, se observa que la secuencia de coeficientes de la DFS de la secuencia periódica \(\tilde{X}[n]\) es \(N\tilde{x}[-k]\), es decir, la secuencia original invertida en orden y multiplicada por \(N\). Esta propiedad de dualidad se resume de la forma siguiente: si
+\[
+ \tilde{x}[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}[k]
+\]
+entonces
+\[
+ \tilde{X}[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;N\tilde{x}[-k].
+\]
 
+\subsection{Propiedades de simetría}\label{sec:dft_dfs_properties_symmetry}
 
+Las propiedades básicas de simetría de la DTFT indicadas en la sección \ref{sec:seq_and_sys_dtft_symmetry_properties} también se cumplen para la DFS de un señal periódica. Específicamente, la DFS cumple que:
+\begin{enumerate}
+ \item \(\displaystyle{\tilde{x}}^*[n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;{\tilde{X}}^*[-k]\)
+ \item \(\displaystyle{\tilde{x}}^*[-n]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;{\tilde{X}}^*[k]\)
+ \item \(\displaystyle\Re(\tilde{x}[n])\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}_e[k]=\frac{1}{2}(\tilde{X}[k]+\tilde{X}^*[-k])\)
+ \item \(\displaystyle j\Im(\tilde{x}[n])\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}_o[k]=\frac{1}{2}(\tilde{X}[k]-\tilde{X}^*[-k])\)
+ \item \(\displaystyle \tilde{x}_e[n]=\frac{1}{2}(\tilde{x}[n]+\tilde{x}^*[-n])\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;
+ \Re(\tilde{X}[k])\)
+ \item \(\displaystyle \tilde{x}_o[n]=\frac{1}{2}(\tilde{x}[n]-\tilde{x}^*[-n])\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;
+ j\Im(\tilde{X}[k]).\)
+\end{enumerate}
+La prueba de 1. es
+\[
+ \sum_{n=0}^{N-1}{\tilde{x}}^*[n]W_N^{kn}=\left(\sum_{n=0}^{N-1}{\tilde{x}}[n]W_N^{-kn}\right)^*={\tilde{X}}^*[-k],
+\]
+y la prueba de 2. es similar. La prueba de 3. es
+\[
+ \sum_{n=0}^{N-1}\Re(\tilde{x}[n])W_N^{kn}=\sum_{n=0}^{N-1}\frac{\tilde{x}[n]+\tilde{x}^*[n]}{2}W_N^{kn}
+ \overset{(a)}{=}\frac{1}{2}(\tilde{X}[k]+{\tilde{X}}^*[-k])\overset{(b)}{=}\tilde{X}_e[k],
+\]
+donde en \((a)\) se empleó la propiedad 1. además de la propiedad de linealidad de la DFS y en \((b)\) se empleó la descomposición de una secuencia en una secuencia simétrica conjugada y una secuencia antisimétrica conjugada (ver la sección \ref{sec:seq_and_sys_dtft_symmetry_properties}). La prueba de 4. es análoga. Las propiedades 5. y 6. se obtienen inmediatamente de las propiedades 1. y 2 y la propiedad de linealidad.
 
+Adicionalmente, si \(\tilde{x}[n]\) es una secuencia periódica real, se cumple que:
+\begin{enumerate}[label=\alph*.]
+ \item \(\displaystyle\Re(\tilde{X}[k])=\Re(\tilde{X}[-k])\)
+ \item \(\displaystyle\Im(\tilde{X}[k])=-\Im(\tilde{X}[-k])\)
+ \item \(\displaystyle|X[k]|=|X[-k]|\)
+ \item \(\displaystyle\angle X[k]|=-\angle X[-k]\)
+\end{enumerate}
+Observar que para una secuencia \(\tilde{x}[n]\) real, la propiedad 4. indica que la parte antisimétrica \(\tilde{X}_o[k]\) de la DFS es nula, es decir,
+\[
+ \tilde{X}_o[k]=\frac{1}{2}(\tilde{X}[k]-\tilde{X}^*[-k])=0.
+\]
+Por lo tanto, si \(\tilde{x}[n]\) es real, se cumple que \(\tilde{X}[k]=\tilde{X}^*[-k]\), de donde las propiedades a.--d. se obtienen inmediatamente. 
 
+\subsection{Convolución periódica}\label{sec:dft_dfs_properties_periodic_convolution}
 
+Sean \(\tilde{x}_1[n]\) y \(\tilde{x}_2[n]\) dos secuencias periódicas, ambas de período \(N\), con coeficientes DFS \(\tilde{X}_1[k]\) y \(\tilde{X}_2[k]\) respectivamente. Si se forma el producto
+\[
+ \tilde{X}_3[k]=\tilde{X}_1[k]\tilde{X}_2[k],
+\]
+la secuencia periódica \(\tilde{x}_3[n]\) con coeficientes de Fourier \(\tilde{X}_3[n]\) es
+\begin{equation}\label{eq:dft_dfs_properties_periodic_convolution}
+ \tilde{x}_3[n]=\sum_{m=0}^{N-1}\tilde{x}_1[m]\tilde{x}_2[n-m]. 
+\end{equation}
+Esta operación es referida como \emph{convolución periódica}. Observar que a diferencia de la convolución aperiódica, la sumatoria es solo sobre un período. Para mostrar este resultado, se aplica la ecuación \ref{eq:dft_fourier_series_analysis_WN} de análisis de la DFS a \(\tilde{x}_3[n]\),
+\begin{align*}
+ \tilde{X}_3[k]&=\sum_{n=0}^{N-1}\left(\sum_{m=0}^{N-1}\tilde{x}_1[m]\tilde{x}_2[n-m]\right)W_N^{kn}\\
+   &=\sum_{m=0}^{N-1}\tilde{x}_1[m]\left(\sum_{n=0}^{N-1}\tilde{x}_2[n-m]W_N^{kn}\right)\\
+   &\overset{(a)}{=}\sum_{m=0}^{N-1}\tilde{x}_1[m]W_N^{km}\tilde{X}_2[k]\\
+   &=\tilde{X}_1[k]\tilde{X}_2[k],
+\end{align*}
+donde en \((a)\) se tuvo en cuenta que el factor entre paréntesis es la DFS de la secuencia \(\tilde{x}_2[n-m]\), y la propiedad \ref{eq:dft_dfs_properties_temporal_shift} de desplazamiento temporal indica que es \(W_N^{km}\tilde{X}_2[k]\). Se concluye que 
+\begin{equation}\label{eq:dft_dfs_properties_frequency_product}
+ \sum_{m=0}^{N-1}\tilde{x}_1[m]\tilde{x}_2[n-m]
+ \;\overset{\mathcal{DFS}}{\longleftrightarrow}\;
+ \tilde{X}_1[k]\tilde{X}_2[k],
+\end{equation}
+que indica que la convolución periódica de secuencias periódicas corresponde a la multiplicación de los respectivos coeficientes de Fourier. Al igual que la convolución aperiódica, la convolución periódica es conmutativa.  
 
+De forma dual, los coeficientes de Fourier del producto de secuencias periódicas se obtienen a partir de la convolución de los correspondientes coeficientes. Específicamente,
+\begin{equation}\label{eq:dft_dfs_properties_time_product}
+ \tilde{x}_1[n]\tilde{x}_2[n]
+ \;\overset{\mathcal{DFS}}{\longleftrightarrow}\;
+ \frac{1}{N}\sum_{l=0}^{N-1}\tilde{X}_1[l]\tilde{X}_2[k-l].
+\end{equation}
+Para mostrarlo, se parte aplicando la ecuación \ref{eq:dft_fourier_series_analysis_WN}  de análisis al producto \(\tilde{x}_1[n]\tilde{x}_2[n]\),
+\begin{align*}
+ \sum_{n=0}^{N-1}\tilde{x}_1[n]\tilde{x}_2[n]W_N^{kn}&\overset{(a)}{=}\sum_{n=0}^{N-1}\left(\frac{1}{N}\sum_{l=0}^{N-1}\tilde{X}_1[l]W_N^{-ln}\right)\tilde{x}_2[n]W_N^{kn}\\
+  &=\frac{1}{N}\sum_{l=0}^{N-1}\tilde{X}_1[l]\left(\sum_{n=0}^{N-1}W_N^{-ln}\tilde{x}_2[n]W_N^{kn}\right)\\
+  &\overset{(b)}{=}\frac{1}{N}\sum_{l=0}^{N-1}\tilde{X}_1[l]\tilde{X}_2[k-l],
+\end{align*}
+donde en \((a)\) se expresó \(\tilde{x}_1[n]\) en términos de los coeficientes de la DFS mediante la ecuación \ref{eq:dft_fourier_series_synthesis_WN} de síntesis y en \((b)\) se empleó el hecho de que el término entre paréntesis son los coeficientes de Fourier desplazados en frecuencia, como indica la ecuación  \ref{eq:dft_dfs_properties_frequency_shift}.
 
+\section{La transformada de Fourier de secuencias periódicas}
 
+Como se discutió en la sección \ref{sec:seq_and_sys_fourier_transform_representation}, la convergencia uniforme de la transformada de Fourier de una secuencia requiere que la secuencia sea absolutamente sumable, y la convergencia en media cuadrática requiere que la secuencia sea cuadráticamente sumable. Las secuencias periódicas no satisfacen ninguna de estas condiciones. Sin embargo, como se discutió brevemente en la sección \ref{sec:seq_and_sys_fourier_transform_representation}, secuencias que pueden expresarse como la suma de exponenciales complejas pueden considerarse tener transformada de Fourier de la forma de un tren de impulsos, como en el ejemplo en dicha sección. De forma similar, es útil incorporar la representación DFS de señales periódicas en el contexto de la transformada de Fourier en tiempo discreto. Esto puede hacerse interpretando a la DTFT de una señal periódica como un tren de impulsos en el dominio de la frecuencia, con los valores de los impulsos proporcionales a los coeficientes de la DFS de la secuencia. Específicamente, si \(\tilde{x}[n]\) es una secuencia periódica con período \(N\) y los correspondientes coeficientes de la DFS son \(\tilde{X}[k]\), la transformada de Fourier de \(\tilde{x}[n]\) se define como el tren de impulsos 
+\begin{equation}\label{eq:dft_dtft_periodic_signal}
+ \tilde{X}(e^{j\omega})=\sum_{k=-\infty}^\infty\frac{2\pi}{N}\tilde{X}[k]\delta\left(\omega-\frac{2\pi k}{N}\right).
+\end{equation}
+Observar que \(\tilde{X}(e^{j\omega})\) tiene la periodicidad de \(2\pi\) requerida, ya que \(\tilde{X}[k]\) es periódica de período \(N\) y los impulsos están ubicados en múltiplos de \(2\pi/N\).
 
+Para mostrar que \(\tilde{X}(e^{j\omega})\) definida por la ecuación \ref{eq:dft_dtft_periodic_signal} es una representación de Fourier de la secuencia periódica \(\tilde{x}[n]\) se parte sustituyendo la ecuación \ref{eq:dft_dtft_periodic_signal} en la ecuación \ref{eq:seq_and_sys_dtft_inverse_definition} de la DTFT inversa,
+\begin{align*}
+ \frac{1}{2\pi}\int_{0-\epsilon}^{2\pi-\epsilon}\tilde{X}(e^{j\omega})e^{j\omega n}\,d\omega
+  &=\frac{1}{2\pi}\int_{0-\epsilon}^{2\pi-\epsilon}\sum_{k=-\infty}^\infty\frac{2\pi}{N}\tilde{X}[k]\delta\left(\omega-\frac{2\pi k}{N}\right)e^{j\omega n}\,d\omega\\
+  &\overset{(a)}{=}\frac{1}{N}\sum_{k=-\infty}^\infty\tilde{X}[k]\int_{0-\epsilon}^{2\pi-\epsilon}\delta\left(\omega-\frac{2\pi k}{N}\right)e^{j\omega n}\,d\omega\\
+  &\overset{(b)}{=}\frac{1}{N}\sum_{k=0}^{N-1}\tilde{X}[k]e^{j(2\pi/N)kn}\\
+  &\overset{(c)}{=}\tilde{x}[n].
+\end{align*}
+Recordar que al evaluar la DTFT inversa puede elegirse cualquier intervalo de largo \(2\pi\), y en los límites de integración, \(\epsilon\) satisface la inecuación \(0<\epsilon<2\pi/N\). Esto se eligió así para que el intervalo de integración incluya al impulso en \(\omega=0\) y no incluya al impulso en \(\omega=2\pi\).\footnote{El intervalo de integración entre 0 y \(2\pi\) tiene el problema de que los impulsos en \(\omega=0\) y \(\omega=2\pi\) requieren un tratamiento especial.} En el razonamiento, en \((a)\) se intercambió el orden integración y sumatoria, y en \((b)\) se consideró que solo los impulsos correspondientes a \(k=0,\,1,\,\dots,\,N-1\) están incluidos en el intervalo de integración, y en consecuencia, para el resto de los valores de \(k\), el integrando es nulo. Finalmente, en \((c)\) se observó que la expresión obtenida es la ecuación \ref{eq:dft_fourier_series_synthesis_WN} de síntesis de la DFS. Se concluye que la DTFT inversa del tren de impulsos dado por la ecuación \ref{eq:dft_dtft_periodic_signal} es la señal periódica \(\tilde{x}[n]\), como se quería.
+
+Si bien la transformada de Fourier de secuencias periódicas no converge en el sentido normal, la introducción de impulsos permite incluir a las secuencias periódicas formalmente en el ámbito del análisis de Fourier. Esto ya se hizo en el capítulo \ref{ch:signals_and_systems} para obtener la transformada de Fourier de otras secuencias no sumables, como el escalón unidad o la secuencia exponencial compleja. Si bien la representación DFS es adecuada para muchos propósitos, la representación de la transformada de Fourier de la ecuación \ref{eq:dft_dtft_periodic_signal} generalmente conduce a resultados mas simples y compactos.
+
+\paragraph{Ejemplo: la transformada de Fourier de un tren de impulsos periódico} Se considera el tren de impulsos periódico
+\[
+ \tilde{p}[n]=\sum_{r=-\infty}^\infty\delta[n-rN],
+\]
+que es el mismo que el considerado en el ejemplo de la sección \ref{sec:dft_dfs}. En dicho ejemplo se obtuvo que los coeficientes DFS son
+\[
+ \tilde{P}[k]=1,
+ \qquad\textrm{para todo }k.
+\]
+Por lo tanto, sustituyendo este resultado en la ecuación \ref{eq:dft_dtft_periodic_signal}, se obtiene que la DTFT de \(\tilde{p}[n]\) es
+\[
+ \tilde{P}(e^{j\omega})=\sum_{k=-\infty}^\infty\frac{2\pi}{N}\delta\left(\omega-\frac{2\pi k}{N}\right).
+\]
+
+El resultado de este ejemplo es la base para una interpretación útil de la relación entre una señal periódica y una señal de largo finito. Considérese la señal \(x[n]\) de largo finito tal que \(x[n]=0\) excepto en el intervalo \(0\leq n\leq N-1\), y considérese la convolución entre \(x[n]\) y el tren de impulsos \(\tilde{p}[n]\) del ejemplo anterior,
+\[
+ \tilde{x}[n]=x[n]*\tilde{p}[n]=x[n]*\sum_{r=-\infty}^\infty\delta[n-rN]=\sum_{r=-\infty}^\infty x[n-rN].
+\]
+Este resultado indica que la señal periódica \(\tilde{x}[n]\) consiste en un conjunto de copias desplazadas temporalmente de la señal de largo finito \(x[n]\). Si la DTFT de \(x[n]\) es \(X(e^{j\omega})\), la transformada de \(\tilde{x}[n]\) es
+\begin{align*}
+ \tilde{X}(e^{j\omega})&=X(e^{j\omega})\tilde{P}(e^{j\omega})\\
+  &=X(e^{j\omega})\sum_{k=-\infty}^\infty\frac{2\pi}{N}\delta\left(\omega-\frac{2\pi k}{N}\right)\\
+  &=\sum_{k=-\infty}^\infty\frac{2\pi}{N}X(e^{j(2\pi/N)k})\delta\left(\omega-\frac{2\pi k}{N}\right).
+\end{align*}
+Comparando este resultado con el de la ecuación \ref{eq:dft_dtft_periodic_signal} se concluye que 
+\[
+ \tilde{X}[k]=X(e^{j(2\pi/N)k})=X(e^{j\omega})\Big|_{\omega=(2\pi/N)k}.
+\]
+Esto indica que la secuencia periódica \(\tilde{X}[k]\) de los coeficientes DFS obtenida mediante la ecuación \ref{eq:dft_fourier_series_analysis_WN} consiste en muestras equiespaciadas de la DTFT de la secuencia de largo finito obtenida mediante la extracción de un período de \(\tilde{x}[n]\), es decir, de
+\begin{equation}\label{eq:dft_dtft_periodic_period_extraction}
+ x[n]=
+ \left\{
+ \begin{array}{ll}
+  \tilde{x}[n], & 0\leq n\leq N-1\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right. 
+\end{equation}
+Este mismo resultado puede obtenerse de otra forma. Como \(x[n]=\tilde{x}[n]\) en \(0\leq n\leq N-1\) y \(x[n]=0\) en otro caso, la DTFT es
+\[
+ X(e^{j\omega})=\sum_{n=0}^{N-1}x[n]e^{-j\omega n}=\sum_{n=0}^{N-1}\tilde{x}[n]e^{-j\omega n}.
+\]
+Comparando este resultado con la ecuación \ref{eq:dft_fourier_series_analysis_WN} se deduce nuevamente que 
+\[
+ \tilde{X}[k]=X(e^{j\omega})\Big|_{\omega=2\pi k/N},
+\]
+que corresponde al muestreo de la DTFT en \(N\) frecuencias equiespaciadas entre \(\omega=0\) y \(\omega=2\pi\), con una separación entre muestras de \(2\pi/N\) radianes.
+
+\section{Muestreo de la transformada de Fourier}\label{sec:dft_dtft_sampling}
+
+En esta sección se discute con mas generalidad la relación entre una secuencia aperiódica con transformada de Fourier \(X(e^{j\omega})\) y la secuencia periódica con coeficientes DFS correspondientes a muestras de \(X(e^{j\omega})\) equiespaciadas en frecuencia. Esta relación es útil para entender a la transformada discreta de Fourier y sus propiedades.
+
+Se considera una secuencia aperiódica \(x[n]\) con DTFT \(X(e^{j\omega})\), y se construye que una secuencia \(\tilde{X}[k]\) mediante el muestreo de \(X(e^{j\omega})\) en las frecuencias \(\omega_k=2\pi k/N\), es decir,
+\begin{equation}\label{eq:dft_dtft_sampling_Xk}
+ \tilde{X}[k]=X(e^{j\omega})\Big|_{\omega=2\pi k/N}=X(e^{j2\pi k/N}). 
+\end{equation}
+Como la transformada de Fourier es periódica en \(\omega\) con período \(2\pi\), la secuencia obtenida es periódica en \(k\) con período \(N\). Además, como la transformada de Fourier es la transformada \(z\) evaluada en la circunferencia unidad, la secuencia \(\tilde{X}[k]\) puede obtenerse muestreando \(X(z)\) en \(N\) puntos equiespaciados en la circunferencia unidad, es decir,
+\[
+ \tilde{X}[k]=X(z)\Big|_{z=e^{j2\pi k/N}}=X(e^{j2\pi k/N}).
+\]
+Estos puntos de muestreo se ilustran en la figura \ref{fig:dft_dtft_sampling_z_plane}, donde se observa que al incrementar \(k\) se vuelven a repetir los mismos puntos de muestreo de la transformada \(z\), resaltando el hecho de que la secuencia \(\tilde{X}[k]\) obtenida es periódica.
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{figuras/dft_dtft_sampling_z_plane.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.45\textwidth}
+    \caption{
+      Puntos de la circunferencia unidad en donde se muestrea \(X(z)\) para obtener \(\tilde{X}[k]\) para \(N=8\).
+    }\label{fig:dft_dtft_sampling_z_plane}
+  \end{minipage}
+\end{figure}
+
+Notar que la secuencia de muestras \(\tilde{X}[k]\), al ser periódica de período \(N\) puede ser la secuencia de los coeficientes DFS de una secuencia periódica \(\tilde{x}[n]\). Para encontrar esa secuencia, se sustituye \(\tilde{X}[k]\) obtenida mediante el muestreo en la ecuación \ref{eq:dft_fourier_series_synthesis_WN} de síntesis de la DFS,
+\begin{equation}\label{eq:dft_dtft_sampling_dfs_synthesis_tmp}
+ \tilde{x}[n]=\frac{1}{N}\sum_{k=0}^{N-1}\tilde{X}[k]W_N^{-kn}. 
+\end{equation}
+Como no se realizó ninguna hipótesis sobre \(x[n]\) excepto de que existe la transformada de Fourier, se emplean límites infinitos para indicar que la suma
+\[
+ X(e^{j\omega})=\sum_{m=-\infty}^\infty x[m]e^{-j\omega m}
+\]
+es sobre los valores no nulos de \(x[m]\). Por lo tanto,
+\[
+ \tilde{X}[k]=X(e^{j\omega})\Big|_{\omega=2\pi k/N}=\sum_{m=-\infty}^\infty x[m]e^{-j2\pi km/N}
+ =\sum_{m=-\infty}^\infty x[m]W_N^{km}.
+\]
+Sustituyendo este resultado en la ecuación \ref{eq:dft_dtft_sampling_dfs_synthesis_tmp} se obtiene que 
+\begin{align*}
+ \tilde{x}[n]&=\frac{1}{N}\sum_{k=0}^{N-1}\left[\sum_{m=-\infty}^\infty x[m]W_N^{km}\right]W_N^{-kn}\\
+   &=\sum_{m=-\infty}^\infty x[m]\left[\frac{1}{N}\sum_{k=0}^{N-1}W_N^{-k(n-m)}\right]\\
+   &\overset{(a)}{=}\sum_{m=-\infty}^\infty x[m]\tilde{p}[n-m]\\
+   &=x[n]*\tilde{p}[n]\\
+   &=x[n]*\sum_{r=-\infty}^\infty\delta[n-rN],
+\end{align*}
+resultando en que 
+\begin{equation}\label{eq:dft_dtft_sampling_xn}
+ \tilde{x}[n]=\sum_{r=-\infty}^\infty x[n-rN].
+\end{equation}
+En el razonamiento, en \((a)\) se consideró que el término entre paréntesis rectos es la DFS del tren de impulsos periódico del ejemplo de la sección \ref{sec:dft_dfs} evaluado en \(n-m\) (ver la ecuación \ref{eq:dft_fourier_series_impulse_train}), y el signo \(*\) denota a la operación de convolución aperiódica.
+
+La ecuación \ref{eq:dft_dtft_sampling_xn} indica que la secuencia periódica \(\tilde{x}[n]\), correspondiente a \(\tilde{X}[k]\) obtenida del muestreo de \(X(e^{j\omega})\), se forma a partir de \(x[n]\) mediante la suma de infinitas réplicas temporalmente desplazadas. Los desplazamientos son todos los múltiplos enteros positivos y negativos de \(N\), el período de la secuencia \(\tilde{X}[k]\). Esto se muestra en la figura \ref{fig:dft_dtft_sampling_example}, donde la secuencia \(x[n]\) es de largo 9, y se consideran dos valores de \(N\), \(N=12\) y \(N=7\). En el caso en que \(N=12\), las réplicas desplazadas de \(x[n]\) no se solapan, y un período de la señal periódica \(\tilde{x}[n]\) es igual a \(x[n]\). En el caso en que \(N=7\), las réplicas de \(x[n]\) se solapan, y un período de \(\tilde{x}[n]\) no es idéntico a \(x[n]\). Sin embargo, en ambos casos se sigue cumpliendo la ecuación \ref{eq:dft_dtft_sampling_Xk}, es decir, los coeficientes DFS de \(\tilde{x}[n]\) son muestras de la DTFT de \(x[n]\) en múltiplos de \(2\pi/N\). Esta discusión recuerda a la discusión sobre muestreo realizada en el capítulo \ref{ch:sampling}. La diferencia es que ahora el muestreo se realiza en el dominio de la frecuencia en lugar de en el dominio del tiempo. Sin embargo, los aspectos generales de las representaciones matemáticas son similares.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/dft_dtft_sampling_example.pdf}
+ \caption{\label{fig:dft_dtft_sampling_example} Secuencia de largo finito \(x[n]\) y secuencias periódicas correspondientes a muestrear la DTFT de \(x[n]\) con \(N=12\) y \(N=7\) muestras por período.}
+ \end{center}
+\end{figure}
+
+Para el ejemplo de la figura \ref{fig:dft_dtft_sampling_example} con \(N=12\), la secuencia \(x[n]\) puede recuperarse a partir de \(\tilde{x}[n]\) extrayendo un período. Equivalentemente, la transformada de Fourier \(X(e^{j\omega})\) puede recuperarse a partir de las muestras espaciadas \(2\pi/12\). En contraste, con \(N=7\), \(x[n]\) no puede obtenerse a partir de \(\tilde{x}[n]\), y, equivalentemente, \(X(e^{j\omega})\) no puede recuperarse a partir de las muestras espaciadas \(2\pi/7\). En el caso con \(N=12\), el espaciamiento de las muestras en frecuencia es suficientemente pequeño para permitir recuperar la DTFT a partir de las muestras, mientras con \(N=7\), la DTFT es submuestreada. La relación entre \(x[n]\) y un período de \(\tilde{x}[n]\) pensarse como una forma de aliasing en el dominio del tiempo, esencialmente igual al aliasing en el dominio de la frecuencia cuando una señal es submuestreada en el dominio del tiempo, como se discutió en el capítulo \ref{ch:sampling}. El aliasing en el dominio del tiempo solo puede evitarse si \(x[n]\) es de largo finito, así como el aliasing en la frecuencia solo puede evitarse si la señal es de banda limitada.
+
+Esta discusión resalta varios conceptos que serán importantes en lo que resta del capítulo. Se vio que muestras de la transformada de Fourier de una secuencia aperiódica \(x[n]\) pueden considerarse como los coeficientes DFS de una secuencia periódica \(\tilde{x}[n]\) obtenida mediante la suma de réplicas desplazadas de \(x[n]\). Si \(x[n]\) es de largo finito y se toma una cantidad suficiente de muestras equiespaciadas de su transformada de Fourier, específicamente, una cantidad mayor o igual al largo de \(x[n]\), entonces la transformada de Fourier es reconstruible a partir de las muestras, y, equivalentemente, \(x[n]\) es recuperable a partir de la correspondiente secuencia \(\tilde{x}[n]\).
+
+La esencia de la discusión previa es que para representar o recuperar \(x[n]\), no es necesario conocer \(X(e^{j\omega})\) en todas las frecuencias si \(x[n]\) tiene largo finito. Dada una secuencia de largo finito \(x[n]\) se puede formar una secuencia periódica mediante la ecuación \ref{eq:dft_dtft_sampling_xn}, la cual puede ser representada por la DFS. Alternativamente, dada la secuencia de coeficientes de Fourier \(\tilde{X}[k]\), se puede encontrar \(\tilde{x}[n]\) y luego extraer un periódo mediante la ecuación \ref{eq:dft_dtft_periodic_period_extraction} para obtener \(x[n]\). Cuando la serie de Fourier es empleada de esta forma para representar una secuencia de largo finito, se denomina transformada discreta de Fourier (\emph{DFT}, Discrete Fourier Transform). En el desarrollo, discusión y aplicación de la DFT, es siempre importante recordar que la representación mediante muestras de la transformada de Fourier es en realidad la representación de una secuencia de largo finito mediante una secuencia periódica, de la cual un período es la secuencia de largo finito que se desea representar.
+
+\section{Representación de Fourier de secuencias de largo finito: la DFT}
+
+En esta sección se formalizan los conceptos sugeridos al final de la sección anterior. Se comienza considerando una secuencia de largo finito \(x[n]\), de largo \(N\) muestras tal que \(x[n]=0\) fuera de intervalo \(0\leq N\leq N-1\). En muchas situaciones se asumirá que la secuencia tiene largo \(N\) aunque tenga largo \(M\leq N\). En esos caso, se reconoce que las últimas \(N-M\) muestras son nulas. A cada secuencia de largo finito de largo \(N\), siempre se puede asociar una secuencia periódica (ver la ecuación \ref{eq:dft_dtft_sampling_xn})
+\begin{equation}\label{eq:dft_representation_tildex_from_x}
+ \tilde{x}[n]=\sum_{r=-\infty}^\infty x[n-rN]. 
+\end{equation}
+La secuencia de largo finito \(x[n]\) puede recuperarse de \(\tilde{x}[n]\) extrayendo un período (ver la ecuación \ref{eq:dft_dtft_periodic_period_extraction}), es decir, 
+\begin{equation}\label{eq:dft_representation_x_from_tildex}
+ x[n]=
+ \left\{
+ \begin{array}{ll}
+  \tilde{x}[n], & 0\leq n\leq N-1\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.  
+\end{equation}
+
+Recordar de la sección \ref{sec:dft_dtft_sampling} que los coeficientes DFS de \(\tilde{x}[n]\) son muestras espaciadas en frecuencia \(2\pi/N\) de la DTFT de \(x[n]\). Como se asume que \(x[n]\) tiene largo \(N\), no hay solapamiento entre los términos \(x[n-rN]\) para diferentes valores de \(r\). Por lo tanto, la ecuación \ref{eq:dft_representation_tildex_from_x} puede expresarse alternativamente como
+\[
+ \tilde{x}[n]=x[(n\modulo N)],
+\]
+donde el operador \(\modulo\) denota el residuo de la división entera. Por conveniencia se empleará la notación \(((n))_N\) para denotar \((n\modulo N)\). Por lo tanto, la ecuación anterior se puede escribir como
+\begin{equation}\label{eq:dft_representation_tildex_from_x_mod}
+ \tilde{x}[n]=x[((n))_N]. 
+\end{equation}
+Observar que la ecuación \ref{eq:dft_representation_tildex_from_x_mod} es equivalente a la ecuación \ref{eq:dft_representation_tildex_from_x} solo cuando \(x[n]\) es de largo menor o igual a \(N\). La secuencia de largo finito \(x[n]\) se obtiene de \(\tilde{x}[n]\) extrayendo un período, como en la ecuación \ref{eq:dft_representation_x_from_tildex}.
+
+Como se definió en la sección \ref{sec:dft_dfs}, la secuencia \(\tilde{X}[k]\) de coeficientes DFS de la secuencia periódica \(\tilde{x}[n]\) es también periódica de largo \(N\). Para mantener una dualidad entre el dominio del tiempo y la frecuencia, los coeficientes de Fourier asociados a una secuencia de largo finito se eligen ser una secuencia de largo finito correspondiente a un período de \(\tilde{X}[k]\). Esta secuencia de largo finito, \(X[k]\), será referida como la DFT. Por lo tanto, la DFT \(X[k]\) está relacionada a los coeficientes DFS como
+\begin{equation}\label{eq:dft_representation_X_from_tildeX}
+ X[k]=
+ \left\{
+ \begin{array}{ll}
+  \tilde{X}[k], & 0\leq k\leq N-1\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.   
+\end{equation}
+y
+\begin{equation}\label{eq:dft_representation_tildeX_from_X}
+ \tilde{X}[k]=X[(k\modulo N)]=X[((k))_N]. 
+\end{equation}
+
+En las ecuaciones \ref{eq:dft_fourier_series_analysis_WN} y \ref{eq:dft_fourier_series_synthesis_WN} de análisis y síntesis de la DFS, los intervalos de las sumatorias son entre 0 y \(N-1\) y por lo tanto se puede reemplazar \(\tilde{x}[k]\) por \(x[k]\) en la ecuación \ref{eq:dft_fourier_series_analysis_WN} de análisis y \(\tilde{X}[k]\) por \(X[k]\) en la ecuación \ref{eq:dft_fourier_series_synthesis_WN} de síntesis. Sustituyendo la ecuación de análisis y síntesis de la DFS con dicha modificación en la ecuación \ref{eq:dft_representation_X_from_tildeX} y \ref{eq:dft_representation_x_from_tildex} respectivamente, se obtiene que 
+\begin{align*}
+ X[k]&=
+ \left\{
+ \begin{array}{ll}
+  \displaystyle\sum_{n=0}^{N-1}x[n]W_N^{kn}, & 0\leq k\leq N-1,\\[\bigskipamount]
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right.\\    
+ x[n]&=
+ \left\{
+ \begin{array}{ll}
+  \displaystyle\frac{1}{N}\sum_{k=0}^{N-1}X[k]W_N^{-kn}, & 0\leq n\leq N-1,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right.  
+\end{align*}
+donde \(W_N=e^{-j(2\pi/N)}\). Estas son las ecuaciones de análisis y síntesis de la DFT, y en general se escriben como
+\begin{align}
+ \textrm{Ecuación de análisis:}&\quad X[k]=\sum_{n=0}^{N-1}x[n]W_N^{kn},\qquad 0\leq k\leq N-1,\label{eq:dft_representation_dft_analysis_WN}\\
+ \textrm{Ecuación de síntesis:}&\quad x[n]=\frac{1}{N}\sum_{k=0}^{N-1}X[k]W_N^{-kn},\qquad0\leq n\leq N-1\label{eq:dft_representation_dft_synthesis_WN}.
+\end{align}
+De esta forma, el hecho de que \(X[k]=0\) fuera del intervalo \(0\leq k\leq N-1\) y \(x[n]=0\) fuera del intervalo \(0\leq n\leq N-1\) es sobrentendido, y no siempre es indicado explícitamente. La relación entre \(x[n]\) y \(X[k]\) implicada por lass ecuaciones \ref{eq:dft_representation_dft_analysis_WN} y \ref{eq:dft_representation_dft_synthesis_WN} será en ocasiones denotada como
+\[
+ x[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X[k].
+\]
+
+En la reformulación de las ecuaciones \ref{eq:dft_fourier_series_analysis_WN} y \ref{eq:dft_fourier_series_synthesis_WN} en las ecuaciones \ref{eq:dft_representation_dft_analysis_WN} y \ref{eq:dft_representation_dft_synthesis_WN} para secuencias de largo finito, no se eliminó la periodicidad inherente. Como la DFS, la DFT \(X[k]\) corresponde a muestras de la transformada de Fourier \(X(e^{j\omega})\), que es periódica, y si la ecuación \ref{eq:dft_representation_dft_synthesis_WN} se evalúa fuera del intervalo \(0\leq n\leq N-1\), el resultado no es cero, sino una extensión periódica de \(x[n]\). La periodicidad inherente siempre está presente. A veces puede causar dificultades y a veces puede explotarse, pero ignorarla conduce a problemas. En la definición de la representación mediante la DFT, simplemente se reconoce que interesan los valores de \(x[n]\) solo en el intervalo \(0\leq n\leq N-1\), debido a que \(x[n]\) es realmente cero fuera de ese intervalo, y solo interesan los valores de \(X[k]\) en el intervalo \(0\leq k\leq N-1\) debido a que esos valores son los únicos que se necesitan en la ecuación \ref{eq:dft_representation_dft_analysis_WN} para construir a \(x[n]\). 
+
+La distinción entre la secuencia de largo finito \(x[n]\) y la secuencia periódica \(\tilde{x}[n]\) vinculadas a través de las ecuaciones \ref{eq:dft_representation_x_from_tildex} y \ref{eq:dft_representation_tildex_from_x_mod} podría parecer menor, ya que, mediante esas ecuaciones se construye inmediatamente una a partir de la otra. Sin embargo, la distinción se hace importante al considerar las propiedades de la DFT, y al considerar los efectos sobre \(x[n]\) al modificar \(X[k]\). Esto se evidencia en la siguiente sección, en donde se discuten las propiedades de la DFT. 
+
+\section{Propiedades de la DFT}
+
+La discusión de las propiedades de la DFT para señales de largo finito en esta sección van en paralelo a las propiedades de la DFS para señales periódicas en la sección \ref{sec:dft_dfs_properties}. Sin embargo, se pone especial atención a la interacción entre la hipótesis de largo finito y la periodicidad implícita de la DFT.
+
+\subsection{Linealidad}
+
+Si dos secuencias de duración finita \(x_1[n]\) y \(x_2[n]\) se combinan linealmente, es decir,
+\[
+ x_3[n]=ax_1[n]+bx_2[n],
+\]
+la DFT de \(x_3[n]\) es
+\begin{equation}\label{eq:dft_properties_linearity_tmp}
+ X_3[k]=aX_1[n]+bX_2[n]. 
+\end{equation}
+Si \(x_1[n]\) tiene largo \(N_1\) y \(x_2[n]\) tiene largo \(N_2\), el largo máximo de \(x_3[n]\) es \(N_3=\max(N_1,\,N_2)\). Por lo tanto, para que se cumpla la ecuación \ref{eq:dft_properties_linearity_tmp}, ambas DFTs deben calcularse con el mismo largo \(N\geq N_3\). Por ejemplo, si \(N_2>N_1\) ambas DFTs deben calcularse con \(N_2\) puntos, es decir,
+\[
+ X_1[k]=\sum_{n=0}^{N_1-1}x[n]W_{N_2}^{kn},\qquad 0\leq k\leq N_2-1
+\]
+y
+\[
+ X_2[k]=\sum_{n=0}^{N_2-1}x[n]W_{N_2}^{kn},\qquad 0\leq k\leq N_2-1.
+\]
+En resumen, si
+\[
+ x_1[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X_1[k]
+ \qquad\qquad\textrm{y}\qquad\qquad
+ x_2[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X_2[k],
+\]
+entonces, se cumple que 
+\begin{equation}\label{eq:dft_properties_linearity}
+ ax_1[n]+bx_2[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;aX_1[k]+bX_2[k], 
+\end{equation}
+donde los largos de las secuencias y sus DFTs son de al menos el máximo del largo entre \(x_1[n]\) y \(x_2[n]\). Por supuesto, pueden calcularse DFTs de mayor largo aumentando el largo de ambas secuencias con muestras de valor cero.
+
+\subsection{Desplazamiento circular de una secuencia}\label{dft_properties_circular_shift}
+
+En las secciones \ref{sec:seq_and_sys_dtft_temporal_and freq_shift} y \ref{sec:dft_dfs_properties_time_frequency_shift} se discutió la propiedad de desplazamiento temporal de la DTFT y la DFS respectivamente. Se considera ahora la propiedad análoga para la DFT. Concretamente, se buscará la operación en el dominio del tiempo que corresponde a multiplicar a los coeficientes DFT de una secuencia \(x[n]\) de largo finito por el factor de fase lineal \(e^{-j(2\pi k/N)m}\). Sea \(x_1[n]\) la secuencia de largo finito para la cual la DFT es \(e^{-j(2\pi k/N)m}X[k]\), es decir, si
+\[
+ x[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X[k]
+\]
+se quiere encontrar \(x_1[n]\) tal que 
+\[
+ x_1[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X_1[k]=e^{-j(2\pi k/N)m}X[k]=W_N^{km}X[k].
+\]
+Como la DFT de \(N\) puntos representa a una secuencia de largo \(N\), tanto \(x[n]\) como \(x_1[n]\) deben valer cero fuera del intervalo \(0\leq n\leq N-1\), y en consecuencia, \(x_1[n]\) no puede tratarse de un simple retardo temporal de \(x[n]\), como ocurre con la DTFT y la DFS. El resultado correcto, se obtiene de la propiedad de desplazamiento de la DFS (ver la sección 
+\ref{sec:dft_dfs_properties_time_frequency_shift}) combinado con la interpretación de la DFT como los coeficientes de la serie de Fourier de la señal periódica \(x_1[((n))_N]\). En particular, de las ecuaciones \ref{eq:dft_representation_tildex_from_x_mod} y \ref{eq:dft_representation_tildeX_from_X},
+\[
+ \tilde{x}[n]=x[((n))_N]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}[k]=X[((k))_N],
+\]
+y de forma similar se define una secuencia periódica \(\tilde{x}_1[n]\) tal que 
+\[
+ \tilde{x}_1[n]=x_1[((n))_N]\;\overset{\mathcal{DFS}}{\longleftrightarrow}\;\tilde{X}_1[k]=X_1[((k))_N],
+\]
+donde por hipótesis,
+\begin{equation}\label{eq:dft_properties_temporal_shift_freq_domain}
+ X_1[k]=e^{-j(2\pi k/N)m}X[k]. 
+\end{equation}
+Por lo tanto, los coeficientes DFS de \(\tilde{x}_1[x]\) son
+\[
+ \tilde{X}_1[k]=e^{-j[2\pi((k))_N/N]m}X[((k))_N].
+\]
+Observando que \(e^{-j[2\pi k/N]m}\) ya es periódico con período \(N\) en \(k\) (y también en \(m\)), se cumple que 
+\[
+ e^{-j[2\pi((k))_N/N]m}=e^{-j(2\pi k/N)m},
+\]
+y por lo tanto
+\[
+ \tilde{X}_1[k]=e^{-j(2\pi k/N)m}X[((k))_N],
+\]
+y de la ecuación \ref{eq:dft_dfs_properties_temporal_shift} de la propiedad de desplazamiento temporal de la DFS, resulta en que 
+\[
+ \tilde{x}_1[n-m]=x_1[((n-m))_N].
+\]
+Se concluye que la secuencia de largo finito \(x_1[n]\) cuya DFT está dada por la ecuación \ref{eq:dft_properties_temporal_shift_freq_domain} es
+\[
+ x_1[n]=
+ \left\{
+ \begin{array}{ll}
+  \tilde{x}_1[n]=\tilde{x}_1[((n-m))_N], & 0\leq n\leq N-1,\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.  
+\]
+En resumen, se obtuvo que 
+\begin{equation}\label{eq:dft_properties_circular_shift}
+ x[((n-m))_N],\quad0\leq n\leq N-1
+  \;\overset{\mathcal{DFT}}{\longleftrightarrow}\;
+  e^{-j(2\pi k/N)m}X[k]=W_N^{km}X[k].
+\end{equation}
+En el contexto de secuencias de largo finito y la DFT, dicho desplazamiento se llama \emph{desplazamiento circular}.
+
+Las secuencias en las distintas etapas de la deducción se muestran en la figura \ref{fig:dft_properties_circular_shift} para un secuencia \(x[n]\) de largo \(N=6\) y un desplazamiento \(m=-2\). Se parte construyendo \(\tilde{x}[n]=x[((n))_N]\), que es la extensión periódica de \(x[n]\), cuyos coeficientes DFS coinciden con los coeficientes DFT de \(x[n]\). Luego, al aplicar la propiedad de desplazamiento temporal de la DFS dada por la ecuación \ref{eq:dft_dfs_properties_temporal_shift}, se obtiene \(\tilde{x}_1[n]=\tilde{n}[n-m]\), y finalmente, se extrae un período de \(\tilde{x}_1[n]\) mediante la aplicación de la ecuación \ref{eq:dft_representation_x_from_tildex}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/dft_properties_circular_shift.pdf}
+ \caption{\label{fig:dft_properties_circular_shift} Desplazamiento circular de una secuencia de largo finito, que consiste en la multiplicación de la DFT por un factor \(W_N^{km}\) de fase lineal.}
+ \end{center}
+\end{figure}
+
+\subsection{Dualidad}
+
+Debido a que la DFT está cercanamente asociada a la DFS, se espera que exhiba una propiedad de dualidad similar a la de la DFS, discutida en la sección \ref{sec:dft_dfs_properties_duality}. Examinando las ecuaciones \ref{eq:dft_representation_dft_analysis_WN} y \ref{eq:dft_representation_dft_synthesis_WN} de análisis y de síntesis, se observa que difieren únicamente en el factor \(1/N\) y en el signo de las potencias de \(W_N\).
+
+La propiedad de dualidad de la DFT puede deducirse explotando la relación con la DFS, como en la deducción de la propiedad de desplazamiento circular. Con este objetivo, se considera \(x[n]\) y su DFT \(X[k]\), y se construyen las secuencias periódicas
+\begin{equation}\label{eq:dft_properties_duality_periodized_sequences}
+ \begin{aligned}
+  \tilde{x}[n]&=x[((n))_N]\\
+  \tilde{X}[k]&=X[((k))_N].
+ \end{aligned}
+\end{equation}
+De  esta forma,
+\[
+ \tilde{x}[n]
+  \;\overset{\mathcal{DFS}}{\longleftrightarrow}\;
+ \tilde{X}[k].
+\]
+De la propiedad de dualidad de la DFS (ver la sección \ref{sec:dft_dfs_properties_duality}), se cumple que  
+\[
+ \tilde{X}[n]
+  \;\overset{\mathcal{DFS}}{\longleftrightarrow}\;
+ N\tilde{x}[-k].
+\]
+Es decir, si se define la secuencia periódica \(\tilde{x}_1[n]=\tilde{X}[n]\), donde un período es la secuencia \(x_1[n]=X[n]\), los coeficientes DFS de \(\tilde{x}_1[n]\) son \(\tilde{X}_1[k]=N\tilde{x}[-k]\). Por lo tanto, la DFT de \(x_1[n]\) es
+\[
+ X_1[k]=
+ \left\{
+ \begin{array}{ll}
+  N\tilde{x}[-k], & 0\leq k\leq N-1,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right.  
+\]
+o equivalentemente,
+\[
+ X_1[k]=
+ \left\{
+ \begin{array}{ll}
+  Nx[((-k))_N], & 0\leq k\leq N-1,\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.  
+\]
+En consecuencia, la propiedad de dualidad puede expresarse como: si
+\[
+ x[n]
+  \;\overset{\mathcal{DFT}}{\longleftrightarrow}\;
+ X[k],
+\]
+entonces,
+\begin{equation}\label{eq:dft_properties_duality}
+ X[n]
+  \;\overset{\mathcal{DFT}}{\longleftrightarrow}\;
+ Nx[((-k))_N],\qquad0\leq k\leq N-1. 
+\end{equation}
+La secuencia \(Nx[((-k))_N]\) es \(Nx[k]\) invertida temporalmente, módulo \(N\). La inversión temporal módulo \(N\) corresponde específicamente a \(((-k))_N=N-k\) para \(k=1,\,\dots,\,N-1\) y \(((-k))_N=((k))_N\) para \(k=0\). Como para el caso de desplazamiento módulo \(N\), el proceso de inversión temporal se visualiza mejor considerando a las secuencias periódicas subyacentes, como se ilustra en el siguiente ejemplo, y específicamente en la figura \ref{fig:dft_properties_duality_example_reversion_modulo}.
+
+\paragraph{Ejemplo: la relación de dualidad de la DFT} Se considera la secuencia de largo finito 
+\begin{equation}\label{eq:dft_properties_duality_example_xn}
+ x[n]=
+ \left\{
+ \begin{array}{ll}
+  \dfrac{N-n}{N}, & 0\leq n\leq N-1,\\[\medskipamount]
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right.   
+\end{equation}
+y se partirá calculando su DFT de \(N\) puntos. De la ecuación \ref{eq:dft_representation_dft_analysis_WN} de análisis, la DFT es
+\begin{align}
+ X[k]&=\sum_{n=0}^{N-1}\dfrac{N-n}{N}e^{-j2\pi kn/N}\nonumber\\
+  &=\sum_{n=0}^{N-1}e^{-j2\pi kn/N}-\frac{1}{N}\sum_{n=0}^{N-1}ne^{-j2\pi kn/N}.\label{eq:dft_properties_duality_example_dft_tmp1}
+\end{align}
+La primera sumatoria es 
+\begin{equation}\label{eq:dft_properties_duality_example_dft_tmp5}
+ \sum_{n=0}^{N-1}e^{-j2\pi kn/N}=
+ \left\{
+ \begin{array}{ll}
+  N, & k=0,\\[\medskipamount]
+  \dfrac{1-e^{-j2\pi k}}{1-e^{-j2\pi k/N}}=0, & k=1,\,\dots,\,N-1.
+ \end{array}
+ \right.   
+\end{equation}
+Para calcular la segunda sumatoria en la ecuación \ref{eq:dft_properties_duality_example_dft_tmp1} también se diferencian los casos en que \(k=0\) y \(k=1,\,\dots,\,N-1\). Si \(k=0\),
+\begin{equation}\label{eq:dft_properties_duality_example_dft_tmp2}
+ \sum_{n=0}^{N-1}ne^{-j2\pi kn/N}=\sum_{n=0}^{N-1}n\overset{(a)}{=}\frac{(N-1)N}{2}, 
+\end{equation}
+donde en \((a)\) se empleó el resultado conocido de una serie aritmética. Para \(k\neq0\),
+\begin{align*}
+ \sum_{n=0}^{N-1}ne^{j2\pi kn/N}&\overset{(a)}{=}e^{-j2\pi k/N}\frac{1-Ne^{-j2\pi k(N-1)/N}+(N-1)e^{-j2\pi k}}{(1-e^{-j2\pi k/N})^2}\\
+  &=e^{-j2\pi k/N}\frac{1-Ne^{-j2\pi k}e^{j2\pi k/N}+(N-1)e^{-j2\pi k}}{(1-e^{-j2\pi k/N})^2}\\
+  &\overset{(b)}{=}e^{-j2\pi k/N}\frac{1-Ne^{j2\pi k/N}+(N-1)}{(1-e^{-j2\pi k/N})^2}\\
+  &=Ne^{-j2\pi k/N}\frac{1-e^{j2\pi k/N}}{(1-e^{-j2\pi k/N})^2}\\
+  &=N\frac{e^{-j2\pi k/N}-1}{(1-e^{-j2\pi k/N})^2},
+\end{align*}
+resultando en que 
+\begin{equation}\label{eq:dft_properties_duality_example_dft_tmp3}
+ \sum_{n=0}^{N-1}ne^{-j2\pi kn/N}=\frac{N}{e^{-j2\pi k/N}-1},
+ \qquad k=1,\,\dots,\,N-1, 
+\end{equation}
+En el razonamiento, en \((a)\) se empleó un resultado conocido de series,\footnote{Ver \url{https://en.wikipedia.org/wiki/List_of_mathematical_series}, por ejemplo.} y en \((b)\) se consideró que \(e^{-j2\pi k}=1\). Observar además que el denominador no se anula para \(k=1,\,\dots,\,N-1\). De los resultados \ref{eq:dft_properties_duality_example_dft_tmp2} y \ref{eq:dft_properties_duality_example_dft_tmp3}, se concluye que la segunda sumatoria es
+\begin{equation}\label{eq:dft_properties_duality_example_dft_tmp4}
+ \sum_{n=0}^{N-1}ne^{-j2\pi kn/N}=
+ \left\{
+ \begin{array}{ll}
+  \dfrac{(N-1)N}{2}, & k=0,\\[\medskipamount]
+  \dfrac{N}{e^{-j2\pi k/N}-1}, & k=1,\,\dots,\,N-1.
+ \end{array}
+ \right.  
+\end{equation}
+Finalmente, sustituyendo los resultados \ref{eq:dft_properties_duality_example_dft_tmp5} y \ref{eq:dft_properties_duality_example_dft_tmp4} en \ref{eq:dft_properties_duality_example_dft_tmp1}, se obtiene que 
+\[
+ X[k]=
+ \left\{
+ \begin{array}{ll}
+  N-\dfrac{(N-1)}{2}=\dfrac{N+1}{2}, & k=0,\\[\medskipamount]
+  \dfrac{1}{1-e^{-j2\pi k/N}}, & k=1,\,\dots,\,N-1,
+ \end{array}
+ \right.
+\]
+es decir,
+\begin{equation}\label{eq:dft_properties_duality_example_dft_pair}
+ x[n]=\dfrac{N-n}{N},\qquad 0\leq n\leq N-1
+ \qquad\overset{\mathcal{DFT}}{\longleftrightarrow}\qquad
+ X[k]=
+ \left\{
+ \begin{array}{ll}
+  \dfrac{N+1}{2}, & k=0,\\[\medskipamount]
+  \dfrac{1}{1-e^{-j2\pi k/N}}, & k=1,\,\dots,\,N-1.
+ \end{array}
+ \right. 
+\end{equation}
+Este par de transformadas DFT se muestra en la figura \ref{fig:dft_properties_duality_example_dft_pair} para \(N=5\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_properties_duality_example_dft_pair.pdf}
+ \caption{\label{fig:dft_properties_duality_example_dft_pair} Par de transformadas DFT \(x[n]\) y \(X[k]\) de la ecuación \ref{eq:dft_properties_duality_example_dft_pair}. Como la DFT \(X[k]\) es compleja, se grafican las secuencias \(\Re\{X[k]\}\) y \(\Im\{X[k]\}\) correspondientes a la parte real e imaginaria respectivamente. también se grafica la parte real e imaginaria de la DTFT \(X(e^{j\omega})\) de \(x[n]\), para hacer énfasis de que la DFT consiste en muestras equiespaciadas en frecuencia de la DTFT.}
+ \end{center}
+\end{figure}
+Continuando, se aplicará para este ejemplo el principio de dualidad, que está dado por la ecuación \ref{eq:dft_properties_duality}. En la figura \ref{fig:dft_properties_duality_example_reversion_modulo} se muestran los pasos para obtener la secuencia \(X_1[k]=Nx[((-k))_N]\), que como indica el principio de dualidad, es la DFT de \(x_1[n]=X[n]\). Como se mencionó al final de la deducción del principio de dualidad y se observa en la figura,
+\[
+ X_1[k]=Nx[((-k))_N]=
+ \left\{
+ \begin{array}{ll}
+  Nx[k], & k=0,\\[\medskipamount]
+  Nx[N-k], & k=1,\,\dots,\,N-1.
+ \end{array}
+ \right.
+\]
+y de la definición de \(x[n]\) dada por la ecuación \ref{eq:dft_properties_duality_example_dft_tmp4}, resulta en que 
+\[
+ X_1[k]=Nx[((-k))_N]=
+ \left\{
+ \begin{array}{ll}
+  N, & k=0,\\[\medskipamount]
+  k, & k=1,\,\dots,\,N-1.
+ \end{array}
+ \right.
+\]
+Por lo tanto, el principio de dualidad de la DFT aplicado a este ejemplo indica que 
+\[
+ x_1[n]=\left\{
+ \begin{array}{ll}
+  \dfrac{N+1}{2}, & n=0,\\[\medskipamount]
+  \dfrac{1}{1-e^{-j2\pi n/N}}, & n=1,\,\dots,\,N-1.
+ \end{array}
+ \right.
+ \qquad\overset{\mathcal{DFT}}{\longleftrightarrow}\qquad
+ X_1[k]=\left\{
+ \begin{array}{ll}
+  N, & k=0,\\[\medskipamount]
+  k, & k=1,\,\dots,\,N-1.
+ \end{array}
+ \right.
+\]
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_properties_duality_example_reversion_modulo.pdf}
+ \caption{\label{fig:dft_properties_duality_example_reversion_modulo} Ilustración del proceso de inversión temporal módulo \(N\) del principio de dualidad. Se muestra la secuencia \(x[n]\) dada por la ecuación \ref{eq:dft_properties_duality_example_xn} para \(N=5\) y cuya DFT \(X[k]\) se indica en la ecuación \ref{eq:dft_properties_duality_example_dft_pair}. Luego se muestra la secuencia periódica \(\tilde{x}[n]=x[((n))_N]\), cuyos coeficientes DFS son \(\tilde{X}[k]\). El principio de dualidad de la DFS indica que los coeficientes DFS de \(\tilde{X}[n]\) son \(\tilde{X}_1[k]=N\tilde{x}[-k]\), y se muestra a continuación. Finalmente, se muestra \(X_1[k]\), que es el período base de \(N\tilde{x}[-k]\) y es la DFT de \(x_1[n]=X[n]\).}
+ \end{center}
+\end{figure}
+
+\subsection{Propiedades de simetría}\label{sec:dft_properties_symmetry}
+
+Debido a que la DFT de \(x[n]\) es idéntica a los coeficientes DFS de la secuencia periódica \(\tilde{x}[n]=x[((n))_N]\), las propiedades de simetría de la DFT pueden inferirse de las propiedades de simetría de la DFS, resumidas en la sección \ref{sec:dft_dfs_properties_symmetry}. Específicamente, de las relaciones  \ref{eq:dft_properties_duality_periodized_sequences} y las propiedades 1. y 2. de la DFS en la sección \ref{sec:dft_dfs_properties_symmetry}, se cumple que 
+\[
+ x^*[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;\tilde{X}^*[((-k))_N],
+ \qquad 0\leq k\leq N-1
+\]
+y
+\[
+ x^*[((-n))_N]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;{X}^*[k],
+ \qquad 0\leq n\leq N-1.
+\]
+Las propiedades 3. a 6. de la DFS en la sección \ref{sec:dft_dfs_properties_symmetry} se refieren a la descomposición de una secuencia periódica en la suma de una secuencia simétrica conjugada y una secuencia antisimétrica conjugada. Esto sugiere la descomposición de la secuencia de largo finito \(x[n]\) en dos secuencias de largo finito \(N\) que corresponden a un período de la secuencia simétrica conjugada y un período de la secuencia antisimétrica conjugada componentes de \(\tilde{x}[n]\). De esta forma, con
+\[
+ \tilde{x}[n]=x[((n))_N]
+\]
+y la parte simétrica conjugada siendo
+\begin{equation}\label{eq:dft_properties_symmetry_xte}
+ \tilde{x}_e[n]=\frac{1}{2}(\tilde{x}[n]+\tilde{x}^*[-n]) 
+\end{equation}
+y la parte antisimétrica conjugada siendo
+\begin{equation}\label{eq:dft_properties_symmetry_xto}
+ \tilde{x}_o[n]=\frac{1}{2}(\tilde{x}[n]-\tilde{x}^*[-n]), 
+\end{equation}
+se define \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) como
+\begin{align}
+ x_\textrm{ep}[n]&=\tilde{x}_e[n],\qquad 0\leq n\leq N-1,\label{eq:dft_properties_symmetry_xep_1}\\
+ x_\textrm{op}[n]&=\tilde{x}_o[n],\qquad 0\leq n\leq N-1,\label{eq:dft_properties_symmetry_xop_1}
+\end{align}
+o, equivalentemente,
+\begin{align}
+ x_\textrm{ep}[n]&=\frac{1}{2}\{x[((n))_N]+x^*[((-n))_N]\},\qquad 0\leq n\leq N-1,\label{eq:dft_properties_symmetry_xep_2}\\
+ x_\textrm{op}[n]&=\frac{1}{2}\{x[((n))_N]-x^*[((-n))_N]\},\qquad 0\leq n\leq N-1,\label{eq:dft_properties_symmetry_xop_2}
+\end{align}
+siendo ambas \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) secuencias de largo finito, nulas fuera del intervalo \(0\leq n\leq N-1\). Considerando que \(((-n))_N=N-n\) para \(n=1\leq n\leq N-1\) y \(((-n))_N=n\) si \(n=0\), como se dedujo previamente, y que \(((n))_N=n\) para \(n=0\leq n\leq N-1\), las ecuaciones \ref{eq:dft_properties_symmetry_xep_2} y \ref{eq:dft_properties_symmetry_xop_2} pueden expresarse como
+\begin{equation}\label{eq:dft_properties_symmetry_xep}
+ \begin{aligned}
+  x_\textrm{ep}[0]&=\Re(x[0]),\\
+  x_\textrm{ep}[n]&=\frac{1}{2}(x[n]+x^*[N-n]),\qquad n=1\leq n\leq N-1,
+ \end{aligned}
+\end{equation}
+y
+\begin{equation}\label{eq:dft_properties_symmetry_xop}
+ \begin{aligned}
+  x_\textrm{op}[0]&=j\Im(x[0]),\\
+  x_\textrm{op}[n]&=\frac{1}{2}(x[n]-x^*[N-n]),\qquad n=1\leq n\leq N-1.
+ \end{aligned}
+\end{equation}
+Esta forma de las ecuaciones es conveniente ya que evita el cálculo módulo \(N\) de los índices.
+
+Claramente, \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) no son iguales a \(x_e[n]\) y \(x_o[n]\) definidas por las ecuaciones \ref{eq:seq_and_sys_dtft_symmetry_symmetric_decomposition} y \ref{eq:seq_and_sys_dtft_symmetry_antisymmetric_decomposition}. Sin embargo, se cumple que 
+\begin{align}
+ x_\textrm{ep}[n]&=x_e[n]+x_e[n-N],\qquad 0\leq n\leq N-1,\label{eq:dft_properties_symmetry_xep_from_xe}\\
+ x_\textrm{op}[n]&=x_o[n]+x_o[n-N],\qquad 0\leq n\leq N-1,\label{eq:dft_properties_symmetry_xop_from_xo}
+\end{align}
+es decir, \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) pueden obtenerse a partir de \(x_e[n]\) y \(x_o[n]\) respectivamente sumando a cada una de ellas una versión de si misma retardada \(N\) muestras y considerando el resultado en el intervalo \(0\leq n\leq N-1\). Por ejemplo, para probar \ref{eq:dft_properties_symmetry_xep_from_xe}, de la definición \ref{eq:seq_and_sys_dtft_symmetry_antisymmetric_decomposition} de \(x_e[n]\),
+\[
+ x_e[n]=\frac{1}{2}(x[n]+x^*[-n])=
+ \left\{ 
+ \begin{array}{ll}
+  \Re(x[n]),& n=0\\[\medskipamount]
+  \dfrac{1}{2}x[n],& 1\leq n\leq N-1,
+ \end{array}
+ \right.
+\]
+y
+\[
+ x_e[n-N]=\frac{1}{2}(x[n-N]+x^*[-(n-N)])=\frac{1}{2}(x[n-N]+x^*[N-n])=
+ \left\{ 
+ \begin{array}{ll}
+  0,& n=0\\[\medskipamount]
+  \dfrac{1}{2}x^*[N-n],& 1\leq n\leq N-1.
+ \end{array}
+ \right.
+\]
+La suma de estas dos ecuaciones es
+\[
+ x_e[n]+x_e[n-N]=
+ \left\{ 
+ \begin{array}{ll}
+  \Re(x[n]),& n=0\\[\medskipamount]
+  \dfrac{1}{2}(x[n]+x^*[N-n]),& 1\leq n\leq N-1,
+ \end{array}
+ \right.
+\]
+que es la ecuación \ref{eq:dft_properties_symmetry_xep}, lo que confirma la igualdad \ref{eq:dft_properties_symmetry_xep_from_xe}. La igualdad \ref{eq:dft_properties_symmetry_xop_from_xo} se prueba de forma análoga. Las secuencias \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) serán referidas como el componente \emph{simétrico conjugado periódico} y el componente \emph{antisimétrico conjugado periódico}, respectivamente, de \(x[n]\). Observar que las secuencias \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) son de duración finita, iguales a un período de las secuencias periódicas \(\tilde{x}_e[n]\) y \(\tilde{x}_o[n]\) respectivamente. El ejemplo al final de esta sección ilustra a las distintas secuencias.
+
+Las ecuaciones \ref{eq:dft_properties_symmetry_xep} y \ref{eq:dft_properties_symmetry_xop} definen a \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) en términos de \(x[n]\). La relación inversa puede encontrarse considerando que la extensión periódica de \(x[n]\) puede descomponerse como
+\[
+ \tilde{x}[n]=\tilde{x}_e[n]+\tilde{x}_o[n],
+\]
+y por lo tanto,
+\[
+ x[n]=\tilde{x}[n]=\tilde{x}_e[n]+\tilde{x}_o[n],\qquad 0\leq n\leq N-1.
+\]
+Combinando este resultado con las ecuaciones \ref{eq:dft_properties_symmetry_xep_1} y \ref{eq:dft_properties_symmetry_xop_1} se obtiene que 
+\[
+ x[n]=x_\textrm{ep}[n]+x_\textrm{op}[n].
+\]
+Alternativamente, la suma de las ecuaciones \ref{eq:dft_properties_symmetry_xep} y \ref{eq:dft_properties_symmetry_xop} conduce al mismo resultado. Con estas consideraciones, las propiedades de simetría de la DFT asociadas a las propiedades 3. a 6. de la DFS en la sección \ref{sec:dft_dfs_properties_symmetry} se obtiene inmediatamente y son
+\begin{align*}
+ \Re(x[n])&\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X_\textrm{ep}[k]\\
+ j\Im(x[n])&\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X_\textrm{op}[k]\\
+ x_\textrm{ep}[n]&\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;\Re(X[k])\\
+ x_\textrm{op}[n]&\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;j\Im(X[k]).
+\end{align*}
+
+\paragraph{Ejemplo: descomposición de una secuencia de largo finito} Considérese la secuencia de largo finito
+\begin{equation}\label{eq:dft_properties_symmetry_example_xn}
+ x[n]=
+ \left\{ 
+ \begin{array}{ll}
+  N-n, &0\leq n\leq N-1,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right. 
+\end{equation}
+y se quiere encontrar \(\tilde{x}_e[n]\), \(\tilde{x}_o[n]\), \(x_\textrm{ep}[n]\), \(x_\textrm{op}[n]\), \(x_e[n]\) y \(x_o[n]\), dados por las ecuaciones \ref{eq:dft_properties_symmetry_xte}, \ref{eq:dft_properties_symmetry_xto}, \ref{eq:dft_properties_symmetry_xep_1}, \ref{eq:dft_properties_symmetry_xop_1}, \ref{eq:seq_and_sys_dtft_symmetry_symmetric_decomposition} y \ref{eq:seq_and_sys_dtft_symmetry_antisymmetric_decomposition} respectivamente. Para hacerlo primero se calculan \(x[-n]\), \(\tilde{x}[n]=x[((n))_N]\) y \(\tilde{x}[-n]=x[((-n))_N]\), dado que \(x[n]\) es una secuencias real y por lo tanto \(x^*[n]=x[n]\). \(x[-n]\) es
+\[
+ x[-n]=
+ \left\{ 
+ \begin{array}{ll}
+  N+n, &-(N-1)\leq n\leq 0,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right.
+\]
+\(\tilde{x}[n]\) es la extensión periódica de \(x[n]\) y \(\tilde{x}[-n]\) es la extensión periódica de \(x_1[n]\), es decir, \(\tilde{x}[-n]=x_1[((n))_N]\), donde \(x_1[n]\) es la secuencia de largo \(N-1\)
+\begin{equation}\label{eq:dft_properties_symmetry_example_x1}
+ x_1[n]=
+ \left\{ 
+ \begin{array}{ll}
+  N, & n=0,\\
+  n, & 1\leq n\leq N-1,\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right. 
+\end{equation}
+Estas secuencias se muestran en la figura \ref{fig:dft_properties_symmetry_signals} para \(N=6\). 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_properties_symmetry_signals.pdf}
+ \caption{\label{fig:dft_properties_symmetry_signals} Secuencia \(x[n]\) dada por la ecuación \ref{eq:dft_properties_symmetry_example_xn} para \(N=6\) y las correspondientes secuencias \(x[-n]\), \(\tilde{x}[n]=x[((n))_N]\) y \(\tilde{x}[-n]=x[((-n))_N]\), necesarias para calcular las descomposiciones simétricas y antisimétricas.}
+ \end{center}
+\end{figure}
+Continuando, 
+\[
+ x_e[n]=\frac{1}{2}(x[n]+x[-n])=
+ \left\{ 
+ \begin{array}{ll}
+  \dfrac{N+n}{2}, & -(N-1)\leq n\leq-1\\[\medskipamount]
+  N, & n=0,\\[\medskipamount]
+ \dfrac{N-n}{2}, & 1\leq n\leq N-1,
+ \end{array}
+ \right.
+\]
+que también puede escribirse como 
+\[
+ x_e[n]=\frac{N-|n|}{2}+\frac{N}{2}\delta[n],\qquad -(N-1)\leq n\leq N-1,
+\]
+y consiste en la suma de las dos primeras secuencias dividido entre 2 de la figura \ref{fig:dft_properties_symmetry_signals}. Además,
+\[
+ x_o[n]=\frac{1}{2}(x[n]-x[-n])=
+ \left\{ 
+ \begin{array}{ll}
+  -\dfrac{N+n}{2}, & -(N-1)\leq n\leq-1\\[\medskipamount]
+  0, & n=0,\\[\medskipamount]
+ \dfrac{N-n}{2}, & 1\leq n\leq N-1,
+ \end{array}
+ \right.
+\]
+y consiste en la resta de las dos primeras secuencias dividido entre 2 de la figura \ref{fig:dft_properties_symmetry_signals}. Luego, \(\tilde{x}_e[n]\) está dada por la ecuación \ref{eq:dft_properties_symmetry_xte}, y es la suma de las dos últimas secuencias dividido entre 2 de la figura \ref{fig:dft_properties_symmetry_signals}. Como indica la ecuación \ref{eq:dft_properties_symmetry_xep_1}, \(x_\textrm{ep}[n]\) es el período base de \(\tilde{x}_e[n]\), y considerando que la secuencia \(x_1[n]\) definida por la ecuación \ref{eq:dft_properties_symmetry_example_x1} es el período base de \(\tilde{x}[-n]\), se cumple que
+\[
+ x_\textrm{ep}[n]=\frac{1}{2}(x[n]+x_1[n])=
+ \left\{ 
+  \begin{array}{ll}
+   \dfrac{N+N}{2}=N, & n=0,\\[\medskipamount]
+   \dfrac{N-n+n}{2}=\dfrac{N}{2}, & 1\leq n\leq N-1,\\[\medskipamount]
+   0, & \textrm{en otro caso,}
+  \end{array}
+ \right. 
+\]
+y \(\tilde{x}_e[n]=x_\textrm{ep}[((n))_N]\). De forma similar,
+\[
+ x_\textrm{op}[n]=\frac{1}{2}(x[n]-x_1[n])=
+ \left\{ 
+  \begin{array}{ll}
+   \dfrac{N-N}{2}=0, & n=0,\\[\medskipamount]
+   \dfrac{N-n-n}{2}=\dfrac{N}{2}-n, & 1\leq n\leq N-1,\\[\medskipamount]
+   0, & \textrm{en otro caso,}
+  \end{array}
+ \right. 
+\]
+y \(\tilde{x}_o[n]=x_\textrm{op}[((n))_N]\). En la figura \ref{fig:dft_properties_symmetry_decomposition} se muestran las secuencias \(\tilde{x}_e[n]\), \(\tilde{x}_o[n]\), \(x_e[n]\), \(x_o[n]\) obtenidas a partir de \(x[n]\). Las secuencias \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) son respectivamente \(\tilde{x}_e[n]\) y \(\tilde{x}_o[n]\) en \(0\leq n\leq N-1\) y cero en otro caso. Como se dedujo previamente y se observa en la figura, las secuencias \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) son distintas a las secuencias \(\tilde{x}_e[n]\) y \(\tilde{x}_o[n]\), difiriendo inclusive en el soporte. Además, en la figura puede verse como \(x_\textrm{ep}[n]\) y \(x_\textrm{op}[n]\) pueden obtenerse a partir de \(\tilde{x}_e[n]\) y \(\tilde{x}_o[n]\) respectivamente sumando a cada una de ellas una copia de si misma retardada \(N\) muestras, como indican las ecuaciones \ref{eq:dft_properties_symmetry_xep_from_xe} y \ref{eq:dft_properties_symmetry_xop_from_xo}. En la figura también puede apreciarse que \(\tilde{x}[n]=\tilde{x}_e[n]+\tilde{x}_o[n]\) y \(x[n]=x_e[n]+x_o[n]\), como es de esperarse, con \(\tilde{x}_e[n]\) y \(x_e[n]\) siendo secuencias simétricas y \(\tilde{x}_e[n]\) y \(x_e[n]\) antisimétricas. Considerando solo el período base de las secuencias \(\tilde{x}_e[n]\), \(\tilde{x}_o[n]\), también se aprecia que se cumple que \(x[n]=x_\textrm{ep}[n]+x_\textrm{op}[n]\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_properties_symmetry_decomposition.pdf}
+ \caption{\label{fig:dft_properties_symmetry_decomposition} Secuencias \(\tilde{x}_e[n]\), \(\tilde{x}_o[n]\), \(x_e[n]\), \(x_o[n]\) correspondientes a \(x[n]\) definida por la ecuación \ref{eq:dft_properties_symmetry_example_xn} para \(N=6\).}
+ \end{center}
+\end{figure}
+
+\subsection{Convolución circular}\label{sec:dft_properties_circular_convolution}
+
+En la sección \ref{sec:dft_dfs_properties_periodic_convolution} se mostró que la multiplicación de los coeficientes DFS de dos secuencias corresponde a la convolución periódica de las secuencias. Se consideran ahora dos secuencias de largo finito \(x_1[n]\) y \(x_2[n]\), ambas de largo \(N\), con DFTs \(X_1[k]\) y \(X_2[k]\) respectivamente, y se quiere determinar la secuencia \(x_3[n]\) cuya DFT es \(X_3[k]=X_1[k]X_2[k]\). Para determinar \(x_3[n]\) pueden emplearse los resultados de la sección \ref{sec:dft_dfs_properties_periodic_convolution}. Específicamente \(x_3[n]\) corresponde a un período de \(\tilde{x}_3[n]\) dada por la ecuación \ref{eq:dft_dfs_properties_periodic_convolution}, es decir,
+\[
+ x_3[n]=\sum_{m=0}^{N-1}\tilde{x}_1[m]\tilde{x}_2[n-m],
+ \qquad 0\leq n\leq N-1,
+\]
+o equivalentemente,
+\[
+ x_3[n]=\sum_{m=0}^{N-1}x_1[((m))_N]x_2[((n-m))_N],
+ \qquad 0\leq n\leq N-1.
+\]
+Como \(((m))_N=m\) para \(0\leq m\leq N-1\), se obtiene que 
+\begin{equation}\label{eq:dft_properties_circular_convolution_definition}
+ x_3[n]=\sum_{m=0}^{N-1}x_1[m]x_2[((n-m))_N],
+ \qquad 0\leq n\leq N-1. 
+\end{equation}
+
+La ecuación \ref{eq:dft_properties_circular_convolution_definition} difiere de la convolución lineal definida por la ecuación \ref{eq:seq_and_sys_convolution_definition} en algunos aspectos importantes. En la convolución definida por la ecuación \ref{eq:dft_properties_circular_convolution_definition}, el cálculo del valor de la secuencia \(x_3[n]\) consiste en multiplicar una de las secuencias por una versión de la otra invertida temporalmente de forma circular y retardada circularmente respecto a la primera. Por esta razón, la operación de combinar dos secuencias de largo finito de acuerdo a la ecuación \ref{eq:dft_properties_circular_convolution_definition} se llama \emph{convolución circular} de \(N\) puntos, indicando que las secuencias son de largo \(N\) (o menor) y que las secuencias son desplazadas módulo \(N\). La operación será denotada como
+\[
+ x_3[n]=x_1[n]\circledast x_2[n].
+\]
+Al igual que la convolución lineal, es conmutativa. La convolución circular es en realidad idéntica a la convolución periódica, pero al emplear la noción de desplazamiento circular, no es necesario construir a las secuencias periódicas.
+
+\paragraph{Ejemplo: convolución circular con un impulso desplazado} Sea \(x_2[n]\) una secuencia de largo \(N\) y 
+\[
+ x_1[n]=\delta[n-n_0],
+\]
+donde \(0<n<N\). \(x_1[n]\) puede considerarse la secuencia de largo \(N\)
+\[
+ x_1[n]=
+ \left\{ 
+ \begin{array}{ll}
+  0, & 0\leq n<n_0,\\
+  1, & n=n_0,\\
+  0, & n_0<n\leq N-1,
+ \end{array}
+ \right.
+\]
+como se muestra en la figura \ref{fig:dft_properties_circular_convolution_delayed_impulse}. La DFT de \(x_1[n]\) es
+\[
+ X_1[k]=W_N^{kn_0}.
+\]
+Si se forma el producto 
+\[
+ X_3[k]=W_N^{kn_0}X_2[k],
+\]
+del resultado de la ecuación \ref{eq:dft_properties_circular_shift} de la propiedad del desplazamiento circular de la DFT, se sabe que la secuencia de largo finito con DFT \(X_3[k]\) es la secuencia \(x_2[n]\) desplazada circularmente \(n_0\) muestras a la derecha en el intervalo \(0\leq n\leq N-1\). Por lo tanto, la convolución circular de una secuencia \(x_2[n]\) con un impulso unitario retardado resulta en la rotación de \(x_2[n]\) en el intervalo \(0\leq n\leq N-1\). Este ejemplo es ilustrado en la figura \ref{fig:dft_properties_circular_convolution_delayed_impulse} para \(N=5\) y \(n_0=1\).
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.57\textwidth}
+    \includegraphics[width=\textwidth]{figuras/dft_properties_circular_convolution_delayed_impulse.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.33\textwidth}
+    \caption{
+      Convolución circular de una secuencia de largo finito \(x_2[n]\) con un impulso retardado \(x_1[n]=\delta[n-1]\).
+    }\label{fig:dft_properties_circular_convolution_delayed_impulse}
+  \end{minipage}
+\end{figure}
+En la figura se muestras las secuencias \(x_2[m]\) y \(x_1[m]\), y luego \(x_2[((0-m))_N]\) y \(x_2[((1-m))_N]\). 
+La suma de las muestras de la secuencias obtenidas en multiplicar de estas dos últimas secuencias por la secuencia \(x_1[m]\) es \(x_3[n]=x_1[n]\circledast x_2[n]\) en \(n=0\) y \(n=1\) respectivamente. Finalmente se muestra la secuencia \(x_3[n]\), que es la convolución circular entre \(x_1[n]\) y \(x_2[n]\).
+
+\paragraph{Ejemplo: convolución circular de dos pulsos rectangulares} Se consideran los pulsos rectangulares
+\[
+ x_1[n]=x_2[n]=
+ \left\{ 
+ \begin{array}{ll}
+  1, & 0\leq n\leq L,\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.
+\]
+Si \(N\) es el largo de la DFT, con \(N=L\) las DFTs de \(N\) puntos son
+\[
+ X_1[k]=X_2[k]=\sum_{n=0}^{N-1}W_N^{kn}=
+ \left\{ 
+ \begin{array}{ll}
+  N, & k=0,\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.
+\]
+Si se multiplica \(X_1[k]\) y \(X_2[k]\) se obtiene que 
+\[
+ X_3[k]=X_1[k]X_2[k]=
+ \left\{ 
+ \begin{array}{ll}
+  N^2, & k=0,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right.
+\]
+y por lo tanto,
+\[
+ x_3[n]=N,\qquad 0\leq n\leq N-1.
+\]
+En la convolución circular entre \(x_1[n]\) y \(x_2[n]\), cuando la secuencia \(x_2[((n-m))_N]\) es rotada respecto a \(x_1[m]\) permanece incambiada y la suma de los productos \(x_1[m]x_2[((n-m))_N]\) es siempre \(N\).\\
+Se considera ahora que las secuencias \(x_1[n]\) y \(x_2[n]\) tienen largo \(N=2L\) agregándoles \(L\) ceros. Si se realiza la convolución circular de \(2L\) puntos, cuyo proceso se ilustra en la figura \ref{fig:dft_properties_circular_convolution_two_impulses}, se obtiene la secuencia triangular \(x_3[n]\) mostrada al final de la figura, que es idéntica a la convolución lineal de las secuencias de largo finito \(x_1[n]\) y \(x_2[n]\). Esta importante observación será discutida con mas detalle en la sección \ref{sec:dft_linear_convolution_with_dft}.
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.57\textwidth}
+    \includegraphics[width=\textwidth]{figuras/dft_properties_circular_convolution_two_impulses.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.33\textwidth}
+    \caption{
+      Convolución circular de \(2L\) puntos de dos secuencias constantes de largo \(L\).
+    }\label{fig:dft_properties_circular_convolution_two_impulses}
+  \end{minipage}
+\end{figure}
+Con \(N=2L\), como en la figura \ref{fig:dft_properties_circular_convolution_two_impulses},
+\[
+ X_1[k]=X_2[k]=\sum_{n=0}^{L-1}W_N^{kn}=\frac{1-W_N^{Lk}}{1-W_N^{k}},
+\]
+por lo que la DFT de la secuencia \(x_3[n]\) triangular es 
+\[
+ X_3[k]=\left(\frac{1-W_N^{Lk}}{1-W_N^{k}}\right)^2,
+\]
+con \(N=2L\).
+
+La propiedad de la convolución circular indica que
+\begin{equation}\label{eq:dft_properties_circular_convolution}
+ x_1[n]\circledast x_2[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;X_1[k]X_2[k].
+\end{equation}
+Debido a las relaciones de dualidad de la DFT, se cumple también que la DFT del producto de dos secuencias de \(N\) muestras es la convolución circular de las respectivas DFTs. Concretamente, si \(x_3[n]=x_1[n]x_2[n]\), la DFT es
+\[
+ X_3[k]=\frac{1}{N}\sum_{l=0}^{N-1}X_1[l]X_2[((k-l))_N],
+\]
+es decir,
+\begin{equation}\label{eq:dft_properties_product}
+ x_1[n]x_2[n]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;\frac{1}{N}X_1[k]\circledast X_2[k].
+\end{equation}
+
+\subsection{Teorema de Parseval}
+
+El teorema de Parseval para la DFT indica que si \(X[k]\) es la DFT de la secuencia \(x[n]\) de largo \(N\), se cumple que  
+\begin{equation}\label{eq:dft_properties_parseval}
+ \sum_{n=0}^{N-1}|x[n]|^2=\frac{1}{N}\sum_{k=0}^{N-1}|X[k]|^2.
+\end{equation}
+La prueba de esta identidad puede obtenerse directamente de las propiedades de la DFT vistas previamente. Específicamente, de la propiedad \ref{eq:dft_properties_circular_convolution} de la convolución circular y de una propiedad de simetría de la DFT (ver la sección \ref{sec:dft_properties_symmetry}), se cumple que 
+\[
+ y[n]=x[n]\circledast x^*[((-n))_N]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;Y[k]=X[k]X^*[k]=|X[k]|^2. 
+\]
+Además,
+\begin{equation}\label{eq:dft_properties_parseval_deduction_tmp}
+ y[0]=\sum_{n=0}^{N-1}|x[n]|^2. 
+\end{equation}
+Para ver esto, defínase \(x_1[n]=x^*[((-n))_N]\), y de la definición \ref{eq:dft_properties_circular_convolution_definition} de convolución circular,
+\[
+ y[n]=x[n]\circledast x[((-n))_N]=x[n]\circledast x_1[n]=\sum_{m=0}^{N-1}x[m]x_1[((n-m))_N].
+\]
+Por lo tanto, evaluando en \(n=0\),
+\[
+ y[0]=\sum_{m=0}^{N-1}x[m]x_1[((-m))_N]=\sum_{m=0}^{N-1}x[m]x^*[((m))_N]=\sum_{m=0}^{N-1}|x[m]|^2.
+\]
+Por otro lado, de la ecuación \ref{eq:dft_representation_dft_synthesis_WN} de síntesis de la DFT evaluada en \(n=0\), se cumple que 
+\[
+ y[0]=\frac{1}{N}\sum_{k=0}^{N-1}Y[k]=\frac{1}{N}\sum_{k=0}^{N-1}|X[k]|^2.
+\]
+Combinando este resultado con el de la ecuación \ref{eq:dft_properties_parseval_deduction_tmp} se obtiene la ecuación \ref{eq:dft_properties_parseval}, que es lo que se quería mostrar. 
+
+\section{Convolución lineal empleando la DFT}\label{sec:dft_linear_convolution_with_dft}
+
+Hay algoritmos eficientes para el cálculo de la DFT de un secuencia de largo finito, como se verá en el capítulo \ref{ch9}. Esos algoritmos son conocidos colectivamente como \emph{transformada rápida de Fourier} (\emph{FFT}, fast Fourier Transform). Debido a la existencia de esos algoritmos, es computacionalmente eficiente la implementación de la convolución de dos secuencias mediante el siguiente procedimiento:
+\begin{enumerate}[label=(\alph*)]
+ \item Calcular las DFTs de \(N\) puntos \(X_1[k]\) y \(X_2[k]\) de las secuencias \(x_1[n]\) y \(x_2[n]\).
+ \item Calcular el producto \(X_3[k]=X_1[k]X_2[k]\) de las DFTs para \(0\leq k\leq N-1\).
+ \item Calcular la secuencia \(x_3[n]=x_1[n]\circledast x_2[n]\) como la DFT inversa de \(x_3[n]\).
+\end{enumerate}
+En diversas aplicaciones es de interés implementar la convolución lineal entre dos secuencias, como por ejemplo, en el filtrado de una secuencia mediante un sistema LTI. Como se vio en la sección \ref{sec:dft_properties_circular_convolution}, la multiplicación de las DFTs corresponde a la convolución circular de las secuencias. Para obtener una convolución lineal hay que asegurarse de que la convolución circular tenga el efecto de una convolución lineal. La discusión del ejemplo de la convolución de dos pulsos rectangulares en la sección \ref{sec:dft_properties_circular_convolution} insinúa como debe hacerse. A continuación se presenta el análisis detallado.
+
+\subsection{Convolución lineal de dos secuencias de largo finito}\label{sec:dft_linear_convolution}
+
+Considérese una secuencia \(x_1[n]\) de largo \(L\) muestras y una secuencia \(x_2[n]\) de largo \(P\) muestras que se combinan mediante la convolución lineal, definida por la ecuación \ref{eq:seq_and_sys_convolution_definition}, para obtener una tercer secuencia
+\begin{equation}\label{eq:dft_linear_convolution_definition}
+ x_3[n]=\sum_{n=-\infty}^\infty x_1[m]x_2[n-m]. 
+\end{equation}
+En la figura \ref{fig:dft_linear_convolution_support} se muestra una secuencia \(x_1[n]\) y \(x_2[n-m]\) para \(n=-1\), \(0\leq n\leq L-1\) y \(n=L+P-1\). El producto \(x_1[m]x_2[n-m]\) es nulo para todo \(m\) si \(n<0\) o si \(n>L-P-2\), es decir, \(x_3[n]\neq0\) para \(0\leq n\leq L-P-2\). Por lo tanto, \(L+P-1\) es el largo máximo de la secuencia que se obtiene mediante la convolución de una secuencia de largo \(L\) con una secuencia de largo \(P\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_linear_convolution_support.pdf}
+ \caption{\label{fig:dft_linear_convolution_support} Ilustración del largo muestras de la secuencia que resulta de la convolución de una secuencia \(x_1[n]\) de largo \(L\) muestras con otra secuencia de largo \(x_2[n]\) de largo \(P\). Se observa que la convolución \(x_3[n]\) es nula para \(n\leq-1\) y para \(n\geq L+P-1\).}
+ \end{center}
+\end{figure}
+
+\subsection{Convolución circular como convolución lineal con aliasing}\label{sec:dft_circular_convolution_as_linear_with_aliasing}
+
+Como muestran los ejemplos de la sección \ref{sec:dft_properties_circular_convolution}, si la convolución circular obtenida mediante el producto de dos DFTs de \(N\) puntos es igual a la convolución lineal de las correspondientes secuencias de largo finito, depende del largo de la DFT en relación al largo de las secuencias. Una interpretación útil de la relación entre la convolución circular y la convolución lineal es en términos de aliasing temporal, y se desarrollará a continuación de diversas formas.
+
+En la sección \ref{sec:dft_dtft_sampling} se observó que si la transformada de Fourier \(X(e^{j\omega})\) de una secuencia \(x[n]\) es muestreada en las frecuencias \(\omega_k=2\pi k/N\), la secuencia obtenida corresponde a los coeficientes DFS de la secuencia periódica
+\begin{equation}\label{eq:dft_aliasing_xt_periodic}
+ \tilde{x}[n]=\sum_{r=-\infty}^\infty x[n-rN]. 
+\end{equation}
+De la discusión de la DFT, la secuencia de largo finito 
+\[
+ X[k]=
+ \left\{ 
+ \begin{array}{ll}
+  X(e^{j2\pi k/N}), & 0\leq k\leq N-1,\\
+  0, & \textrm{en otro caso,}
+ \end{array}
+ \right. 
+\]
+es la DFT de un período de \(\tilde{x}[n]\) dada por la ecuación \ref{eq:dft_aliasing_xt_periodic}, es decir,
+\[
+ x_p[n]=
+ \left\{ 
+ \begin{array}{ll}
+  \tilde{x}[n], & 0\leq n\leq N-1,\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.
+\]
+Si \(x[n]\) tiene largo menor o igual a \(N\), no se produce aliasing en la ecuación \ref{eq:dft_aliasing_xt_periodic} y \(x_p[n]=x[n]\). Sin embargo, si el largo de \(x[n]\) es mayor que \(N\), \(x_p[n]\) puede no ser igual a \(x[n]\) para algunos o todos los valores de \(n\). Se empleará el subíndice \(p\) para denotar que una secuencia es un período de una secuencia periódica obtenida mediante la DFT inversa de una transformada de Fourier muestreada. El subíndice puede omitirse cuando es claro que no ocurre aliasing temporal.
+
+La secuencia \(x_3[n]\) en la ecuación \ref{eq:dft_linear_convolution_definition} tiene transformada de Fourier 
+\[
+ X_3(e^{j\omega})=X_1(e^{j\omega})X_2(e^{j\omega}).
+\]
+Si se define la DFT 
+\[
+ X_3[k]=X_3(e^{j2\pi k/N}),\qquad 0\leq k\leq N-1,
+\]
+también se cumple que 
+\[
+ X_3[k]=X_1(e^{j2\pi k/N})X_2(e^{j2\pi k/N}),\qquad 0\leq k\leq N-1,
+\]
+y por lo tanto,
+\begin{equation}\label{eq:dft_sampling_X3}
+ X_3[k]=X_1[k]X_2[k]. 
+\end{equation}
+De esta forma, la secuencia que resulta de aplicar la DFT inversa a \(X_3[k]\) es
+\begin{equation}\label{eq:dft_sampling_x3p}
+ x_{3p}[n]=
+ \left\{ 
+ \begin{array}{ll}
+  \displaystyle\sum_{r=-\infty}^\infty x_3[n-rN], & 0\leq n\leq N-1,\\[\medskipamount]
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right. 
+\end{equation}
+y de la ecuación \ref{eq:dft_sampling_X3},
+\[
+ x_{3p}[n]=x_1[n]\circledast x_2[n],
+\]
+donde esta convolución circular es de \(N\) puntos.
+
+El razonamiento indica que la convolución circular de dos secuencias es equivalente a la convolución lineal seguida de aliasing temporal de acuerdo a la ecuación \ref{eq:dft_sampling_x3p}.
+
+Observar que si \(N\) es mayor que \(L\) y \(P\), \(X_1[k]\) y \(X_2[k]\) representan a \(x_1[n]\) y \(x_2[n]\) de forma exacta, pero \(x_{3p}[n]=x_3[n]\) para todo \(n\) solo si \(N\) es mayor que el largo de la secuencia \(x_3[n]\). Como se mostró en la sección \ref{sec:dft_linear_convolution}, si \(x_1[n]\) tiene largo \(L\) y \(x_2[n]\) tiene largo \(P\), \(x_3[n]\) tiene largo máximo \(L+P-1\). Por lo tanto, la convolución circular correspondiente a \(X_1[k]X_2[k]\) es idéntica a la convolución lineal correspondiente a \(X_1(e^{j\omega})X_2(e^{j\omega})\) si \(N\), el largo de las DFTs, cumple que \(N\geq L+P-1\).
+
+\paragraph{Ejemplo: convolución circular como convolución lineal con aliasing} El resultado del último ejemplo de la sección \ref{sec:dft_properties_circular_convolution} sobre la convolución circular de dos pulsos rectangulares, es fácilmente comprendido mediante la interpretación recién discutida. En dicho ejemplo, \(x_1[n]\) y \(x_2[n]\) son secuencias constantes idénticas de largo \(L=P=6\), como se muestra en la figura \ref{fig:dft_circular_convolution_as_linear_with_aliasing_example_1}. La convolución lineal \(x_3[n]=x_1[n]*x_2[n]\) de esas secuencias es una secuencia triangular de largo \(L+P-1\) y también se muestra en la figura, junto a dos versiones desplazadas \(x_3[n-rN]\), sumandos de la ecuación \ref{eq:dft_sampling_x3p}, \(x_3[n-N]\) y \(x_3[n+N]\) para \(N=6\). La convolución circular de \(N\) puntos de \(x_1[n]\) y \(x_2[n]\) puede obtenerse mediante la ecuación \ref{eq:dft_sampling_x3p}. Esto se muestra en la figura para \(N=L=6\) y para \(N=2L=12\). Observar que para \(N=L=6\), solo los sumandos \(x_3[n]\) y \(x_3[n+N]\) en la ecuación \ref{eq:dft_sampling_x3p} contribuyen al resultado en \(0\leq n\leq N-1\), y su suma en ese intervalo es una secuencia constante de amplitud \(L\), acorde al resultado obtenido en el ejemplo de la sección \ref{sec:dft_properties_circular_convolution} mediante la DFT inversa del producto de las DFTs de \(N=L\) puntos. Para \(N=2L=12\) no hay aliasing temporal en los sumandos de la ecuación \ref{eq:dft_sampling_x3p} y solo \(x_3[n]\) contribuye al resultado. Como el largo de la convolución lineal es \(2L-1=11\) muestras, el resultado de la convolución circular de \(N=2L=12\) puntos es idéntico a la convolución lineal para todo \(0\leq n\leq N-1\). De hecho, lo mismo también es cierto para la convolución circular de \(N=2L-1=11\) puntos.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_circular_convolution_as_linear_with_aliasing_example_1.pdf}
+ \caption{\label{fig:dft_circular_convolution_as_linear_with_aliasing_example_1} Ilustración de que la convolución circular es idéntica a la convolución lineal con aliasing. Se muestra las secuencias \(x_1[n]\) y \(x_2[n]\) a las que se aplicará la convolución, luego la convolución lineal \(x_3[n]=x_1[n]*x_2[n]\), seguido de las versiones desplazadas \(x_3[n+N]\) y \(x_3[n-N]\) para \(N=L=6\). Finalmente, se muestra el resultado de la ecuación \ref{eq:dft_sampling_x3p} para \(N=L=6\) y \(N=2L=12\), que coinciden con la convolución circular \(x_1[n]\circledast x_2[n]\) de \(N\) puntos, las cuales fueron deducidas en el último ejemplo de la sección \ref{sec:dft_properties_circular_convolution}.}
+ \end{center}
+\end{figure}
+
+Como muestra el ejemplo, el aliasing temporal en la convolución circular de dos secuencias de largo finito puede evitarse si \(N>L+P-1\). Si \(N=L=P\), todos los valores de la secuencia de la convolución circular pueden ser distintos a los valores de la convolución lineal. Sin embargo, si \(P<L\), algunos de los valores de la convolución circular de \(L\) puntos son iguales a los valores correspondientes de la convolución lineal. La interpretación de la convolución circular como convolución lineal con aliasing es útil para mostrarlo.
+
+Considérese dos secuencias de largo finito \(x_1[n]\) y \(x_2[n]\), con \(x_1[n]\) de largo \(L\) y \(x_2[n]\) de largo \(P\), donde \(P<L\), como se muestra en la figura \ref{fig:dft_circular_convolution_as_linear_with_aliasing_example_2}. Se quiere saber que valores de la convolución circular de \(L\) puntos son iguales a la convolución lineal y cuales no. La convolución lineal entre \(x_1[n]\) y \(x_2[n]\) es la secuencia \(x_3[n]\) de largo \(L+P-1\) que se muestra en la figura. Para determinar la convolución circular de \(L\) puntos puede emplearse la ecuación \ref{eq:dft_sampling_x3p},
+\[
+ x_{3p}[n]=
+ \left\{ 
+ \begin{array}{ll}
+  x_1[n]\circledast x_2[n]=\displaystyle\sum_{r=-\infty}^\infty x_3[n-rL], & 0\leq n\leq L-1,\\[\medskipamount]
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right. 
+\]
+En la figura \ref{fig:dft_circular_convolution_as_linear_with_aliasing_example_2} se muestran los sumandos correspondientes a \(r=0\), \(r=1\) y \(r=-1\). Se observa que en el intervalo \(0\leq n\leq L-1\), \(x_{3p}[n]\) está compuesto solo por los sumandos \(x_3[n]\) y \(x_3[n+L]\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_circular_convolution_as_linear_with_aliasing_example_2.pdf}
+ \caption{\label{fig:dft_circular_convolution_as_linear_with_aliasing_example_2} Interpretación de la convolución circular como la convolución lineal con aliasing para el caso en que las secuencias tienen largo \(L\) y \(P\) con \(P<L\). Las primeras \(P-1\) muestras de la convolución circular de \(L\) puntos está corruptas por aliasing, mientras que las \(L-P+1\) están intactas  y coinciden con las muestras correspondientes de la convolución lineal.}
+ \end{center}
+\end{figure}
+
+En general, con \(P<L\), solo el sumando \(x_3[n+L]\) se solapa con \(x_3[n]\) en el intervalo \(0\leq n\leq L-1\). Específicamente, cuando se suman esos términos, la últimas \(P-1\) muestras de \(x_3[n+L]\), que se extienden desde la muestra \(n=0\) a \(n=P-2\), son sumadas a las primeras \(P-1\) muestras de \(x_3[n]\), y las últimas \(P-1\) muestras de \(x_3[n]\), que se extienden desde la muestra \(n=L\) a \(n=L+P-2\), contribuyen solo al siguiente período de la secuencia periódica subyacente \(\tilde{x}_3[n]\). Estas consideraciones se aprecian en la figura \ref{fig:dft_circular_convolution_as_linear_with_aliasing_example_2}. Luego, \(x_{3p}\) se obtiene extrayendo el intervalo \(0\leq n\leq L-1\), como indica la ecuación \ref{eq:dft_sampling_x3p}. Como las últimas \(P-1\) muestras de \(x_3[n+L]\) y \(x_3[n]\) son idénticas, se puede ver al proceso de la convolución circular como la convolución lineal con aliasing alternativamente como tomar las últimas \(P-1\) muestras de \(x_3[n]\) desde \(n=L\) hasta \(n=L+P-1\) y sumarlas a las primeras \(P-1\) muestras de \(x_3[n]\). El proceso podrìa describirse como envolver a la secuencia \(x_3[n]\) sobre si misma. Las primeras \(P-1\) muestras están corrompidas debido al aliasing temporal, y el resto, las correspondientes al intervalo \(n=P-1\) a \(n=L\) (las últimas \(L-P+1\) muestras de \(x_{3p}[n]\)), están intactas, es decir, son idénticas a las obtenidas con la convolución lineal, como se observa en la figura.
+
+De esta discusión, es claro que si la convolución circular es suficientemente larga respecto al largo de las secuencias \(x_1[n]\) y \(x_2[n]\), se evita aliasing con valores no nulos, en cuyo caso, la convolución circular y la convolución lineal son idénticas.
+
+\subsection{Implementación de sistemas lineales invariantes en el tiempo con la DFT}
+
+La discusión previa se enfocó en formas de obtener una convolución lineal a partir de una convolución circular. Como los sistemas LTI pueden implementarse mediante la convolución, esto implica que la convolución circular, calculada mediante el procedimiento descrito al comienzo de la sección \ref{sec:dft_linear_convolution_with_dft}, puede emplearse para implementar estos sistemas. Para ver como se hace esto, considérese una secuencia de entrada \(x[n]\) de \(L\) puntos y una respuesta al impulso \(h[n]\) de \(P\) puntos. La convolución lineal de estas secuencias, que se denotará \(y[n]\), tiene un largo de \(L+P-1\) muestras. En consecuencia, como se discutió en la sección \ref{sec:dft_circular_convolution_as_linear_with_aliasing}, para que la convolución circular y la convolución lineal sean idénticas, la convolución circular debe ser de largo de al menos \(L+P-1\) muestras. La convolución circular puede obtenerse mediante el producto de las DFTs de \(x[n]\) y \(h[n]\). Como se desea que este producto represente a la DFT de la convolución lineal de \(x[n]\) y \(h[n]\), que tiene largo \(L+P-1\), las DFTs de \(x[n]\) y \(h[n]\) deben ser de al menos ese largo, es decir, \(x[n]\) y \(h[n]\) deben extenderse con muestras de valor de amplitud nulo. Este  proceso se denomina \emph{relleno de ceros}.
+
+El procedimiento permite el cálculo de la convolución lineal de dos secuencias de largo finito empleando a la DFT, es decir, la salida de un sistema FIR cuya entrada es de largo finito puede calcularse empleando a la DFT. En muchas aplicaciones, la entrada es de largo indefinido. En principio, se podría almacenar la secuencia de entrada completa e implementar el procedimiento descrito mediante la DFT de un largo grande de puntos. Sin embargo, el cálculo de DFTs tan largas no es práctico. Otra desventaja de este método de filtrado es que no se puede calcular la salida hasta haber recolectado todas las muestras de la entrada, y en muchas aplicaciones, este retardo en el procesamiento no puede tolerarse. La solución a ambos problemas es emplear \emph{convolución por bloques}, en donde la señal a filtrar es segmentada en secciones de largo \(L\). Puede entonces aplicarse la convolución de cada sección con la respuesta al impulso y luego combinar a las secciones filtradas de forma apropiada.
+
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_lti_block_convolution_h_x.pdf}
+ \caption{\label{fig:dft_lti_block_convolution_h_x} Respuesta al impulso \(h[n]\) de largo finito y señal \(x[n]\) de largo indefinido a ser filtrada.}
+ \end{center}
+\end{figure}
+Para ilustrar el procedimiento y desarrollar la forma de combinar las secciones filtradas se considera la respuesta al impulso \(h[n]\) de largo \(P\) y la señal \(x[n]\) de largo indefinido mostradas en la figura \ref{fig:dft_lti_block_convolution_h_x}. Se asumirá que \(x[n]=0\) en \(n<0\) y que el largo de \(x[n]\) es mucho mayor que \(P\). La secuencia \(x[n]\) puede representarse como la suma de segmentos de largo \(L\) desplazados temporalmente no solapados como
+\begin{equation}\label{eq:dft_lti_with_dft_signal_blocks_input}
+ x[n]=\sum_{r=0}^\infty x_r[n-rL] 
+\end{equation}
+donde 
+\[
+ x_r[n]=
+ \left\{ 
+ \begin{array}{ll}
+  x[n+rL], & 0\leq n\leq L-1\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.
+\]
+La figura \ref{fig:dft_lti_block_convolution_overlap_add} ilustra esta segmentación para la señal \(x[n]\) de la figura \ref{fig:dft_lti_block_convolution_h_x}. Observar que dentro de cada segmento \(x_r[n]\), la primera muestra está en \(n=0\), pero la muestra cero de \(x_r[n]\) es la muestra \(rL\) de \(x[n]\). Esto se muestra en la figura \ref{fig:dft_lti_block_convolution_overlap_add}, donde los segmentos se encuentran en sus posiciones desplazadas pero con el origen temporal redefinido como se indicó.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_lti_block_convolution_overlap_add.pdf}
+ \caption{\label{fig:dft_lti_block_convolution_overlap_add} Descomposición de la señal \(x[n]\) de la figura \ref{fig:dft_lti_block_convolution_h_x} en secciones \(x_r[n]\) no solapadas de largo \(L\) y el resultado de la convolución de las secciones con la respuesta al impulso \(h[n]\).}
+ \end{center}
+\end{figure}
+
+Debido a que la convolución es una operación LTI, de la ecuación \ref{eq:dft_lti_with_dft_signal_blocks_input} se observa que 
+\[
+ y[n]=x[n]*h[n]=\left(\sum_{r=0}^\infty x_r[n-rL]\right)*h[n]=\sum_{r=0}^\infty x_r[n-rL]*h[n]=\sum_{r=0}^\infty y_r[n-rL],
+\]
+es decir,
+\begin{equation}\label{eq:dft_lti_with_dft_signal_blocks_output}
+ y[n]=\sum_{r=0}^\infty y_r[n-rL],
+\end{equation}
+donde
+\[
+ y_r[n]=x_r[n]*h[n].
+\]
+Debido a que las secuencias \(x_r[n]\) tienen solo \(L\) muestras no nulas y \(h[n]\) es de largo \(P\), cada bloque \(y_r[n]=x_r[n]*h[n]\) tiene largo \(L+P-1\). Por lo tanto, la convolución lineal puede calcularse con el procedimiento descrito previamente empleando DFTs de \(N\) puntos, con \(N\geq L+P+1\). Como el comienzo de cada sección de entrada está separado de sus vecinos por \(L\) muestras y cada sección filtrada tiene largo \(L+P+1\), las muestras no nulas de las secciones filtradas se solapan \(P-1\) muestras, y esas muestras solapadas deben sumarse, como requiere la ecuación \ref{eq:dft_lti_with_dft_signal_blocks_output}. Esto se ilustra en la figura \ref{fig:dft_lti_block_convolution_overlap_add}, donde se muestran las secciones filtradas \(y_r[n]=x_r[n]*h[n]\). Asi como la señal de entrada es reconstruida sumando las secciones \(x_r[n]\) desplazadas temporalmente, la señal filtrada \(x[n]*h[n]\) se construye sumando las secciones filtradas \(y_r[n]\) desplazadas temporalmente, mostradas en la figura. Este procedimiento para construir la salida filtrada a partir de las secciones filtradas es referido como método de \emph{solapamiento--suma} (\emph{overlap--add}).
+
+Un procedimiento alternativo para implementar la convolución por bloques, denominado método de \emph{solapamiento--almacenamiento} (\emph{overlap--save}), consiste en aplicar una convolución circular de \(L\) puntos entre una respuesta al impulso de \(P\) puntos y un segmento \(x_r[n]\) de \(L\) puntos, e identificar la parte de la convolución circular que corresponde a la convolución lineal. Específicamente, se mostró que si se aplica la convolución circular a una secuencia de \(L\) puntos con una secuencia de \(P\) puntos, con \(P<L\), los primeros \(P-1\) puntos son incorrectos debido a aliasing temporal, mientras que el resto de los puntos son idénticos a los obtenidos mediante la convolución lineal. El método consiste en dividir a \(x[n]\) en secciones de largo \(L\) de forma tal que cada sección se solapa \(P-1\) puntos con la sección precedente. Concretamente, las secciones se definen como
+\begin{equation}\label{eq:dft_lti_with_dft_signal_blocks_overap_save_input}
+ x_r[n]=x[n+r(L-P+1)-P+1],
+ \qquad 0\leq n\leq L-1, 
+\end{equation}
+donde, como antes, se definió el origen temporal de cada sección como el comienzo de la sección en lugar de su comienzo sobre \(x[n]\). Esta forma se seccionamiento se ilustra en la figura \ref{fig:dft_lti_block_convolution_overlap_save}. Observar que según indica la ecuación \ref{eq:dft_lti_with_dft_signal_blocks_overap_save_input}, se cumple que la primera y última muestra de la primera sección \(x_0[n]\) es respectivamente
+\[
+ \begin{array}{lclcl}
+  x_0[0] &=& x[-P+1]\\
+  x_0[L-1]&=&x[L-1-P+1]&=&x[L-P],
+ \end{array}
+\]
+es decir, la sección \(x_0[n]\) corresponde a las muestras \(-P+1\leq n\leq L-P\) de \(x[n]\) y por lo tanto, las primeras \(P-1\) muestras son nulas, ya que \(x[n]=0\) en \(n<0\), como se aprecia en la figura \ref{fig:dft_lti_block_convolution_overlap_save}. De la misma forma, la primer y última muestra de la segunda sección \(x_1[n]\) es respectivamente
+\[
+ \begin{array}{lclcl}
+  x_1[0] &=& x[L-P+1-P+1]&=& x[L-2P+2]\\
+  x_1[L-1]&=&x[L-1+L-P+1-P+1]&=&x[2L-2P+1],
+ \end{array}
+\]
+es decir, corresponde las muestras \(L-2P+2\leq n\leq 2L-2P+1\) de \(x[n]\). Por lo tanto, el solapamiento entre las secciones es \((L-P)-(L-2P+2)+1=P-1\) muestras.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=1\textwidth]{figuras/dft_lti_block_convolution_overlap_save.pdf}
+ \caption{\label{fig:dft_lti_block_convolution_overlap_save} Descomposición de la señal \(x[n]\) de la figura \ref{fig:dft_lti_block_convolution_h_x} en secciones \(x_r[n]\) largo \(L\) solapadas \(P-1\) muestras y el resultado \(y_{rp}[n]\) de la convolución de cada sección con la respuesta al impulso \(h[n]\). Las muestras en colo rojo de cada sección filtrada deben ser descartadas para formar la convolución lineal.}
+ \end{center}
+\end{figure}
+
+La convolución circular de cada sección con \(h[n]\) se denota \(y_{rp}[n]\), donde el subíndice adicional \(p\) indica que \(y_{rp}[n]\) es el resultado de una convolución circular en la cual ocurrió aliasing. Estas secuencias también se muestran en la figura \ref{fig:dft_lti_block_convolution_overlap_save}. La porción de cada sección de salida en la región \(0\leq n\leq P-2\) es la parte con aliasing que debe ser descartada. La señal filtrada se construye juntando las secciones sucesivas con las \(P-1\) primeras muestras eliminadas. De esta forma,
+\[
+ y[n]=\sum_{r=0}^\infty y_r[n-r(L-P+1)+P-1],
+\]
+donde 
+\[
+ y_r[n]=
+ \left\{ 
+ \begin{array}{ll}
+  y_{rp}[n], & P-1\leq n\leq L-1\\
+  0, & \textrm{en otro caso.}
+ \end{array}
+ \right.
+\]
+Este procedimiento se llama método de solapamiento--almacenamiento debido a que los segmentos de entrada se solapan y cada sección nueva consiste en \(L-P+1\) muestras nuevas y \(P-1\) muestras almacenadas de la sección previa.  
+
+La utilidad de los métodos solapamiento--suma y solapamiento--almacenamiento proviene de que hay algoritmos altamente eficientes para el cálculo de la DFT, como se verá en el capítulo \ref{ch:9}. Estos algoritmos son conocidos colectivamente como FFT, y son tan eficientes que, incluso para respuestas al impulso de largo pequeño, es mas eficiente la implementación de la convolución por bloques empleando la DFT que la implementación de la convolución lineal directa.
+
+\section{La transformada discreta del coseno (DCT)}
+
+La DFT es quizás el ejemplo mas común de una clase general de representaciones de transformadas de largo finito de la forma
+\begin{align}
+ A[k]&=\sum_{n=0}^{N-1}x[n]\phi_k^*[n],\label{sec:dft_dct_orthogonal_transform_analysis}\\
+ x[n]&=\frac{1}{N}\sum_{k=0}^{N-1}A[k]\phi_k[n],\label{sec:dft_dct_orthogonal_transform_synthesis}
+\end{align}
+donde las secuencias \(\phi_k[n]\), referidas como \emph{secuencias base}, son ortogonales entre si, es decir,
+\[
+ \frac{1}{N}\sum_{n=0}^{N-1}\phi_k[n]\phi^*_m[n]=
+ \left\{ 
+ \begin{array}{ll}
+  1, & m=k,\\
+  0, & m\neq k.
+ \end{array}
+ \right.
+\]
+En el caso de la DFT, las secuencias base son las secuencias exponenciales complejas periódicas \(e^{j2\pi kn/N}\), y la secuencia \(A[k]\) es en general compleja aunque la secuencia \(x[n]\) sea real. Esto motiva a la búsqueda de secuencias base reales que conduzcan a secuencias transformadas \(A[k]\) reales cuando \(x[n]\) es real. Se han propuesto diversas transformaciones ortogonales con esta característica. Una de ellas es transformada discreta del coseno (\emph{DCT}, Discrete Cosine Transform) \cite{ahmed1974discrete}. La DCT está cercanamente vinculada a la DFT y es especialmente útil e importante en varias aplicaciones de procesamiento de señales, particularmente en compresión de voz e imágenes. En esta sección se brinda una introducción a la DCT, mostrando su relación con la DFT.
+
+\subsection{Definiciones de la DCT}
+
+La DCT es una transformación de la forma de las ecuaciones \ref{sec:dft_dct_orthogonal_transform_analysis} y \ref{sec:dft_dct_orthogonal_transform_synthesis} donde las secuencias base \(\phi_k[n]\) son cosenos. Debido a que el coseno es periódico y tiene simetría par, la extensión de \(x[n]\) fuera del intervalo \(0\leq n\leq N-1\) en la ecuación de síntesis \ref{sec:dft_dct_orthogonal_transform_synthesis} es también periódica y simétrica. Así como la DFT involucra la hipótesis implícita de periodicidad, la DCT involucra las hipótesis implícitas tanto de periodicidad como de \emph{simetría par}.
+
+En el desarrollo de la DFT, una secuencia de largo finito se representa formando una secuencia periódica de la cual la secuencia de largo finito puede extraerse unívocamente, y luego se emplea una expansión en términos de  exponenciales complejas periódicas. De forma similar, la DCT corresponde a formar una secuencia periódica simétrica a partir de la secuencia de largo finito de forma tal que la secuencia de largo finito original pueda ser unívocamente recuperada. Debido a que hay varias formas de hacerlo, hay varias definiciones de la DCT. En la figura \ref{fig:dft_dct_periodicity_time} se muestran cuatro ejemplos de extensiones periódicas simétricas de una secuencia \(x[n]\) de \(N=4\) puntos. Esas secuencias son todas periódicas y también tienen simetría par. En cada caso, las secuencia original de largo finito es fácilmente extraída como los primeras cuatro muestras de un período. Las extensiones periódicas se denominan \(\tilde{x}_1[n]\), \(\tilde{x}_2[n]\), \(\tilde{x}_3[n]\) y \(\tilde{x}_4[n]\). Se observa que \(\tilde{x}_1[n]\) tiene período \(2N-2=6\) y tiene simetría par en torno a \(n=0\) y \(n=N-1=3\). La secuencia \(\tilde{x}_2[n]\) tiene período \(2N=8\) y tiene simetría par en torno a las medias muestras \(n=-1/2\) y \(n=N-1/2=7/2\). La secuencia \(\tilde{x}_3[n]\) tiene período \(4N=16\) y tiene simetría par en torno a \(n=0\) y \(n=2N=8\). La secuencia \(\tilde{x}_3[n]\) también tiene período \(4N=16\) y tiene simetría par en torno a las medias muestras \(n=-1/2\) y \(n=2N-1/2=15/2\). Notar que las extensiones periódicas \(\tilde{x}_1[n]\) y \(\tilde{x}_2[n]\) se construyeron simetrizando de forma par hacia la derecha a la secuencia original \(x[n]\) de dos formas distintas: repitiendo o no repitiendo los extremos (primera y última muestra) de \(x[n]\) en la extensión. Cuando un extremo no se repite, el punto de simetría es en una muestra exacta, y cuando  se repite, el punto de simetría es en el punto medio entre dos muestras. Esos puntos de simetría par están marcados como \emph{WS} cuando ocurren en un muestra exacta (\emph{whole--symmetric}) y como \emph{HS} cuando ocurre entre muestras (\emph{half--symmetric}) en la figura \ref{fig:dft_dct_periodicity_time}. Por otro lado, las extensiones periódicas \(\tilde{x}_3[n]\) y \(\tilde{x}_4[n]\) se construyeron simetrizando de forma impar hacia la derecha a la secuencia original \(x[n]\) de dos formas distintas. Los puntos de simetría impar están marcados como \emph{WA} cuando ocurren en una muestra exacta (\emph{whole--antisymmetric}) y como \emph{HA} cuando ocurre entre muestras (\emph{half--antisymmetric}) en la figura. Esta notación es la empleada en \cite{martucci1994symmetric}. Con esta notación, las cuatro extensiones \(\tilde{x}_1[n]\), \(\tilde{x}_2[n]\), \(\tilde{x}_3[n]\) y \(\tilde{x}_4[n]\) periódicas con simetría par  en la figura \ref{fig:dft_dct_periodicity_time} se generan a partir de \(x[n]\) como WSWS, HSHS, WSWA, HSHA respectivamente.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/dft_dct_periodicity_time.pdf}
+ \caption{\label{fig:dft_dct_periodicity_time} Cuatro extensiones periódicas con simetría par de la secuencia \(x[n]\) de \(N=4\) muestras marcada en rojo. \(\tilde{x}_1[n]\) es la extensión periódica tipo-1 para la DCT-1, \(\tilde{x}_2[n]\) es la extensión periódica tipo-2 para la DCT-2, \(\tilde{x}_2[n]\) es la extensión periódica tipo-3 para la DCT-3 y \(\tilde{x}_4[n]\) es la extensión periódica tipo-4 para la DCT-4.}
+ \end{center}
+\end{figure}
+
+Los cuatro casos mostrados en la figura \ref{fig:dft_dct_periodicity_time} ilustran la periodicidad implícita en las cuatro formas comunes de la DCT, que son referidas como DCT-1, DCT-2, DCT-3 y DCT-4 respectivamente. Existen cuatro formas mas de crear secuencias periódicas con simetría par a partir de \(x[n]\), correspondientes a las extensiones WSHS, HSWS, WSHA y HSWA \cite{martucci1994symmetric}. Esto significa que hay otras cuatro posibles representaciones DCT. Adicionalmente, es posible crear ocho secuencias reales periódicas con simetría impar a partir de \(x[n]\), conduciendo a ocho versiones distintas de la \emph{transformada discreta del seno} (\emph{DST}, Discrete Sine Transform), donde las secuencias base de la representación ortonormal son funciones seno. Estas transformadas forman una familia de 16 transformaciones ortonormales de secuencias reales. Las extensiones los \(2^4=16\) pares posibles de WS, HS, WA y HA. De todas estas, las representaciones DCT-1 y DCT-2 son las mas usadas y solo se hará foco en ellas en lo que resta de la discusión.
+
+\subsection{Definición de la DCT-1 y DCT-2} 
+
+Las extensiones periódicas que conducen a las distintas formas de la DCT pueden construirse mediante la suma de copias desplazadas de las secuencias de \(N\) puntos \(\pm x[n]\) y \(\pm x[-n]\). En la DCT-1, los extremos de las versiones desplazadas se solapan, mientras que en la DCT-2 no. Para la DCT-1, primero se modifican los extremos de \(x[n]\) y luego se extiende hasta tener largo \(2N-2\). Específicamente, la extensión periódica es 
+\begin{equation}\label{eq:dft_dct_periodic_extension_type_1}
+ \tilde{x}_1[n]=x_\alpha[((n))_{2N-2}]+x_\alpha[((-n))_{2N-2}], 
+\end{equation}
+donde \(x_\alpha[n]\) es la secuencia \(x[n]\) modificada como \(x_\alpha[n]=\alpha[n]x[n]\) con
+\begin{equation}\label{eq:dft_dct_1_definition_alpha}
+ \alpha[n]=
+ \left\{ 
+ \begin{array}{ll}
+  \dfrac{1}{2}, & n=0\textrm{ y }n=N-1,\\[\medskipamount]
+  1, & 1\leq n\leq N-2.
+ \end{array}
+ \right.  
+\end{equation}
+Las secuencias involucradas se muestran en la figura \ref{fig:dft_dct_periodicity_types_1_2_construction} para la secuencia \(x[n]\) de la figura \ref{fig:dft_dct_periodicity_time}. Observar que la ponderación de los extremos de \(x[n]\) es necesaria para compensar la duplicación que ocurre cuando las dos secuencias de la ecuación \ref{eq:dft_dct_periodic_extension_type_1} se solapan en \(n=0\) y \(n=N-1\) y en los puntos espaciados múltiplos de \(2N-2\) de éstos. Con la ponderación, se cumple que \(x[n]=\tilde{x}_1[n]\) para \(n=0,\,1,\,\dots,\,N-1\). La secuencia periódica \(\tilde{x}_1[n]\) resultante tiene período \(2N-2\) muestras y simetría par en torno a los múltiplos de \(N-1\), la cual es referida como simetría periódica de \emph{tipo-1}. En las figuras \ref{fig:dft_dct_periodicity_time} y \ref{fig:dft_dct_periodicity_types_1_2_construction} se muestra un caso de simetría tipo-1 donde \(N=4\) y \(\tilde{x}_1[n]\) tiene período \(2N-2=6\). La DCT-1 es definida por el par de transformadas
+\begin{equation}\label{eq:dft_dct_1_definition}
+ X^{c1}[k]=2\sum_{n=0}^{N-1}\alpha[n]x[n]\cos\left(\frac{\pi k n}{N-1}\right),
+ \qquad 0\leq k\leq N-1,
+\end{equation}
+\begin{equation}\label{eq:dft_dct_1_inverse_definition}
+ x[n]=\frac{1}{N-1}\sum_{k=0}^{N-1}\alpha[k]X^{c1}[k]\cos\left(\frac{\pi k n}{N-1}\right),
+ \qquad 0\leq n\leq N-1,
+\end{equation}
+donde \(\alpha[n]\) está definida por la ecuación \ref{eq:dft_dct_1_definition_alpha}.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/dft_dct_periodicity_types_1_2_construction.pdf}
+ \caption{\label{fig:dft_dct_periodicity_types_1_2_construction} Construcción de las extensiones periódicas simétricas de tipo-1 y tipo-2 de la secuencia \(x[n]\) de \(N=4\) de la figura \ref{fig:dft_dct_periodicity_time}.}
+ \end{center}
+\end{figure}
+
+Para la DCT-2, \(x[n]\) se extiende para tener período \(2N\), y la secuencia periódica está dada por 
+\begin{equation}\label{eq:dft_dct_periodic_extension_type_2}
+ \tilde{x}_2[n]=x[((n))_{2N}]+x[((-n-1))_{2N}], 
+\end{equation}
+como se muestra en la figura \ref{fig:dft_dct_periodicity_types_1_2_construction}. Debido a que los extremos no se solapan, no se necesita una modificación de \(x[n]\) para asegurar que \(x[n]=\tilde{x}_2[n]\) para \(n=0,\,1,\,\dots,\,N-1\). En este caso, llamado simetría periódica de \emph{tipo-2}, la secuencia periódica \(\tilde{x}_2[n]\) tiene simetría par en torno a los puntos medios entre muestras \(-1/2,\,N-1/2,\,2N-1/2,\,\dots\), como se observa en las figuras \ref{fig:dft_dct_periodicity_time} y \ref{fig:dft_dct_periodicity_types_1_2_construction} para \(N=4\) y \(2N=8\). La DCT-2 es definida por el par de transformadas
+\begin{equation}\label{eq:dft_dct_2_definition}
+ X^{c2}[k]=2\sum_{n=0}^{N-1}x[n]\cos\left(\frac{\pi k(2n+1)}{2N}\right),
+ \qquad 0\leq k\leq N-1,
+\end{equation}
+\begin{equation}\label{eq:dft_dct_2_inverse_definition}
+ x[n]=\frac{1}{N}\sum_{k=0}^{N-1}\beta[k]X^{c2}[k]\cos\left(\frac{\pi k(2n+1)}{2N}\right),
+ \qquad 0\leq n\leq N-1,
+\end{equation}
+donde la DCT-2 inversa involucra a la función de ponderación
+\begin{equation}\label{eq:dft_dct_2_inverse_definition_beta}
+ \beta[k]=
+ \left\{ 
+ \begin{array}{ll}
+  \dfrac{1}{2}, & k=0,\\[\medskipamount]
+  1, & 1\leq n\leq N-1.
+ \end{array}
+ \right.  
+\end{equation}
+En la bibliografía se encuentran definiciones alternativas de la DCT que incluyen factores de normalización que hacen que las transformadas sean \emph{unitarias} (ver la sección 2.4 de \cite{rao1990discrete}). La DCT sería una transformación unitaria si además de ser ortonormal también tiene la propiedad de que 
+\[ 
+\sum_{n=0}^{N-1}(x[n])^2=\sum_{k=0}^{N-1}(X^{c2}[k])^2.
+\]
+Por ejemplo, la DCT-2 es usualmente definida como
+\[
+ \tilde{X}^{c2}[k]=\sqrt{\frac{1}{N}}\tilde{\beta}[k]\sum_{n=0}^{N-1}x[n]\cos\left(\frac{\pi k(2n+1)}{2N}\right),
+ \qquad 0\leq k\leq N-1,
+\]
+\[
+ x[n]=\sqrt{\frac{1}{N}}\sum_{k=0}^{N-1}\tilde{\beta}[k]X^{c1}[k]\cos\left(\frac{\pi k(2n+1)}{2N}\right),
+ \qquad 0\leq n\leq N-1,
+\]
+donde
+\[
+ \tilde{\beta}[k]=
+ \left\{ 
+ \begin{array}{ll}
+  \dfrac{1}{\sqrt{2}}, & k=0,\\[\medskipamount]
+  1, & 1\leq n\leq N-1.
+ \end{array}
+ \right.  
+\]
+Comparando estas ecuaciones con las ecuaciones \ref{eq:dft_dct_2_definition} y \ref{eq:dft_dct_2_inverse_definition} se observa que los factores 2, \(1/N\) y \(\beta[k]\) fueron redistribuidos entre la transformada directa e inversa. Puede aplicarse una normalización similar para definir una versión normalizada de DCT-1. Sin embargo, en lo que resta de la discusión se emplearán las definiciones de las ecuaciones  \ref{eq:dft_dct_1_definition} y \ref{eq:dft_dct_1_inverse_definition} y las ecuaciones  \ref{eq:dft_dct_2_definition} y \ref{eq:dft_dct_2_inverse_definition} en lugar de las definiciones normalizadas ya que son mas fáciles de vincular con la DFT como fue definida en este capítulo.
+
+Aunque normalmente la DCT se evalúa únicamente en el intervalo \(0\leq k\leq N-1\), nada evita evaluar las ecuaciones de la DCT fuera de ese intervalo. Esta extensión de la DCT se muestra en la figura \ref{fig:dft_dct_periodicity_types_1_2_dct} para la DCT-1 \(X^{c1}[k]\) y DCT-2 \(X^{c2}[k]\) de las extensiones \(\tilde{x}_1[n]\) y \(\tilde{x}_2[n]\) de la figura \ref{fig:dft_dct_periodicity_time}. En la figura, se observa que las DCTs también son secuencias periódicas pares. Sin embargo, la simetría de la secuencia transformada no siempre es la misma que la periodicidad implícita de la secuencia original. Comparando las figuras \ref{fig:dft_dct_periodicity_time} y \ref{fig:dft_dct_periodicity_types_1_2_dct}, se ve que mientas que \(\tilde{x}_1[n]\) y la extensión de \(X^{c1}[k]\) tienen ambas simetría tipo-1 con el mismo período, la extensión de \(X^{c2}[k]\) tiene simetría tipo-3 en lugar de la simetría de \(\tilde{x}_2[n]\), que es tipo-2. Otra diferencia es que \(X^{c2}[k]\) se extiende con período \(4N\) mientras que \(\tilde{x}_2[n]\) tiene período \(2N\).
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=\textwidth]{figuras/dft_dct_periodicity_types_1_2_dct.pdf}
+ \caption{\label{fig:dft_dct_periodicity_types_1_2_dct} DCT-1 y DCT-2 la secuencia \(x[n]\) de \(N=4\) de la figura \ref{fig:dft_dct_periodicity_time}. En rojo se maracan las DCTs en el intervalo \(0\leq k\leq N-1\) y en negro las extensiones fuera de ese intervalo.}
+ \end{center}
+\end{figure}
+
+Debido a que las DCTs son transformaciones ortogonales, tienen propiedades similares a la DFT. Estas propiedades están elaboradas con detalle en \cite{rao1990discrete}.
+
+\subsection{Relación entre la DFT y la DCT-1}
+
+Hay una relación cercana entre la DFT y las distintas clases de DCTs. Para desarrollar este vinculo con la DCT-1, se parte recordando que \(\tilde{x}_1[n]\) se construye a partir de \(x[n]\) mediante la ecuación \ref{eq:dft_dct_periodic_extension_type_1}. Por lo tanto, un período de \(\tilde{x}_1[n]\) define a la secuencia de largo finito 
+\[
+ x_1[n]=x_\alpha[((n))_{2N-2}]+x_\alpha[((-n))_{2N-2}]=\tilde{x}_1[n],
+ \qquad 
+ n=0,\,1,\,\dots,\,2N-3,
+\]
+donde \(x_\alpha[n]=\alpha[n]x[n]\) es la secuencia original \(x[n]\) de \(N\) puntos con los valores de las muestras de los extremos divididos entre 2. Considerando la propiedad de simetría de la DFT que indica que (ver la sección \ref{sec:dft_properties_symmetry})
+\[
+ x^*[((-n))_N]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;{X}^*[k],
+ \qquad 0\leq n\leq N-1,
+\]
+y teniendo en cuenta que \(x[n]\) es real y por lo tanto \(x^*[((-n))_N]=x[((-n))_N]\), la DFT de \(2N-2\) puntos de la secuencia \(x_1[n]\) es
+\[
+ X_1[k]=X_\alpha[k]+X^*_\alpha[k]=2\Re\{X_\alpha[k]\},
+ \qquad 
+ k=0,\,1,\,\dots,\,2N-3,
+\]
+donde \(X_\alpha[k]\) es la DFT de \(2N-2\) puntos de la secuencia \(\alpha[n]x[n]\) de \(N\) puntos, es decir, \(\alpha[n]x[n]\) es rellenada con \(N-2\) ceros. De la definición de la DFT, se observa que 
+\begin{align*}
+ X_1[k]&=2\Re\{X_\alpha[k]\}\\
+  &=2\Re\left\{\sum_{n=0}^{2N-2}\alpha[n]x[n]e^{j2\pi kn/(2N-2)}\right\}\\
+  &\overset{(a)}{=}2\sum_{n=0}^{N-1}\alpha[n]x[n]\Re\left\{e^{j2\pi kn/(2N-2)}\right\}\\
+  &=2\sum_{n=0}^{N-1}\alpha[n]x[n]\cos\left(\frac{2\pi kn}{2N-2}\right)\\
+  &=2\sum_{n=0}^{N-1}\alpha[n]x[n]\cos\left(\frac{\pi kn}{N-1}\right),
+  \qquad
+  k=0,\,1,\,\dots,\,2N-3,
+\end{align*}
+donde en \((a)\) se consideró que \(\alpha[n]x[n]\) tiene solo las primeras \(N\) muestras no nulas. Considerando que la última igualdad para \(k=0,\,1,\,\dots,\,N-1\) es la definición de la DCT-1 de \(N\) puntos, resulta en que 
+\begin{equation}\label{eq:dft_dct_1_relation_with_dft_X1}
+ X_1[k]=X^{c1}[k],
+  \qquad
+  k=0,\,1,\,\dots,\,N-1.
+\end{equation}
+Esto indica que la DCT-1 de un secuencia de \(N\) muestras es idéntica a las primeras \(N\) muestras de \(X_1[k]\), la DFT de \(2N-2\) puntos de la secuencia extendida simétricamente \(x_1[n]\), y también es idéntica al doble de la parte real de los primeros \(N\) puntos de \(X_\alpha[k]\), la DFT de \(2N-2\) puntos de la secuencia ponderada \(x_\alpha[n]\).
+
+Como se discute en el capítulo \ref{ch:9}, existen algoritmos computacionalmente rápidos para el cálculo de la DFT que pueden emplearse para el cálculo de la DFT de \(X_1[k]\) o \(X_\alpha[k]\), y así se dispone inmediatamente de algoritmos eficientes para el cálculo de la DCT-1. Considerando además que la DCT-1 involucra solo coeficientes reales, existen también algoritmos eficientes para el cálculo de la DCT-1 de secuencias reales.
+
+La DCT-1 inversa también puede calcularse empleando la DFT inversa. Para hacerlo, solo se necesita emplear la ecuación \ref{eq:dft_dct_1_relation_with_dft_X1} para construir \(X_1[k]\) a partir de \(X^{c1}[k]\) y luego calcular la DFT inversa de \(2N-2\) puntos. Específicamente, considerando que \(X_1[k]\) tiene simetría tipo-1, hecho que surge de observar que 
+\[
+ \cos\left[\dfrac{\pi(2N-2-k)n}{N-1}\right]=\cos\left(2\pi n-\dfrac{\pi kn}{N-1}\right)=\cos\left(\frac{\pi kn}{N-1}\right),
+\]
+\(X_1[k]\) se construye como
+\begin{equation}\label{eq:dft_dct_1_relation_with_dft_X1_alt}
+ X_1[k]=
+ \left\{ 
+ \begin{array}{ll}
+  X^{c1}[k],& k=0,\,1,\,\dots,\,N-1,\\[\medskipamount]
+  X^{c1}[2N-2-k],& k=N,\,N+1,\,\dots,\,2N-3.
+ \end{array}
+ \right. 
+\end{equation}
+Luego, aplicando la DFT inversa de \(2N-2\) puntos se obtiene la secuencia extendida simétrica
+\begin{equation}\label{eq:dft_dct_1_relation_with_dft_x1}
+ x_1[n]=\frac{1}{2N-2}\sum_{k=0}^{2N-3}X_1[k]e^{j2\pi kn/(2N-2)},
+ \qquad 
+ n=0,\,1,\,\dots,\,2N-2, 
+\end{equation}
+de la cual puede obtenerse \(x[n]\) extrayendo las \(N\) primeras muestras, es decir, \(x[n]=x_1[n]\) para \(n=0,\,1,\,\dots,\,N-1\). La expresión \ref{eq:dft_dct_1_inverse_definition} de la DCT-1 inversa puede mostrarse sustituyendo la ecuación \ref{eq:dft_dct_1_relation_with_dft_X1_alt} en la ecuación \ref{eq:dft_dct_1_relation_with_dft_x1} de la siguiente forma:
+\begin{align*}
+ x_1[n]&=\frac{1}{2N-2}\sum_{k=0}^{2N-3}X_1[k]e^{j2\pi kn/(2N-2)}\\
+  &=\frac{1}{2N-2}\left\{\sum_{k=0}^{N-1}X^{c1}[k]e^{j2\pi kn/(2N-2)}+\sum_{k=N}^{2N-3}X^{c1}[2N-2-k]e^{j2\pi kn/(2N-2)}\right\}\\
+  &\overset{(a)}{=}\frac{1}{2N-2}\left\{\sum_{k=0}^{N-1}X^{c1}[k]e^{j2\pi kn/(2N-2)}
+    +\sum_{l=N-2}^{1}X^{c1}[l]e^{j2\pi (2N-2-l)n/(2N-2)}\right\}\\
+  &=\frac{1}{2N-2}\left\{\sum_{k=0}^{N-1}X^{c1}[k]e^{j2\pi kn/(2N-2)}
+    +\sum_{l=1}^{N-2}X^{c1}[l]e^{-j2\pi ln/(2N-2)}e^{j2\pi(2N-2)n/(2N-2)}\right\}\\
+  &=\frac{1}{2N-2}\left\{\sum_{k=0}^{N-1}X^{c1}[k]e^{j2\pi kn/(2N-2)}
+    +\sum_{l=1}^{N-2}X^{c1}[l]e^{-j2\pi ln/(2N-2)}\right\}\\
+  &\overset{(b)}{=}\frac{1}{2N-2}\Bigg\{X^{c1}[0]
+    +\sum_{k=1}^{N-2}X^{c1}[k]\left(e^{j2\pi kn/(2N-2)}+e^{-j2\pi kn/(2N-2)}\right)\\
+  &\qquad\qquad\qquad 
+    +X^{c1}[N-1]e^{j2\pi (N-1)n/(2N-2)}\Bigg\}\\
+  &=\frac{1}{2N-2}\Bigg\{X^{c1}[0]
+    +2\sum_{k=1}^{N-2}X^{c1}[k]\cos\left(\frac{2\pi kn}{2N-2}\right)
+    +X^{c1}[N-1]e^{j2\pi (N-1)n/(2N-2)}\Bigg\}\\
+  &\overset{(c)}{=}\frac{1}{2N-2}\left\{X^{c1}[0]\cos\left(\frac{\pi 0n}{N-1}\right)
+    +2\sum_{k=1}^{N-2}X^{c1}[k]\cos\left(\frac{\pi kn}{N-1}\right)
+    +X^{c1}[N-1]\cos\left[\frac{\pi(N-1)n}{N-1}\right]\right\}\\
+  &\overset{(d)}{=}\frac{2}{2N-2}\left\{\frac{X^{c1}[0]}{2}\cos\left(\frac{\pi 0n}{N-1}\right)
+    +\sum_{k=1}^{N-2}X^{c1}[k]\cos\left(\frac{\pi kn}{N-1}\right)
+    +\frac{X^{c1}[N-1]}{2}\cos\left[\frac{\pi(N-1)n}{N-1}\right]\right\}\\
+  &\overset{(e)}{=}\frac{1}{N-1}\sum_{k=0}^{N-1}\alpha[k]X^{c1}[k]\cos\left(\frac{\pi kn}{N-1}\right),
+  \qquad 
+   n=0,\,1,\,\dots,\,N-1.
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(l=2N-2-k\), en \((b)\) se sacó el primer y último sumando de la primera sumatoria y luego se juntaron ambas sumatorias, en \((c)\) se mantiene la igualdad observando que el factor que multiplica a \(X^{c1}[0]\) es \(\cos[\pi0n/(N-1)]=\cos0=1\), igual en ambos lados de la igualdad, y el factor que multiplica a \(X^{c1}[N-1]\) es \(e^{j2\pi (N-1)n/(2N-2)}=e^{j\pi n}=(-1)^n\) y \(\cos[\pi(N-1)n/(N-1)]=\cos(\pi n)=(-1)^n\), también igual en ambos lados de la igualdad, en \((d)\) se saco 2 de factor común y en \((e)\), \(\alpha[k]\) está definido por la ecuación \ref{eq:dft_dct_1_definition_alpha}.
+
+\subsection{Relación entre la DFT y la DCT-2}
+
+La DCT-2 de una secuencia finita también puede expresarse en términos de la DFT. Para determinar esta relación se observa que un período de la secuencia periódica \(\tilde{x}_2[n]\) dada por la ecuación \ref{eq:dft_dct_periodic_extension_type_2} define a la secuencia de \(2N\) puntos
+\[
+ x_2[n]=x[((n))_{2N}]+x[((-n-1))_{2N}]=\tilde{x}_2[n],
+ \qquad 
+ n=0,\,1,\,\dots,\,2N-1,
+\]
+donde \(x[n]\) es la secuencia original de \(N\) puntos. Si \(X[k]\) es la DFT de \(2N\) puntos de \(x[n]\), es decir, la DFT de \(x[n]\) con relleno de \(N\) muestras nulas, la DFT de \(2N\) puntos de \(x_2[n]\) es 
+\[
+ X_2[k]=X[k]+X^*[k]e^{j2\pi k/(2N)},
+ \qquad 
+ k=0,\,1,\,\dots,\,2N-1.
+\]
+El segundo sumando en la derecha de esta igualdad se obtiene observando que por una propiedad de simetría de la DFT (ver la sección \ref{sec:dft_properties_symmetry}),
+\[
+ y_1[n]=x^*[((-n))_N]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;Y_1[k]=X^*[k],
+ \qquad
+ n=0,\,1,\,\dots,\,2N-1.
+\]
+y la secuencia de \(2N\) puntos \(y_2[n]=x[((-n-1))_{2N}]\) es el desplazamiento circular una muestra hacia la izquierda de \(y_1[n]\), y por lo tanto, de la ecuación \ref{eq:dft_properties_circular_shift}, se cumple que 
+\[
+ y_2[n]=x^*[((-n-1))_N]\;\overset{\mathcal{DFT}}{\longleftrightarrow}\;Y_2[k]=Y_1[k]e^{j2\pi k/(2N)}=X^*[k]e^{j2\pi k/(2N)},
+ \qquad
+ n=0,\,1,\,\dots,\,2N-1.
+\]
+Retornando a la DFT de \(x_2[n]\), se observa que 
+\begin{align}
+ X_2[k]&=X[k]+X^*[k]e^{j2\pi k/(2N)}\nonumber\\
+  &=e^{j\pi k/(2N)}\left(X[k]e^{-j\pi k/(2N)}+X^*[k]e^{j\pi k/(2N)}\right)\nonumber\\
+  &=e^{j\pi k/(2N)}2\Re\left\{X[k]e^{-j\pi k/(2N)}\right\}.\label{eq:dft_dct_2_relation_with_dft_X2_tmp}
+\end{align}
+Empleando la definición de la DFT de \(2N\) puntos, se obtiene que
+\begin{align*}
+ 2\Re\left\{X[k]e^{-j\pi k/(2N)}\right\}&=2\Re\left\{\sum_{n=0}^{2N-1}x[n]e^{-j2\pi kn/(2N)}e^{-j\pi k/(2N)}\right\}\\
+  &=2\Re\left\{\sum_{n=0}^{N-1}x[n]e^{-j\pi k(2n+1)/(2N)}\right\}\\
+  &=2\sum_{n=0}^{N-1}x[n]\cos\left(\frac{\pi k(2n+1)}{2N}\right).
+\end{align*}
+Por lo tanto, de la definción \ref{eq:dft_dct_2_definition} de la DCT-2, resulta en que 
+\begin{equation}\label{eq:dft_dct_2_relation_with_dft_X}
+ X^{c2}[k]=2\Re\left\{X[k]e^{-j\pi k/(2N)}\right\},
+ \qquad 
+ k=0,\,1,\,\dots,\,N-1,
+\end{equation}
+que es la expresión de la DCT-2 en términos de \(X[k]\), la DFT de \(2N\) puntos de la secuencia \(x[n]\) de \(N\) puntos. Sustituyendo este resultado en la ecuación \ref{eq:dft_dct_2_relation_with_dft_X2_tmp} se obtiene que 
+\begin{equation}\label{eq:dft_dct_2_relation_with_dft_X2_alt}
+ X_2[k]=e^{j\pi k/(2N)}X^{c2}[k],
+ \qquad 
+ k=0,\,1,\,\dots,\,N-1,
+\end{equation}
+o equivalentemente,
+\begin{equation}\label{eq:dft_dct_2_relation_with_dft_X2}
+ X^{c2}[k]=e^{-j\pi k/(2N)}X_2[k],
+ \qquad 
+ k=0,\,1,\,\dots,\,N-1,
+\end{equation}
+que es la expresión de la DCT-2 en términos de \(X_2[k]\), la DFT de \(2N\) puntos de un período de la extensión simétrica \(x_2[n]\).
+Por lo tanto, la DCT-2 puede obtenerse mediante el cálculo de la DFT de \(2N\) puntos de \(X[k]\) y \(X_2[k]\), para lo cual existen algoritmos rápidos.
+
+La DCT-2 inversa también puede calcularse empleando a la DFT inversa. Para verlo, se parte observando que la DCT-2 cumple la propiedad de simetría 
+\[
+ X^{c2}[2N-k]=-X^{c2}[k],
+ \qquad 
+ k=0,\,1,\,\dots,\,2N-1.
+\]
+Esta propiedad se obtiene directamente de la definición \ref{eq:dft_dct_2_definition} de la DCT-2 considerando que se cumple que 
+\[
+ \cos\left(\frac{\pi (2N-k)(2n+1)}{2N}\right)=\cos\left(\pi(2n+1)-\frac{\pi k(2n+1)}{2N}\right)
+ =-\cos\left(\frac{\pi k(2n+1)}{2N}\right).
+\]
+De esta propiedad de simetría y la ecuación \ref{eq:dft_dct_2_relation_with_dft_X2_alt}, la DFT de \(2N\) puntos de la extensión simétrica \(x_2[n]\) de \(2N\) puntos se puede expresar en términos de la DCT-2 de la secuencia original \(x[n]\) de \(N\) puntos como 
+\begin{equation}\label{eq:dft_dct_2_relation_with_dft_X2_alt2}
+ X_2[k]= 
+ \left\{
+ \begin{array}{ll}
+  X^{c2}[0], & k=0\\[\medskipamount]
+  e^{j\pi k/(2N)}X^{c2}[k], & k=1,\,\dots,\,N-1,\\[\medskipamount]
+  0, &k=N\\[\medskipamount]
+  -e^{j\pi k/(2N)}X^{c2}[2N-k], & k=N+1,\,\dots,\,2N-1,
+ \end{array}
+ \right. 
+\end{equation}
+donde el resultado para \(k=N\) proviene de que 
+\[
+ \cos\left(\frac{\pi N(2n+1)}{2N}\right)=\cos\left(\frac{\pi}{2}(2n+1)\right)=0.
+\]
+Aplicando la DFT inversa a \(X_2[k]\) se obtiene la extensión simétrica \(x_2[n]\),
+\begin{equation}\label{eq:dft_dct_2_relation_with_dft_x2}
+ x_2[n]=\frac{1}{2N}\sum_{k=0}^{2N-1}X_2[k]e^{j2\pi kn/(2N)},
+ \qquad 
+ n=0,\,1,\,\dots,\,2N-1, 
+\end{equation}
+de donde puede obtenerse \(x[n]\) extrayendo las primeras \(N\) muestras, es decir, \(x[n]=x_2[n]\) para \(n=0,\,1,\,\dots,\,N-1\). Sustituyendo la ecuación \ref{eq:dft_dct_2_relation_with_dft_X2_alt2} en la ecuación  \ref{eq:dft_dct_2_relation_with_dft_x2} se puede mostrar la expresión \ref{eq:dft_dct_2_inverse_definition} de la siguiente forma:
+\begin{align*}
+ x_2[n]&=\frac{1}{2N}\sum_{k=0}^{2N-1}X_2[k]e^{j2\pi kn/(2N)}\\
+  &=\frac{1}{2N}\left\{X^{c2}[0]+\sum_{k=1}^{N-1}e^{j\pi k/(2N)}X^{c2}[k]e^{j2\pi kn/(2N)}-\sum_{k=N+1}^{2N-1}e^{j\pi k/(2N)}X^{c2}[2N-k]e^{j2\pi kn/(2N)}\right\}\\
+  &\overset{(a)}{=}\frac{1}{2N}\left\{X^{c2}[0]+\sum_{k=1}^{N-1}e^{j\pi k/(2N)}X^{c2}[k]e^{j2\pi kn/(2N)}-\sum_{l=N-1}^{1}e^{j\pi(2N-l)/(2N)}X^{c2}[l]e^{j2\pi(2N-l)n/(2N)}\right\}\\
+  &=\frac{1}{2N}\left\{X^{c2}[0]+\sum_{k=1}^{N-1}e^{j\pi k/(2N)}X^{c2}[k]e^{j2\pi kn/(2N)}-\sum_{l=N-1}^{1}e^{j\pi}e^{-j\pi l/(2N)}X^{c2}[l]e^{j2\pi n}e^{-j2\pi ln/(2N)}\right\}\\
+  &\overset{(b)}{=}\frac{1}{2N}\left\{X^{c2}[0]+\sum_{k=1}^{N-1}e^{j\pi k/(2N)}X^{c2}[k]e^{j2\pi kn/(2N)}+\sum_{l=1}^{N-1}e^{-j\pi l/(2N)}X^{c2}[l]e^{-j2\pi ln/(2N)}\right\}\\
+  &=\frac{1}{2N}\left\{X^{c2}[0]+\sum_{k=1}^{N-1}X^{c2}[k]e^{j\pi k(2n+1)/(2N)}+\sum_{l=1}^{N-1}X^{c2}[l]e^{-j\pi l(2n+1)/(2N)}\right\},
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(l=2N-k\) en la segunda sumatoria y en \((b)\) se consideró que \(e^{j\pi}=-1\) y \(e^{j2\pi n}=1\) para todo \(n\). Continuando, juntando ambas sumatorias, 
+\begin{align*}
+ x_2[n]&=\frac{1}{2N}\left\{X^{c2}[0]+2\sum_{k=1}^{N-1}X^{c2}[k]\cos\left(\frac{\pi k(2n+1)}{2N}\right)\right\}\\
+   &=\frac{1}{N}\left\{\frac{X^{c2}[0]}{2}+\sum_{k=1}^{N-1}X^{c2}[k]\cos\left(\frac{\pi k(2n+1)}{2N}\right)\right\}\\
+   &=\frac{1}{N}\sum_{k=0}^{N-1}\beta[k]X^{c2}[k]\cos\left(\frac{\pi k(2n+1)}{2N}\right),
+   \qquad 
+   n=0,\,1,\,\dots,\,N-1.
+\end{align*}
+donde \(\beta[k]\) está dado por la ecuación \ref{eq:dft_dct_2_inverse_definition_beta}. Se obtuvo la ecuación \ref{eq:dft_dct_2_inverse_definition}, que es lo que se quería.
+
+\subsection{Propiedad de compactación de energía de la DCT-2}
+
+La DCT-2 es empleada en diversas aplicaciones de compresión de datos debido a una propiedad referida como ``compactación de energía''. Específicamente, la DCT-2 de una secuencia de largo finito usualmente tiene sus coeficientes mas altamente concentrados en los índices bajos que la DFT. Esto surge del teorema de Parseval, que para la DCT-1 es 
+\begin{equation}\label{eq:dft_dct_1_parseval}
+ \sum_{n=0}^{N-1}\alpha[n]|x[n]|^2=\frac{1}{2N-2}\sum_{k=0}^{N-1}\alpha[k]|X^{c1}[k]|^2
+\end{equation}
+y para la DCT-2 es
+\begin{equation}\label{eq:dft_dct_2_parseval}
+ \sum_{n=0}^{N-1}|x[n]|^2=\frac{1}{2N}\sum_{k=0}^{N-1}\beta[k]|X^{c2}[k]|^2,
+\end{equation}
+donde \(\alpha[n]\) y \(\beta[n]\) están dados por la ecuaciones \ref{eq:dft_dct_1_definition_alpha} y \ref{eq:dft_dct_2_inverse_definition_beta} respectivamente.
+
+Previo al análisis de la propiedad de compactación de energía se deducirán las identidades de Parseval \ref{eq:dft_dct_1_parseval} y \ref{eq:dft_dct_2_parseval} siguiendo las indicaciones del problema 8.74 de \cite{oppenheim2009discrete}. 
+
+Para la deducción de la identidad de Parseval de la DCT-1 de una secuencia \(x[n]\) de \(N\) muestras, se parte considerando su extensión simétrica \(x_1[n]\) de \(2N-2\) muestras y su correspondiente DFT \(X_1[k]\). De la identidad de Parseval \ref{eq:dft_properties_parseval} de la DFT, se cumple que
+\begin{equation}\label{eq:dft_dct_1_parseval_deduction_1}
+ \sum_{n=0}^{2N-3}|x_1[n]|^2=\frac{1}{2N-2}\sum_{k=0}^{2N-3}|X_1[k]|^2. 
+\end{equation}
+Por un lado, teniendo en cuenta la relación \ref{eq:dft_dct_1_relation_with_dft_X1_alt} entre la DFT \(X_1[k]\) y la DCT-1 de \(x[n]\), se observa que 
+\begin{align*}
+ \sum_{k=0}^{2N-3}|X_1[k]|^2&=\sum_{k=0}^{N-1}|X^{c1}[k]|^2+\sum_{k=N}^{2N-3}|X^{c1}[2N-2-k]|^2\\
+  &\overset{(a)}{=}\sum_{k=0}^{N-1}|X^{c1}[k]|^2+\sum_{l=1}^{N-2}|X^{c1}[l]|^2\\
+  &=\sum_{k=0}^{N-1}|X^{c1}[k]|^2+\left(\sum_{l=0}^{N-1}|X^{c1}[l]|^2-|X^{c1}[0]|^2-|X^{c1}[N-1]|^2\right)\\
+  &=2\sum_{k=0}^{N-1}|X^{c1}[k]|^2-|X^{c1}[0]|^2-|X^{c1}[N-1]|^2\\
+  &=2\left(\sum_{k=0}^{N-1}|X^{c1}[k]|^2-\frac{|X^{c1}[0]|^2}{2}-\frac{|X^{c1}[N-1]|^2}{2}\right)\\
+  &=2\sum_{k=0}^{N-1}\alpha[k]|X^{c1}[k]|^2,
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(l=2N-2-k\) en la segunda sumatoria. Se obtuvo que 
+\begin{equation}\label{eq:dft_dct_1_parseval_deduction_2}
+ \sum_{k=0}^{2N-3}|X_1[k]|^2=2\sum_{k=0}^{N-1}\alpha[k]|X^{c1}[k]|^2.
+\end{equation}
+Por otro lado, teniendo en cuenta que la relación entre \(x[n]\) y la extensión simétrica \(x_1[n]\) dada por un período de la secuencia de la ecuación \ref{eq:dft_dct_periodic_extension_type_1} puede escribirse como
+\[
+  x_1[n]=
+ \left\{ 
+ \begin{array}{ll}
+  x[n],& n=0,\,1,\,\dots,\,N-1,\\[\medskipamount]
+  x[2N-2-n],& n=N,\,N+1,\,\dots,\,2N-3,
+ \end{array}
+ \right.
+\]
+haciendo el mismo razonamiento que antes, se obtiene que 
+\begin{equation}\label{eq:dft_dct_1_parseval_deduction_3}
+  \sum_{n=0}^{2N-3}|x_1[n]|^2=2\sum_{n=0}^{N-1}\alpha[n]|x[n]|^2.
+\end{equation}
+Finalmente, sustituyendo las ecuaciones \ref{eq:dft_dct_1_parseval_deduction_2} y \ref{eq:dft_dct_1_parseval_deduction_3} en la ecuación \ref{eq:dft_dct_1_parseval_deduction_1}, se obtiene que la identidad \ref{eq:dft_dct_1_parseval}, que es lo que se quería.
+
+La deducción del teorema de Parseval para la DCT-2 es similar. En este caso, la extensión periódica \(x_2[n]\) tiene \(2N\) muestras. Si \(X_2[k]\) es la DFT de \(x_2[n]\), el teorema de Parseval de la DFT indica que 
+\begin{equation}\label{eq:dft_dct_2_parseval_deduction_1}
+ \sum_{n=0}^{2N-1}|x_2[n]|^2=\frac{1}{2N}\sum_{k=0}^{2N-1}|X_2[k]|^2.
+\end{equation}
+De la relación \ref{eq:dft_dct_2_relation_with_dft_X2_alt2} entre la DFT y la DCT-2, se cumple que 
+\begin{align*}
+ \sum_{k=0}^{2N-1}|X_2[k]|^2&=\sum_{k=0}^{N-1}|X^{c2}[k]|^2+\sum_{k=N+1}^{2N-1}|X^{c2}[2N-k]|^2\\
+  &\overset{(a)}{=}\sum_{k=0}^{N-1}|X^{c2}[k]|^2+\sum_{l=1}^{N-1}|X^{c2}[l]|^2\\
+  &=2\sum_{k=0}^{N-1}|X^{c2}[k]|^2-|X^{c2}[0]|^2\\
+  &=2\sum_{k=0}^{N-1}\beta[k]|X^{c2}[k]|^2,
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(l=2N-k\). Se obtuvo que 
+\begin{equation}\label{eq:dft_dct_2_parseval_deduction_2}
+ \sum_{k=0}^{2N-1}|X_2[k]|^2=2\sum_{k=0}^{N-1}\beta[k]|X^{c2}[k]|^2.
+\end{equation}
+La extensión simétrica \(x_2[n]\) dada por un período de la secuencia de la ecuación \ref{eq:dft_dct_periodic_extension_type_2} puede escribirse como
+\[
+  x_2[n]=
+ \left\{ 
+ \begin{array}{ll}
+  x[n],& n=0,\,1,\,\dots,\,N-1,\\[\medskipamount]
+  x[2N-1-n],& n=N,\,N+1,\,\dots,\,2N-1.
+ \end{array}
+ \right.
+\]
+Por lo tanto,
+\begin{align*}
+ \sum_{n=0}^{2N-1}|x_2[n]|^2&=\sum_{n=0}^{N-1}|x[n]|^2+\sum_{n=N}^{2N-1}|x[2N-1-n]|^2\\
+  &\overset{(a)}{=}\sum_{n=0}^{N-1}|x[n]|^2+\sum_{m=0}^{N-1}|x[m]|^2\\
+  &=2\sum_{n=0}^{N-1}|x[n]|^2,
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(m=2N-1-m\). Sustituyendo este resultado y el de la ecuación \ref{eq:dft_dct_2_parseval_deduction_2} en la ecuación \ref{eq:dft_dct_2_parseval_deduction_1} se obtiene la ecuación \ref{eq:dft_dct_2_parseval}, concluyendo la prueba. 
+
+Se dice que la DCT está concentrada en los indices bajos de la DCT si el resto de los coeficientes pueden establecerse a cero sin producir impacto en la energía de la señal. La propiedad de compactación de energía se ilustra en el siguiente ejemplo.
+
+\paragraph{Ejemplo: compactación de energía en la DCT-2} Se considera una señal de prueba de la forma 
+\[
+ x[n]=a^n\cos(\omega_0n+\phi),
+ \qquad 
+ n=0,\,1,\,\dots,\,N-1.
+\]
+Dicha señal se muestra en la figura \ref{fig:example_08_13_dct2_energy_compaction_x} para \(a=0.95\), \(\omega_0=0.1\pi\), \(\phi=0\) y \(N=32\). 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.95\textwidth]{figuras/example_08_13_dct2_energy_compaction_x.pdf}
+ \caption{\label{fig:example_08_13_dct2_energy_compaction_x} Señal de prueba para comparación de la DFT y la DCT-2.}
+ \end{center}
+\end{figure}
+\\
+La parte real e imaginaria de la DFT de 32 puntos de la secuencia de 32 puntos de la figura \ref{fig:example_08_13_dct2_energy_compaction_x} se muestra en la figura \ref{fig:example_08_13_dct2_energy_compaction_DFT_DCT2}, así como su DCT-2. En el caso de la DFT, se muestra la parte real e imaginaria para \(k=0,\,1,\,\dots,\,16\). Como la señal \(x[n]\) es real, \(X[0]\) y \(X[16]\) son reales. El resto de los valores son complejos y simétricos conjugados, específicamente, \(X[16+m]=X^*[16-m]\) para \(1\leq m\leq 15\). De esta forma, los 32 números reales correspondientes a la DFT mostrados en la figura \ref{fig:example_08_13_dct2_energy_compaction_DFT_DCT2} especifican completamente a la DFT de 32 puntos. En el caso de la DCT-2 se muestran todos sus valores, que son 32 números reales. En la figura \ref{fig:example_08_13_dct2_energy_compaction_x} se observa que los valores de la DCT-2 están altamente concentrados en los índices bajos, por lo que el teorema de Parseval sugiere que la energía de la secuencia está mas concentrada en la DCT-2 que en la DFT.
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.95\textwidth]{figuras/example_08_13_dct2_energy_compaction_DFT_DCT2.pdf}
+ \caption{\label{fig:example_08_13_dct2_energy_compaction_DFT_DCT2} Parte real e imaginara de la DFT de 32 puntos y DCT-2 de 32 puntos de la secuencia de la figura \ref{fig:example_08_13_dct2_energy_compaction_x}.}
+ \end{center}
+\end{figure}
+\\
+Esta propiedad de concentración de la energía puede ser cuantificada truncando a las dos representaciones y comparando el error cuadrático medio de la aproximación de las dos representaciones truncadas cuando se emplea la misma cantidad de coeficientes reales. Para hacerlo, se define 
+\[
+ x_{2m-1}^\textrm{dft}[n]=\frac{1}{N}\sum_{k=0}^{N-1}T_{2m-1}[k]X[k]e^{j2\pi kn/N},
+ \qquad 
+ n=0,\,1,\,\dots,\,N-1,
+\]
+donde \(X[k]\) es la DFT de \(N\) puntos de \(x[n]\) y
+\[
+ T_{2m-1}[k]=
+ \left\{ 
+ \begin{array}{ll}
+  1, & 0\leq k\leq \dfrac{N}{2}-m,\\[\medskipamount]
+  0, & \dfrac{N}{2}-m+1\leq k\leq \dfrac{N}{2}+m-1,\\[\medskipamount]
+  1, & \dfrac{N}{2}+m\leq k\leq N-1,
+ \end{array}
+ \right. 
+\]
+donde por simplicidad, se asume que \(N\) es par. El subíndice \(2m-1\) indica la cantidad de coeficientes reales establecidos en cero en función de \(m\). Si \(m=1\), \(T_1[k]=0\) solo para \(k=N/2\), por lo que solo es removido el coeficiente real \(X[N/2]\). Si \(m=2\), se elimina el coeficiente real \(X[N/2]\), el coeficiente complejo \(X[N/2-1]\) y el coeficiente complejo conjugado \(X[N/2+1]\), siendo un total de 3 coeficientes reales eliminados, y así sucesivamente. De esta forma, \(x_{2m-1}^\textrm{dft}[n]\) es la secuencia que es sintetizada omitiendo \(2m+1\) coeficientes de la DFT simétricamente en torno a \(k=N/2\) para \(m=1,\,2,\,\dots,\,N/2\). Observar que el caso con \(m=N/2\) corresponde a establecer en cero a todos los coeficientes de la DFT excepto el coeficiente real \(X[0]\).
+\\
+De la misma forma, se puede truncar la DCT-2, obteniendo
+\[
+ x_m^\textrm{dct}[n]=\frac{1}{N}\sum_{k=0}^{N-1-m}\beta[k]X^{c2}[k]\cos\left(\frac{\pi k(2n+1)}{2N}\right),
+ \qquad 
+ n=0,\,1,\,\dots,\,N-1.
+\]
+En este caso, se omiten \(m\) coeficientes. Por ejemplo, si \(m=3\), se omiten los 3 coeficientes reales \(X^{c2}[31]\), \(X^{c2}[30]\) y \(X^{c2}[29]\) en la síntesis de \(x_m^\textrm{dct}[n]\) a partir de la DCT-2 de la figura \ref{fig:example_08_13_dct2_energy_compaction_DFT_DCT2}. Debido a que estos coeficientes son muy pequeños, \(x_3^\textrm{dct}[n]\) debería diferir poco de \(x[n]\).
+\\
+Para mostrar la dependencia del error de aproximación con la cantidad de coeficientes reales eliminados de la DFT y la DCT-2, se define el error cuadrático medio de aproximación como
+\[
+ E^\textrm{dft}[2m-1]=\frac{1}{N}\sum_{n=0}^{N-1}|x[n]-x_{2m-1}^\textrm{dft}[n]|^2
+\]
+y
+\[
+ E^\textrm{dct}[m]=\frac{1}{N}\sum_{n=0}^{N-1}|x[n]-x_{m}^\textrm{dct}[n]|^2
+\]
+para la DFT y la DCT truncadas respectivamente. Hay que tener en cuenta que la cantidad de coeficientes reales eliminados en el error de aproximación \(E^\textrm{dft}[2m+1]\) es \(2m+1\), mientras que es \(m\) en el error \(E^\textrm{dct}[m]\), y solo tiene sentido compararlos con la misma cantidad de coeficientes reales eliminados, es decir, hay que comparar por ejemplo \(E^\textrm{dft}[5]\) con \(E^\textrm{dct}[5]\), y no con el mismo valor de \(m\) en ambas ecuaciones. En la figura \ref{fig:example_08_13_dct2_energy_compaction_MSE} se muestran los errores de aproximación en función del número de coeficientes reales eliminados. Se observa que para este ejemplo, el error de aproximación producido por el truncamiento de la DFT crece constantemente con el número de coeficientes truncados, mientras que para la DCT se mantiene muy pequeño incluso hasta la eliminación de 27 coeficientes. Esto significa que los 32 números de la secuencia \(x[n]\) pueden ser representados con error pequeño por solo 5 coeficientes de la DCT-2. Esto también lo sugiere la DCT-2 en la figura \ref{fig:example_08_13_dct2_energy_compaction_DFT_DCT2}, en donde se aprecia que solo los primeros 5 coeficientes de la DCT-2 tienen valores significativos y el resto son cercanos a cero. 
+\begin{figure}[!htb]
+ \begin{center}
+ \includegraphics[width=0.95\textwidth]{figuras/example_08_13_dct2_energy_compaction_MSE.pdf}
+ \caption{\label{fig:example_08_13_dct2_energy_compaction_MSE} Comparación del error de truncamiento de la DFT y la DCT-2.}
+ \end{center}
+\end{figure}
+
+La señal del ejemplo anterior es una exponencial decreciente de baja frecuencia con fase nula, y fue elegida con cuidado para resaltar la propiedad de compactación de la energía de la DCT-2, pero hay que tener en cuenta que no cualquier señal produce un resultado tan dramático. Señales pasaltos e incluso señales de la forma del ejemplo con parámetros distintos no producen una diferencia tan grande. Sin embargo, en muchos casos de compresión de datos, la DCT-2 brinda una ventaja considerable sobre la DFT. Puede mostrarse que la DCT-2 es casi óptima en el sentido de proveer el mínimo error cuadrático medio de truncamiento para secuencias con función de autocorrelación exponencial. 
 
 
 
